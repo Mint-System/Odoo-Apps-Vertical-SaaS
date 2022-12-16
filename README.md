@@ -1,4 +1,4 @@
-# Odoo Apps: Forestry
+# Odoo Apps: SaaS
 
 Collection of SaaS related modules.
 
