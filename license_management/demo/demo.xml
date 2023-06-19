@@ -1,12 +1,19 @@
 <odoo>
 
-  <record id="license0" model="license.license">
-    <field name="name">Mapping Solution</field>
-    <field name="value">GUZK-GFKD-YNAK-72OM</field>
+  <record id="license_product0" model="product.product">
+    <field name="name">Software License</field>
   </record>
 
   <record id="type0" model="license.type">
     <field name="name">perpetual</field>
+  </record>
+
+  <record id="license0" model="license.license">
+    <field name="name">L00001</field>
+    <field name="key">GUZK-GFKD-YNAK-72OM</field>
+    <field name="product_id" ref="license_management.license_product0"/>
+    <field name="type_id" ref="license_management.type0"/>
+    <field name="partner_id" ref="base.res_partner_2"/>
   </record>
 
 </odoo>

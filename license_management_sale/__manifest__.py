@@ -1,21 +1,15 @@
 {
-    "name": "License Management",
+    "name": "License Management Sale",
     "summary": """
-        Manage software licensens.
+        Sell software licenses.
     """,
     "author": "Mint System GmbH, Odoo Community Association (OCA)",
     "website": "https://www.mint-system.ch",
     "category": "Services",
     "version": "16.0.1.0.0",
     "license": "AGPL-3",
-    "depends": ["base", "product"],
-    "data": [
-        "views/license_license.xml",
-        "views/license_type.xml",
-        "security/security.xml",
-        "data/ir_sequence.xml",
-        "security/ir.model.access.csv",
-    ],
+    "depends": ["license_management", "sale"],
+    "data": ["views/product_template.xml","views/license_license.xml","views/sale_order.xml"],
     "installable": True,
     "application": False,
     "auto_install": False,
