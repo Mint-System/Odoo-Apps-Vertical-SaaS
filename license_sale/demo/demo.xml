@@ -1,6 +1,6 @@
 <odoo>
 
-  <record id="license_management.license_product0" model="product.product">
+  <record id="license.license_product0" model="product.product">
     <field name="license_ok" eval="True" />
   </record>
 

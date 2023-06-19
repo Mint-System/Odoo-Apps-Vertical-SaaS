@@ -7,7 +7,7 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     license_ids = fields.Many2many('license.license', compute='_compute_license_ids', string='Licenses associated to this sale')
-    license_count = fields.Integer(string='Licenses', compute='_compute_license_ids', groups='license_management.group_user')
+    license_count = fields.Integer(string='Licenses', compute='_compute_license_ids', groups='license.group_user')
 
     @api.depends('order_line.product_id')
     def _compute_license_ids(self):
@@ -17,8 +17,8 @@ class SaleOrder(models.Model):
 
     def action_view_license(self):
         self.ensure_one()
-        view_form_id = self.env.ref('license_management.license_view_form').id
-        view_tree_id = self.env.ref('license_management.license_view_tree').id
+        view_form_id = self.env.ref('license.license_view_form').id
+        view_tree_id = self.env.ref('license.license_view_tree').id
         action = {
             'type': 'ir.actions.act_window',
             'domain': [('id', 'in', self.license_ids.ids)],

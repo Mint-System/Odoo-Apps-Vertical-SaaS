@@ -2,12 +2,12 @@
 <odoo>
 
     <record id="view_order_form" model="ir.ui.view">
-        <field name="name">license_management_sale.view_order_form</field>
+        <field name="name">license_sale.view_order_form</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//button[@name='action_view_invoice']" position="before">
-                <button type="object" name="action_view_license" class="oe_stat_button" icon="fa-key" attrs="{'invisible': [('license_count', '=', 0)]}" groups="license_management.group_user">
+                <button type="object" name="action_view_license" class="oe_stat_button" icon="fa-key" attrs="{'invisible': [('license_count', '=', 0)]}" groups="license.group_user">
                     <field name="license_count" widget="statinfo" string="Licenses"/>
                 </button>
             </xpath>

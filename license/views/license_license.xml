@@ -2,7 +2,7 @@
 <odoo>
 
     <record id="license_view_form" model="ir.ui.view">
-        <field name="name">license_management.license_view_form</field>
+        <field name="name">license.license_view_form</field>
         <field name="model">license.license</field>
         <field name="arch" type="xml">
             <form string="License">
@@ -43,7 +43,7 @@
     </record>
 
     <record id="license_view_tree" model="ir.ui.view">
-        <field name="name">license_management.license_view_tree</field>
+        <field name="name">license.license_view_tree</field>
         <field name="model">license.license</field>
         <field name="arch" type="xml">
             <tree>
@@ -62,12 +62,12 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem name="License Management" id="license_management.menu_root"
-        web_icon="license_management,static/description/icon.png" />
+    <menuitem name="License Management" id="license.menu_root"
+        web_icon="license,static/description/icon.png" />
 
-    <menuitem name="Licenses" id="license_management.menu_licenses"
-        parent="license_management.menu_root" />
-    <menuitem name="Licenses" id="license_management.menu_license"
-        parent="license_management.menu_licenses" action="license_management.license_open_view_tree" />
+    <menuitem name="Licenses" id="license.menu_licenses"
+        parent="license.menu_root" />
+    <menuitem name="Licenses" id="license.menu_license"
+        parent="license.menu_licenses" action="license.license_open_view_tree" />
 
 </odoo>

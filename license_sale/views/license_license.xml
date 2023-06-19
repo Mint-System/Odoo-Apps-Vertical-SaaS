@@ -2,9 +2,9 @@
 <odoo>
 
     <record id="license_view_form" model="ir.ui.view">
-        <field name="name">license_management_sale.license_view_form</field>
+        <field name="name">license_sale.license_view_form</field>
         <field name="model">license.license</field>
-        <field name="inherit_id" ref="license_management.license_view_form" />
+        <field name="inherit_id" ref="license.license_view_form" />
         <field name="arch" type="xml">
 
             <field name="partner_id" position="after">
