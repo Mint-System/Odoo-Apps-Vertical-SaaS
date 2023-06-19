@@ -3,12 +3,12 @@
     :alt: License: GPL-3
 
 ==================
-LicenseSpring Base
+License Management
 ==================
 
-Manage LicenseSpring Products, Customers, Orders and Licenses.
+Manage software licensens.
 
-For a detailed documentation have a look at https://www.odoo-wiki.org/.
+For a detailed documentation have a look at https://www.odoo-wiki.org/license-management.html
 
 .. image:: https://raw.githubusercontent.com/Mint-System/Wiki/master/assets/icon-box.png
   :height: 100

@@ -1,0 +1,12 @@
+<odoo>
+
+  <record id="license0" model="license.license">
+    <field name="name">Mapping Solution</field>
+    <field name="value">GUZK-GFKD-YNAK-72OM</field>
+  </record>
+
+  <record id="type0" model="license.type">
+    <field name="name">perpetual</field>
+  </record>
+
+</odoo>

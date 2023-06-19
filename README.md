@@ -14,4 +14,4 @@ git clone git@github.com:mint-system/odoo-apps-vertical-saas.git ./addons/vertic
 
 | Module | Summary |
 | --- | --- |
-| [licensespring_base](licensespring_base) |         Manage LicenseSpring Products, Customers, Orders and Licenses. |
+| [license_management](license_management) |         Manage software licensens. |
