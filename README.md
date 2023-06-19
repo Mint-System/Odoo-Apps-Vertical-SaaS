@@ -14,4 +14,5 @@ git clone git@github.com:mint-system/odoo-apps-vertical-saas.git ./addons/vertic
 
 | Module | Summary |
 | --- | --- |
-| [license_management](license_management) |         Manage software licensens. |
+| [license](license) |         Manage software licensens. |
+| [license_sale](license_sale) |         Sell software licenses. |
