@@ -27,6 +27,8 @@ class License(models.Model):
         string='Status',
         copy=False,
         default='draft')
+    date_start = fields.Date()
+    date_end = fields.Date()
 
     @api.model_create_multi
     def create(self, vals_list):

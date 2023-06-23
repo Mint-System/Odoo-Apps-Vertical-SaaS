@@ -1,7 +1,21 @@
 <odoo>
 
-  <record id="license.license_product0" model="product.product">
-    <field name="license_ok" eval="True" />
-  </record>
+    <record id="license.license_product0" model="product.product">
+        <field name="license_ok" eval="True" />
+        <field name="list_price">80</field>
+    </record>
+
+    <record id="sale_order_50" model="sale.order">
+        <field name="partner_id" ref="base.res_partner_address_5" />
+        <field name="user_id" ref="base.user_admin" />
+        <field name="pricelist_id" ref="product.list0" />
+    </record>
+
+    <record id="sale_order_line_16" model="sale.order.line">
+        <field name="order_id" ref="sale_order_50" />
+        <field name="product_id" ref="license.license_product0" />
+        <field name="product_uom_qty">1</field>
+        <field name="price_unit">80</field>
+    </record>
 
 </odoo>
