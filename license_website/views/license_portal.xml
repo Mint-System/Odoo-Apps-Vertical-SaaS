@@ -57,7 +57,7 @@
                         <tr>
                             <td>
                                 <a
-                                    t-attf-href="/my/license/#{license.id}"
+                                    t-att-href="license.get_portal_url()"
                                 >
                                     <t t-out="license.name" />
                                 </a>
@@ -71,7 +71,7 @@
 
     <template id="portal_license_page" name="My License">
         <t t-call="portal.portal_layout">
-            <t t-set="o_portal_fullwidth_alert" groups="account.group_account_invoice">
+            <t t-set="o_portal_fullwidth_alert" groups="license.group_user">
                 <t t-call="portal.portal_back_in_edit_mode">
                     <t
                         t-set="backend_url"

@@ -92,7 +92,7 @@ class LicensePortal(CustomerPortal):
         return request.render('license_website.portal_my_licenses', values)
 
     @http.route(
-        ['/my/license/<int:license_id>'],
+        ['/my/licenses/<int:license_id>'],
         type='http',
         auth='public',
         website=True,
