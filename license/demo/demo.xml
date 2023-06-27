@@ -5,7 +5,7 @@
   </record>
 
   <record id="type0" model="license.type">
-    <field name="name">perpetual</field>
+    <field name="name">Perpetual</field>
   </record>
 
   <record id="license0" model="license.license">

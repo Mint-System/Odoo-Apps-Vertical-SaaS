@@ -19,17 +19,21 @@ class SaleOrderLine(models.Model):
         return {
             'partner_id': self.order_id.partner_id.id,
             'product_id': self.product_id.id,
+            'type_id': self.product_id.license_type_id.id,
             'sale_line_id': self.id,
             'sale_order_id': self.order_id.id,
             'state': 'assigned',
         }
 
     def _create_license(self):
-        """Create a license for each ordered qty."""
-        for qty in range(int(self.product_uom_qty)):
+        """Create a license based on policy."""
+        
+        product_uom_qty = 1
+        if self.product_id.license_policy == 'quantity':
+            product_uom_qty = self.product_uom_qty
+        for qty in range(int(product_uom_qty)):
             values = self._create_license_prepare_values()
             license = self.env['license.license'].sudo().create(values)
-            # Post message on license
             license_msg = _('This license has been created from: %s (%s)', self.order_id._get_html_link(), self.product_id.name)
             license.message_post(body=license_msg)
         return True
