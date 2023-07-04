@@ -8,7 +8,7 @@ License Management
 
 Manage software licensens.
 
-For a detailed documentation have a look at https://www.odoo-wiki.org/license-management.html
+For a detailed documentation have a look at https://www.odoo-wiki.org/license.html
 
 .. image:: https://raw.githubusercontent.com/Mint-System/Wiki/master/assets/icon-box.png
   :height: 100

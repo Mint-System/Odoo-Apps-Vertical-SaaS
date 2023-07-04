@@ -8,7 +8,7 @@ License Management Website
 
 Portal view for licenses.
 
-For a detailed documentation have a look at https://www.odoo-wiki.org/license-management.html
+For a detailed documentation have a look at https://www.odoo-wiki.org/license-website.html
 
 .. image:: https://raw.githubusercontent.com/Mint-System/Wiki/master/assets/icon-box.png
   :height: 100
