@@ -9,11 +9,11 @@ class License(models.Model):
     _name = 'license.license'
     _description = 'License'
 
-    name = fields.Char(default=lambda self: _('New'), readonly=True, states={'draft': [('readonly', False)]})
-    key = fields.Char(compute='_compute_key', tracking=True, store=True, states={'draft': [('readonly', False)]})
-    type_id = fields.Many2one('license.type', readonly=True, states={'draft': [('readonly', False)]})
-    partner_id = fields.Many2one('res.partner', tracking=True, readonly=True, states={'draft': [('readonly', False)]})
-    product_id = fields.Many2one('product.product', tracking=True, readonly=True, states={'draft': [('readonly', False)]})
+    name = fields.Char(default=lambda self: _('New'), readonly=True, states={'draft': [('readonly', False)], 'assigned': [('readonly', False)]})
+    key = fields.Char(compute='_compute_key', tracking=True, store=True, states={'draft': [('readonly', False)], 'assigned': [('readonly', False)]})
+    type_id = fields.Many2one('license.type', readonly=True, states={'draft': [('readonly', False)], 'assigned': [('readonly', False)]})
+    partner_id = fields.Many2one('res.partner', tracking=True, readonly=True, states={'draft': [('readonly', False)], 'assigned': [('readonly', False)]})
+    product_id = fields.Many2one('product.product', tracking=True, readonly=True, states={'draft': [('readonly', False)], 'assigned': [('readonly', False)]})
     state = fields.Selection(
         selection=[
             ('draft', 'Draft'),

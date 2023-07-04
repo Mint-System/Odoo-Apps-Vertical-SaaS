@@ -25,8 +25,8 @@
                     </group>
                     <group>
                         <group>
-                            <field name="type_id" />
                             <field name="product_id" />
+                            <field name="type_id" />
                         </group>
                         <group>
                             <field name="partner_id" />
@@ -62,7 +62,7 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem name="License Management" id="license.menu_root"
+    <menuitem name="License" id="license.menu_root"
         web_icon="license,static/description/icon.png" />
 
     <menuitem name="Licenses" id="license.menu_licenses"

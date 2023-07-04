@@ -1,5 +1,5 @@
-from odoo import _, api, fields, models
 import logging
+from odoo import _, api, fields, models
 _logger = logging.getLogger(__name__)
 
 
@@ -27,7 +27,7 @@ class SaleOrderLine(models.Model):
 
     def _create_license(self):
         """Create a license based on policy."""
-        
+
         product_uom_qty = 1
         if self.product_id.license_policy == 'quantity':
             product_uom_qty = self.product_uom_qty

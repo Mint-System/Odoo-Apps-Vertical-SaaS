@@ -13,6 +13,6 @@ class product_template(models.Model):
     license_policy = fields.Selection(
         [('quantity', 'License per quantity'),
          ('product', 'License per product')],
-         default='order',
+         default='quantity',
         help='License per quantity: Generate a license for each ordered quantity.\n'
-             'License per product: Generate a single license for a product order.')
+             'License per product: Generate a license for each ordered product.')
