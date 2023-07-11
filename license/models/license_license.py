@@ -39,7 +39,7 @@ class License(models.Model):
 
     @api.depends('create_date')
     def _compute_key(self):
-        for rec in self:
+        for rec in self.filtered(lambda l: not l.key):
             rec.key = str(uuid.uuid4()).upper()
 
     def assign(self):
