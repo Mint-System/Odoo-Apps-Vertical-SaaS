@@ -15,5 +15,6 @@ git clone git@github.com:mint-system/odoo-apps-vertical-saas.git ./addons/vertic
 | Module | Summary |
 | --- | --- |
 | [license](license) |         Manage software licensens. |
+| [license_ocad](license_ocad) |         Sync licenses with the OCAD license activation service. |
 | [license_sale](license_sale) |         Sell software licenses. |
 | [license_website](license_website) |         Portal view for licenses. |
