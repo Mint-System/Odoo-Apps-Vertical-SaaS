@@ -12,6 +12,15 @@
     <record id="product_information_key_ocad3" model="product.information.key">
         <field name="name">EditionShort</field>
     </record>
+    <record id="product_information_key_ocad4" model="product.information.key">
+        <field name="name">NumberOfActivations</field>
+    </record>
+    <record id="product_information_key_ocad5" model="product.information.key">
+        <field name="name">IsTeam</field>
+    </record>
+    <record id="product_information_key_ocad6" model="product.information.key">
+        <field name="name">Runtime</field>
+    </record>
 
     <record id="product_information_value_ocad0" model="product.information.value">
         <field name="integer_value">2018</field>
@@ -28,6 +37,22 @@
     <record id="product_information_value_ocad3" model="product.information.value">
         <field name="char_value">MAS</field>
         <field name="attribute_type">char</field>
+    </record>
+    <record id="product_information_value_ocad4" model="product.information.value">
+        <field name="integer_value">1</field>
+        <field name="attribute_type">integer</field>
+    </record>
+    <record id="product_information_value_ocad5" model="product.information.value">
+        <field name="boolean_value">0</field>
+        <field name="attribute_type">boolean</field>
+    </record>
+    <record id="product_information_value_ocad6" model="product.information.value">
+        <field name="integer_value">1</field>
+        <field name="attribute_type">integer</field>
+    </record>
+    <record id="product_information_value_ocad7" model="product.information.value">
+        <field name="integer_value">3</field>
+        <field name="attribute_type">integer</field>
     </record>
 
     <record id="product_information_attribute_ocad0" model="product.information.attribute">
@@ -49,6 +74,26 @@
         <field name="key_id" ref="product_information_key_ocad3" />
         <field name="attribute_type">char</field>
         <field name="value_id" ref="product_information_value_ocad3" />
+    </record>
+    <record id="product_information_attribute_ocad4" model="product.information.attribute">
+        <field name="key_id" ref="product_information_key_ocad4" />
+        <field name="attribute_type">integer</field>
+        <field name="value_id" ref="product_information_value_ocad4" />
+    </record>
+    <record id="product_information_attribute_ocad5" model="product.information.attribute">
+        <field name="key_id" ref="product_information_key_ocad5" />
+        <field name="attribute_type">boolean</field>
+        <field name="value_id" ref="product_information_value_ocad5" />
+    </record>
+    <record id="product_information_attribute_ocad6" model="product.information.attribute">
+        <field name="key_id" ref="product_information_key_ocad6" />
+        <field name="attribute_type">integer</field>
+        <field name="value_id" ref="product_information_value_ocad6" />
+    </record>
+    <record id="product_information_attribute_ocad7" model="product.information.attribute">
+        <field name="key_id" ref="product_information_key_ocad6" />
+        <field name="attribute_type">integer</field>
+        <field name="value_id" ref="product_information_value_ocad7" />
     </record>
 
 </odoo>

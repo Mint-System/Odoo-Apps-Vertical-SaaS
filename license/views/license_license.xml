@@ -7,8 +7,8 @@
         <field name="arch" type="xml">
             <form string="License">
                 <header>
-                    <button name="action_assign" states="draft" type="object" string="Assign"/>
-                    <button name="action_activate" states="assigned" type="object" string="Activate"/>
+                    <button name="action_assign" states="draft" type="object" string="Assign" class="btn-primary"/>
+                    <button name="action_activate" states="assigned" type="object" string="Activate" class="btn-primary"/>
                     <button name="action_reset" states="active" type="object" string="Reset"/>
                     <button name="action_disable" states="active" type="object" string="Disable"/>                    
                     <button name="action_cancel" states="active,disabled,expired" type="object" string="Cancel"/>
@@ -36,8 +36,9 @@
                         </group>
                         <group>
                             <field name="partner_id" />
-                            <field name="date_start" readonly="1" />
-                            <field name="date_end" readonly="1" />
+                            <field name="date_start" />
+                            <field name="runtime" />
+                            <field name="date_end" />
                         </group>
                     </group>
                 </sheet>

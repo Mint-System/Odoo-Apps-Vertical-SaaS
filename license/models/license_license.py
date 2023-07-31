@@ -1,6 +1,6 @@
-import logging
-import uuid
+import logging, uuid
 from odoo import _, api, fields, models
+from dateutil.relativedelta import relativedelta
 from odoo.exceptions import UserError
 _logger = logging.getLogger(__name__)
 
@@ -10,11 +10,11 @@ class License(models.Model):
     _name = 'license.license'
     _description = 'License'
 
-    name = fields.Char(default=lambda self: _('New'), required=True, readonly=True, states={'draft': [('readonly', False)], 'assigned': [('readonly', False)]})
-    key = fields.Char(default=lambda self: _('New'), compute='_compute_key', tracking=True, required=True, store=True, states={'draft': [('readonly', False)], 'assigned': [('readonly', False)]})
-    type_id = fields.Many2one('license.type', readonly=True, states={'draft': [('readonly', False)], 'assigned': [('readonly', False)]})
-    partner_id = fields.Many2one('res.partner', tracking=True, readonly=True, states={'draft': [('readonly', False)]})
-    product_id = fields.Many2one('product.product', tracking=True, readonly=True, states={'draft': [('readonly', False)], 'assigned': [('readonly', False)]})
+    name = fields.Char(default=lambda self: _('New'), required=True, readonly=True, states={'draft': [('readonly', False)]})
+    key = fields.Char(default=lambda self: _('New'), compute='_compute_key', tracking=True, required=True, store=True, states={'draft': [('readonly', False)]})
+    type_id = fields.Many2one('license.type', readonly=True, states={'draft': [('readonly', False)]})
+    partner_id = fields.Many2one('res.partner', required=True, tracking=True, readonly=True, states={'draft': [('readonly', False)]})
+    product_id = fields.Many2one('product.product', required=True, tracking=True, readonly=True, states={'draft': [('readonly', False)]})
     state = fields.Selection(
         selection=[
             ('draft', 'Draft'),
@@ -28,8 +28,19 @@ class License(models.Model):
         string='Status',
         copy=False,
         default='draft')
-    date_start = fields.Date()
-    date_end = fields.Date()
+    date_start = fields.Date(readonly=True, states={'draft': [('readonly', False)]})
+    runtime = fields.Float('Runtime Months', default=12, readonly=True, states={'draft': [('readonly', False)]})
+    date_end = fields.Date(compute='_compute_date_end', readonly=True, states={'draft': [('readonly', False)]})
+
+    @api.depends('date_start', 'runtime')
+    def _compute_date_end(self):
+        """If runtime changes or date start update date end accordingly."""
+        for license in self:
+            if license.date_start:
+                license.date_end = license.date_start + relativedelta(months=license.runtime)
+            else:
+                license.date_end = False
+
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -45,17 +56,17 @@ class License(models.Model):
 
     def action_assign(self):
         for license in self:
-            if not license.partner_id:
-                raise UserError(
-                    _("You cannot assign a license if no partner is set.")
-                )
+            # if not license.partner_id:
+            #     raise UserError(
+            #         _("You cannot assign a license if no partner is set.")
+            #     )
             license.write({'state': 'assigned'})
 
     def action_activate(self):
         for license in self:
             license.write({
                 'state': 'active',
-                'date_start': fields.Datetime.now()
+                'date_start': license.date_start if license.date_start else fields.Datetime.now()
             })
 
     def action_reset(self):

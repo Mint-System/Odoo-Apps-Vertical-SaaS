@@ -1,5 +1,4 @@
-import logging
-import hashlib
+import logging, hashlib, random, requests
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 _logger = logging.getLogger(__name__)
@@ -70,56 +69,73 @@ def get_ocad2018_checksum(v, lnum, e, lname):
     # print(checksum)
     return checksum
 
-
 class License(models.Model):
     _inherit = 'license.license'
 
-    # Set partner_id to required and disallow editing in assigned state
+    # Set partner_id to required
+    partner_id = fields.Many2one(required=True)
+    
+    # New fields
+    token = fields.Char(compute='_compute_download_token', readonly=True, store=True)
 
-    name = fields.Char(default=lambda self: _('New'), required=True, readonly=True, states={'draft': [('readonly', False)]})
-    key = fields.Char(default=lambda self: _('New'), compute='_compute_key', tracking=True, required=True, store=True, states={'draft': [('readonly', False)]})
-    type_id = fields.Many2one('license.type', readonly=True, states={'draft': [('readonly', False)]})
-    partner_id = fields.Many2one('res.partner', required=True, tracking=True, readonly=True, states={'draft': [('readonly', False)]})
-    product_id = fields.Many2one('product.product', tracking=True, readonly=True, states={'draft': [('readonly', False)]})
+    def _compute_download_token(self):
+        char_table = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789abcdefghijklmnopqrstuvwxyz' # 58 char
+        for license in self:
+            result = ''
+            for _ in range(8):
+                result += char_table[random.randint(0, 57)]  # randint includes both ends of the range
+            license.token = result
 
     @api.depends('name', 'product_id', 'partner_id')
     def _compute_key(self):
-        for license in self:
-            if license.product_id:
-                try:
-                    version = license.product_id.get_value_by_key('Version')
-                    edition_long = license.product_id.get_value_by_key('EditionLong')
-                    # Values: 2012, 5002, 'Mapping Solutions', 'OCAD AG'
-                    # Result: 5E27-8047-C507
-                    license.key = ''.join(get_ocad2018_checksum(version, int(license.name), edition_long, license.partner_id.name))
-                except Exception as error:
-                    raise UserError(
-                        _('Generating checksum failed with error: %s\n') % str(error) +
-                        _('This is most likely due to missing product informations.')    
-                    )
+        for license in self.filtered(lambda l: l.product_id and l.name != _('New') and l.key == _('New')):
+            try:
+                version = license.product_id.get_value_by_key('Version')
+                edition_long = license.product_id.get_value_by_key('EditionLong')
+                # Values: 2012, 5002, 'Mapping Solutions', 'OCAD AG'
+                # Result: 5E27-8047-C507
+                license.key = ''.join(get_ocad2018_checksum(version, int(license.name), edition_long, license.partner_id.name))
+            except Exception as error:
+                raise UserError(
+                    _('Generating checksum failed with error: %s\n') % str(error) +
+                    _('This is most likely due to missing product informations.')    
+                ) from error
 
     def action_assign(self):
         super().action_assign()
-        for license in self:
-            _logger.warning({
-                'warning': {
-                    'title': _('Notification'),
-                    'message': _('License assigned.'),
-                    'type': 'notification'
-                }
-            })
 
     def action_activate(self):
         super().action_activate()
         for license in self:
-            _logger.warning({
-                'warning': {
-                    'title': _('Notification'),
-                    'message': _('License activated.'),
-                    'type': 'notification'
-                }
-            })
+            edition_short = license.product_id.get_value_by_key('EditionShort')
+            number_of_activations = license.product_id.get_value_by_key('NumberOfActivations')
+            is_team = license.product_id.get_value_by_key('IsTeam')
 
+            url = 'https://www.ocad.com/ocadintern/db_newlicense/UpdateNewLicense2018.php'
+            params = {
+                'editing': edition_short,
+                'licenseNumber': license.name,
+                'checkSum': license.key,
+                'dwnlink': license.token,
+                'numberOfActivations': number_of_activations,
+                'subBegin': license.date_start,
+                'subEnd': license.date_end,
+                'isTeam': is_team,
+                'reseller': ''
+            }
+
+            try:
+                session = requests.Session()
+                session.auth = (user, password)
+                response = session.post(url, params=params)
+            except Exception as error:
+                raise UserError(
+                    _('Failed to activate license: %s\n') % str(error) +
+                    _('This is most likely due to missing product informations.')    
+                ) from error
+
+            _logger.warning(response)
+                
     def action_reset(self):
         super().action_reset()
         for license in self:
