@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_information_key_ocad0" model="product.information.key">
+        <field name="name">Version</field>
+    </record>
+    <record id="product_information_key_ocad1" model="product.information.key">
+        <field name="name">Edition</field>
+    </record>
+    <record id="product_information_key_ocad2" model="product.information.key">
+        <field name="name">EditionLong</field>
+    </record>
+    <record id="product_information_key_ocad3" model="product.information.key">
+        <field name="name">EditionShort</field>
+    </record>
+
+    <record id="product_information_value_ocad0" model="product.information.value">
+        <field name="integer_value">2018</field>
+        <field name="attribute_type">integer</field>
+    </record>
+    <record id="product_information_value_ocad1" model="product.information.value">
+        <field name="integer_value">70</field>
+        <field name="attribute_type">integer</field>
+    </record>
+    <record id="product_information_value_ocad2" model="product.information.value">
+        <field name="char_value">Mapping Solution</field>
+        <field name="attribute_type">char</field>
+    </record>
+    <record id="product_information_value_ocad3" model="product.information.value">
+        <field name="char_value">MAS</field>
+        <field name="attribute_type">char</field>
+    </record>
+
+    <record id="product_information_attribute_ocad0" model="product.information.attribute">
+        <field name="key_id" ref="product_information_key_ocad0" />
+        <field name="attribute_type">integer</field>
+        <field name="value_id" ref="product_information_value_ocad0" />
+    </record>
+    <record id="product_information_attribute_ocad1" model="product.information.attribute">
+        <field name="key_id" ref="product_information_key_ocad1" />
+        <field name="attribute_type">integer</field>
+        <field name="value_id" ref="product_information_value_ocad1" />
+    </record>
+    <record id="product_information_attribute_ocad2" model="product.information.attribute">
+        <field name="key_id" ref="product_information_key_ocad2" />
+        <field name="attribute_type">char</field>
+        <field name="value_id" ref="product_information_value_ocad2" />
+    </record>
+    <record id="product_information_attribute_ocad3" model="product.information.attribute">
+        <field name="key_id" ref="product_information_key_ocad3" />
+        <field name="attribute_type">char</field>
+        <field name="value_id" ref="product_information_value_ocad3" />
+    </record>
+
+</odoo>

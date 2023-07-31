@@ -74,42 +74,95 @@ def get_ocad2018_checksum(v, lnum, e, lname):
 class License(models.Model):
     _inherit = 'license.license'
 
+    # Set partner_id to required and disallow editing in assigned state
 
-    @api.depends('create_date')
+    name = fields.Char(default=lambda self: _('New'), required=True, readonly=True, states={'draft': [('readonly', False)]})
+    key = fields.Char(default=lambda self: _('New'), compute='_compute_key', tracking=True, required=True, store=True, states={'draft': [('readonly', False)]})
+    type_id = fields.Many2one('license.type', readonly=True, states={'draft': [('readonly', False)]})
+    partner_id = fields.Many2one('res.partner', required=True, tracking=True, readonly=True, states={'draft': [('readonly', False)]})
+    product_id = fields.Many2one('product.product', tracking=True, readonly=True, states={'draft': [('readonly', False)]})
+
+    @api.depends('name', 'product_id', 'partner_id')
     def _compute_key(self):
-        for license in self.filtered(lambda l: l.key == _('New')):
-            license.key = get_ocad2018_checksum(2018, 5002, 'Mapping Solution', 'OCAD AG') #Values for testing, Result = 5E27-8047-C507
+        for license in self:
+            if license.product_id:
+                try:
+                    version = license.product_id.get_value_by_key('Version')
+                    edition_long = license.product_id.get_value_by_key('EditionLong')
+                    # Values: 2012, 5002, 'Mapping Solutions', 'OCAD AG'
+                    # Result: 5E27-8047-C507
+                    license.key = ''.join(get_ocad2018_checksum(version, int(license.name), edition_long, license.partner_id.name))
+                except Exception as error:
+                    raise UserError(
+                        _('Generating checksum failed with error: %s\n') % str(error) +
+                        _('This is most likely due to missing product informations.')    
+                    )
 
     def action_assign(self):
         super().action_assign()
         for license in self:
-            
+            _logger.warning({
+                'warning': {
+                    'title': _('Notification'),
+                    'message': _('License assigned.'),
+                    'type': 'notification'
+                }
+            })
 
     def action_activate(self):
         super().action_activate()
         for license in self:
-            
+            _logger.warning({
+                'warning': {
+                    'title': _('Notification'),
+                    'message': _('License activated.'),
+                    'type': 'notification'
+                }
+            })
 
     def action_reset(self):
         super().action_reset()
         for license in self:
-            
+            _logger.warning({
+                'warning': {
+                    'title': _('Notification'),
+                    'message': _('License resetted.'),
+                    'type': 'notification'
+                }
+            })
 
     def action_disable(self):
         super().action_disable()
         for license in self:
-
+            _logger.warning({
+                'warning': {
+                    'title': _('Notification'),
+                    'message': _('License disabled.'),
+                    'type': 'notification'
+                }
+            })
 
     def action_cancel(self):
         super().action_cancel()
         for license in self:
-
+            _logger.warning({
+                'warning': {
+                    'title': _('Notification'),
+                    'message': _('License cancelled.'),
+                    'type': 'notification'
+                }
+            })
 
     def action_draft(self):
         super().action_draft()
         for license in self:
+            _logger.warning({
+                'warning': {
+                    'title': _('Notification'),
+                    'message': _('License set to draft.'),
+                    'type': 'notification'
+                }
+            })
 
     def unlink(self):
-        for license in self:
-            
         return super(License, self).unlink()
