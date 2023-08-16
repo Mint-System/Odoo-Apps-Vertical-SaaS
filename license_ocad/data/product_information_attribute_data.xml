@@ -23,34 +23,37 @@
     </record>
 
     <record id="product_information_value_ocad0" model="product.information.value">
+        <field name="name">2018</field>
         <field name="integer_value">2018</field>
         <field name="attribute_type">integer</field>
     </record>
     <record id="product_information_value_ocad1" model="product.information.value">
+        <field name="name">70</field>
         <field name="integer_value">70</field>
         <field name="attribute_type">integer</field>
     </record>
     <record id="product_information_value_ocad2" model="product.information.value">
+        <field name="name">Mapping Solution</field>
         <field name="char_value">Mapping Solution</field>
         <field name="attribute_type">char</field>
     </record>
     <record id="product_information_value_ocad3" model="product.information.value">
+        <field name="name">MAS</field>
         <field name="char_value">MAS</field>
         <field name="attribute_type">char</field>
     </record>
     <record id="product_information_value_ocad4" model="product.information.value">
+        <field name="name">1</field>
         <field name="integer_value">1</field>
         <field name="attribute_type">integer</field>
     </record>
     <record id="product_information_value_ocad5" model="product.information.value">
+        <field name="name">0</field>
         <field name="boolean_value">0</field>
         <field name="attribute_type">boolean</field>
     </record>
     <record id="product_information_value_ocad6" model="product.information.value">
-        <field name="integer_value">1</field>
-        <field name="attribute_type">integer</field>
-    </record>
-    <record id="product_information_value_ocad7" model="product.information.value">
+        <field name="name">3</field>
         <field name="integer_value">3</field>
         <field name="attribute_type">integer</field>
     </record>
@@ -88,12 +91,12 @@
     <record id="product_information_attribute_ocad6" model="product.information.attribute">
         <field name="key_id" ref="product_information_key_ocad6" />
         <field name="attribute_type">integer</field>
-        <field name="value_id" ref="product_information_value_ocad6" />
+        <field name="value_id" ref="product_information_value_ocad4" />
     </record>
     <record id="product_information_attribute_ocad7" model="product.information.attribute">
         <field name="key_id" ref="product_information_key_ocad6" />
         <field name="attribute_type">integer</field>
-        <field name="value_id" ref="product_information_value_ocad7" />
+        <field name="value_id" ref="product_information_value_ocad6" />
     </record>
 
 </odoo>
