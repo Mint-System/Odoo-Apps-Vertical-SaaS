@@ -101,84 +101,84 @@ class License(models.Model):
                     _('This is most likely due to missing product informations.')    
                 ) from error
 
-    def action_assign(self):
-        super().action_assign()
+    # def action_assign(self):
+    #     super().action_assign()
 
-    def action_activate(self):
-        super().action_activate()
-        for license in self:
-            edition_short = license.product_id.get_value_by_key('EditionShort')
-            number_of_activations = license.product_id.get_value_by_key('NumberOfActivations')
-            is_team = license.product_id.get_value_by_key('IsTeam')
+    # def action_activate(self):
+    #     super().action_activate()
+    #     for license in self:
+    #         edition_short = license.product_id.get_value_by_key('EditionShort')
+    #         number_of_activations = license.product_id.get_value_by_key('NumberOfActivations')
+    #         is_team = license.product_id.get_value_by_key('IsTeam')
 
-            url = 'https://www.ocad.com/ocadintern/db_newlicense/UpdateNewLicense2018.php'
-            params = {
-                'editing': edition_short,
-                'licenseNumber': license.name,
-                'checkSum': license.key,
-                'dwnlink': license.token,
-                'numberOfActivations': number_of_activations,
-                'subBegin': license.date_start,
-                'subEnd': license.date_end,
-                'isTeam': is_team,
-                'reseller': ''
-            }
+    #         url = 'https://www.ocad.com/ocadintern/db_newlicense/UpdateNewLicense2018.php'
+    #         params = {
+    #             'editing': edition_short,
+    #             'licenseNumber': license.name,
+    #             'checkSum': license.key,
+    #             'dwnlink': license.token,
+    #             'numberOfActivations': number_of_activations,
+    #             'subBegin': license.date_start,
+    #             'subEnd': license.date_end,
+    #             'isTeam': is_team,
+    #             'reseller': ''
+    #         }
 
-            try:
-                session = requests.Session()
-                session.auth = (user, password)
-                response = session.post(url, params=params)
-            except Exception as error:
-                raise UserError(
-                    _('Failed to activate license: %s\n') % str(error) +
-                    _('This is most likely due to missing product informations.')    
-                ) from error
+    #         try:
+    #             session = requests.Session()
+    #             session.auth = (user, password)
+    #             response = session.post(url, params=params)
+    #         except Exception as error:
+    #             raise UserError(
+    #                 _('Failed to activate license: %s\n') % str(error) +
+    #                 _('This is most likely due to missing product informations.')    
+    #             ) from error
 
-            _logger.warning(response)
+    #         _logger.warning(response)
                 
-    def action_reset(self):
-        super().action_reset()
-        for license in self:
-            _logger.warning({
-                'warning': {
-                    'title': _('Notification'),
-                    'message': _('License resetted.'),
-                    'type': 'notification'
-                }
-            })
+    # def action_reset(self):
+    #     super().action_reset()
+    #     for license in self:
+    #         _logger.warning({
+    #             'warning': {
+    #                 'title': _('Notification'),
+    #                 'message': _('License resetted.'),
+    #                 'type': 'notification'
+    #             }
+    #         })
 
-    def action_disable(self):
-        super().action_disable()
-        for license in self:
-            _logger.warning({
-                'warning': {
-                    'title': _('Notification'),
-                    'message': _('License disabled.'),
-                    'type': 'notification'
-                }
-            })
+    # def action_disable(self):
+    #     super().action_disable()
+    #     for license in self:
+    #         _logger.warning({
+    #             'warning': {
+    #                 'title': _('Notification'),
+    #                 'message': _('License disabled.'),
+    #                 'type': 'notification'
+    #             }
+    #         })
 
-    def action_cancel(self):
-        super().action_cancel()
-        for license in self:
-            _logger.warning({
-                'warning': {
-                    'title': _('Notification'),
-                    'message': _('License cancelled.'),
-                    'type': 'notification'
-                }
-            })
+    # def action_cancel(self):
+    #     super().action_cancel()
+    #     for license in self:
+    #         _logger.warning({
+    #             'warning': {
+    #                 'title': _('Notification'),
+    #                 'message': _('License cancelled.'),
+    #                 'type': 'notification'
+    #             }
+    #         })
 
-    def action_draft(self):
-        super().action_draft()
-        for license in self:
-            _logger.warning({
-                'warning': {
-                    'title': _('Notification'),
-                    'message': _('License set to draft.'),
-                    'type': 'notification'
-                }
-            })
+    # def action_draft(self):
+    #     super().action_draft()
+    #     for license in self:
+    #         _logger.warning({
+    #             'warning': {
+    #                 'title': _('Notification'),
+    #                 'message': _('License set to draft.'),
+    #                 'type': 'notification'
+    #             }
+    #         })
 
-    def unlink(self):
-        return super(License, self).unlink()
+    # def unlink(self):
+    #     return super(License, self).unlink()

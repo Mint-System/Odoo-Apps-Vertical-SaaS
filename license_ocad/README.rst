@@ -10,11 +10,6 @@ Sync licenses with the OCAD license activation service.
 
 For a detailed documentation have a look at https://www.odoo-wiki.org/license-ocad.html
 
-.. image:: https://raw.githubusercontent.com/Mint-System/Wiki/master/assets/icon-box.png
-  :height: 100
-  :width: 100
-  :alt: Icon
-
 Configuration
 ~~~~~~~~~~~~~
 
