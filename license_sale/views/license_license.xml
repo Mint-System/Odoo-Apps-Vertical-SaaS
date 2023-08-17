@@ -8,7 +8,8 @@
         <field name="arch" type="xml">
 
             <field name="partner_id" position="after">
-                <field name="sale_line_id" readonly="1" />
+                <field name="sale_line_id" />
+                <field name="client_order_ref" />
             </field>
 
             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">

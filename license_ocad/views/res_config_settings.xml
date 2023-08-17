@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">license_ocad.res_config_settings_view_form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='connectors_setting_container']/div[1]" position="after">
+                <div class="col-12 col-lg-6 o_setting_box" id="license_ocad">
+                    <div class="o_setting_right_pane" id="license_ocad_settings">
+                        
+                        <div class="o_form_label">License OCAD</div>
+                        
+                        <div class="text-muted">Set credentials for the OCAD  license activation service</div>
+
+                        <div class="content-group mt16">
+                            <label for="ocad_username" string="Username" class="col-lg-3 o_light_label"/>
+                            <field name="ocad_username" class="oe_inline"/>
+                        </div>
+
+                        <div class="content-group">
+                            <label for="ocad_password" string="Password" class="col-lg-3 o_light_label"/>
+                            <field name="ocad_password" password="True" class="oe_inline"/>
+                        </div>
+
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
