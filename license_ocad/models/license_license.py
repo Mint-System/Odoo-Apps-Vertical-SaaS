@@ -72,40 +72,59 @@ def get_ocad2018_checksum(v, lnum, e, lname):
 class License(models.Model):
     _inherit = 'license.license'
 
-    # Set partner_id to required
-    partner_id = fields.Many2one(required=True)
-    
     # New fields
-    token = fields.Char(compute='_compute_download_token', readonly=True, store=True)
+    company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)
+    download_token = fields.Char(compute='_compute_download_token', readonly=True, store=True, precompute=True)
+    download_link = fields.Char(compute='_compute_download_link', readonly=True, store=True)
     
+    @api.depends('name')
     def _compute_download_token(self):
         char_table = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789abcdefghijklmnopqrstuvwxyz' # 58 char
         for license in self:
             result = ''
             for _ in range(8):
                 result += char_table[random.randint(0, 57)]  # randint includes both ends of the range
-            license.token = result
+            license.download_token = result
+
+    @api.depends('name', 'product_id', 'download_token')
+    def _compute_download_link(self):
+        """Generate download link."""
+        for license in self:
+            edition_short = str(license.product_id.get_value_by_key('EditionShort'))
+            version = str(license.product_id.get_value_by_key('Version'))
+            license.download_link = 'https://www.ocad.com/OCAD2018/OCAD_2018_Setup.php?e=' + edition_short + '&l=' + license.name + '&v=' + version + '&d=' + license.download_token
 
     @api.depends('name', 'product_id', 'partner_id', 'client_order_ref')
     def _compute_key(self):
-        for license in self: # .filtered(lambda l: l.product_id and l.name != _('New') and l.key == _('New')):
-            try:
-                version = license.product_id.get_value_by_key('Version')
-                edition_long = license.product_id.get_value_by_key('EditionLong')
-                # Values: 2012, 5002, 'Mapping Solutions', 'OCAD AG'
-                # Result: 5E27-8047-C507
-                license.key = ''.join(get_ocad2018_checksum(version, int(license.name), edition_long, license.client_order_ref))
-            except Exception as error:
-                raise UserError(
-                    _('Generating checksum failed with error: %s\n') % str(error) +
-                    _('This is most likely due to missing license informations.')    
-                )
-
-    def action_assign(self):
-        super().action_assign()
-
-    def action_activate(self):
         for license in self:
+            version = license.product_id.get_value_by_key('Version')
+            edition_long = license.product_id.get_value_by_key('EditionLong')
+            # Values: 2012, 5002, 'Mapping Solutions', 'OCAD AG'
+            # Result: 5E27-8047-C507
+            license.key = ''.join(get_ocad2018_checksum(version, int(license.name), edition_long, license.client_order_ref))
+
+    def _enable_license(self):
+        message = ''
+        for license in self:
+
+            edition_short = license.product_id.get_value_by_key('EditionShort')
+
+            url = 'https://www.ocad.com/ocadintern/db_increaseCounter/increaseCounter_2018.php'
+            params = {
+                'editing': edition_short,
+                'licenseNumber': license.name,
+            }
+            auth = (self.company_id.ocad_username, self.company_id.ocad_password)
+
+            response = requests.post(url, params=params, auth=auth)
+            message += response.text + '\n'
+
+        return message
+
+    def _create_license(self):
+        message = ''
+        for license in self:
+
             edition_short = license.product_id.get_value_by_key('EditionShort')
             number_of_activations = license.product_id.get_value_by_key('NumberOfActivations')
             is_team = license.product_id.get_value_by_key('IsTeam')
@@ -115,65 +134,54 @@ class License(models.Model):
                 'editing': edition_short,
                 'licenseNumber': license.name,
                 'checkSum': license.key,
-                'dwnlink': license.token,
+                'dwnlink': license.download_token,
                 'numberOfActivations': number_of_activations,
-                'subBegin': license.date_start,
-                'subEnd': license.date_end,
+                'subBegin': license.date_start.strftime('yyyy/mm/dd'),
+                'subEnd': license.date_end.strftime('yyyy/mm/dd'),
                 'isTeam': is_team,
                 'reseller': ''
             }
+            auth = (self.company_id.ocad_username, self.company_id.ocad_password)
 
-            session = requests.Session()
-            session.auth = (self.company_id.ocad_username, self.company_id.ocad_password)
-            response = session.post(url, params=params)
+            response = requests.post(url, params=params, auth=auth)
+            message += response.text + '\n'
 
-            _logger.warning(response)
+        return message
 
+    def action_activate(self):
+        """Create and enable license."""
         super().action_activate()
-                
+
+        message = self._create_license()
+        message += self._enable_license()
+
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'OCAD License Service',
+                'message': message,
+                'sticky': False,
+                'type': 'danger' if 'FEHLER' in message else 'success',
+                'next': {'type': 'ir.actions.act_window_close'},  # Refresh the form
+            }
+        }
+
     # def action_reset(self):
     #     super().action_reset()
     #     for license in self:
-    #         _logger.warning({
-    #             'warning': {
-    #                 'title': _('Notification'),
-    #                 'message': _('License resetted.'),
-    #                 'type': 'notification'
-    #             }
-    #         })
 
     # def action_disable(self):
     #     super().action_disable()
     #     for license in self:
-    #         _logger.warning({
-    #             'warning': {
-    #                 'title': _('Notification'),
-    #                 'message': _('License disabled.'),
-    #                 'type': 'notification'
-    #             }
-    #         })
 
     # def action_cancel(self):
     #     super().action_cancel()
     #     for license in self:
-    #         _logger.warning({
-    #             'warning': {
-    #                 'title': _('Notification'),
-    #                 'message': _('License cancelled.'),
-    #                 'type': 'notification'
-    #             }
-    #         })
 
     # def action_draft(self):
     #     super().action_draft()
     #     for license in self:
-    #         _logger.warning({
-    #             'warning': {
-    #                 'title': _('Notification'),
-    #                 'message': _('License set to draft.'),
-    #                 'type': 'notification'
-    #             }
-    #         })
 
     # def unlink(self):
     #     return super(License, self).unlink()

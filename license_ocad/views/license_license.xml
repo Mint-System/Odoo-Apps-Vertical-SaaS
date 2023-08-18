@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="license_view_form" model="ir.ui.view">
+        <field name="name">license_ocad.license_view_form</field>
+        <field name="model">license.license</field>
+        <field name="inherit_id" ref="license.license_view_form" />
+        <field name="arch" type="xml">
+
+            <field name="type_id" position="after">
+                <field name="download_link" widget="url" attrs="{'invisible': [('state', '!=', 'active')]}" />
+            </field>
+
+        </field>
+    </record>
+
+</odoo>
