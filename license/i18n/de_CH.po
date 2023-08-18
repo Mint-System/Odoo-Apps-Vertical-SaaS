@@ -131,7 +131,7 @@ msgstr "Entwurf"
 #. module: license
 #: model_terms:ir.ui.view,arch_db:license.license_view_form
 msgid "Enable"
-msgstr "Reaktivieren"
+msgstr ""
 
 #. module: license
 #: model:ir.model.fields.selection,name:license.selection__license_license__state__expired

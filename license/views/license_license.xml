@@ -11,6 +11,7 @@
                     <button name="action_activate" states="assigned" type="object" string="Activate" class="btn-primary"/>
                     <button name="action_reset" states="active" type="object" string="Reset"/>
                     <button name="action_disable" states="active" type="object" string="Disable"/>                    
+                    <button name="action_enable" states="disabled" type="object" string="Enable" class="btn-primary"/>                    
                     <button name="action_cancel" states="active,disabled,expired" type="object" string="Cancel"/>
                     <button name="action_draft" states="assigned,cancelled" type="object" string="Set to Draft"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,assigned,active,disabled,cancelled" />

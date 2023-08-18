@@ -41,7 +41,6 @@ class License(models.Model):
             else:
                 license.date_end = False
 
-
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
@@ -56,10 +55,6 @@ class License(models.Model):
 
     def action_assign(self):
         for license in self:
-            # if not license.partner_id:
-            #     raise UserError(
-            #         _("You cannot assign a license if no partner is set.")
-            #     )
             license.write({'state': 'assigned'})
 
     def action_activate(self):
@@ -82,6 +77,13 @@ class License(models.Model):
             license.write({
                 'state': 'disabled',
                 'date_end': fields.Datetime.now()
+            })
+
+    def action_enable(self):
+        for license in self:
+            license.write({
+                'state': 'active',
+                'date_start': license.date_start if license.date_start else fields.Datetime.now()
             })
 
     def action_cancel(self):
