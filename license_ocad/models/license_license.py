@@ -90,18 +90,20 @@ class License(models.Model):
     def _compute_download_link(self):
         """Generate download link."""
         for license in self:
-            edition_short = str(license.product_id.get_value_by_key('EditionShort'))
-            version = str(license.product_id.get_value_by_key('Version'))
-            license.download_link = 'https://www.ocad.com/OCAD2018/OCAD_2018_Setup.php?e=' + edition_short + '&l=' + license.name + '&v=' + version + '&d=' + license.download_token
+            if license.product_id and license.name != _('New'):
+                edition_short = str(license.product_id.get_value_by_key('EditionShort'))
+                version = str(license.product_id.get_value_by_key('Version'))
+                license.download_link = 'https://www.ocad.com/OCAD2018/OCAD_2018_Setup.php?e=' + edition_short + '&l=' + license.name + '&v=' + version + '&d=' + license.download_token
 
     @api.depends('name', 'product_id', 'partner_id', 'client_order_ref')
     def _compute_key(self):
         for license in self:
-            version = license.product_id.get_value_by_key('Version')
-            edition_long = license.product_id.get_value_by_key('EditionLong')
-            # Values: 2012, 5002, 'Mapping Solutions', 'OCAD AG'
-            # Result: 5E27-8047-C507
-            license.key = ''.join(get_ocad2018_checksum(version, int(license.name), edition_long, license.client_order_ref))
+            if license.product_id and license.client_order_ref and license.name != _('New'):
+                version = license.product_id.get_value_by_key('Version')
+                edition_long = license.product_id.get_value_by_key('EditionLong')
+                # Values: 2012, 5002, 'Mapping Solutions', 'OCAD AG'
+                # Result: 5E27-8047-C507
+                license.key = ''.join(get_ocad2018_checksum(version, int(license.name), edition_long, license.client_order_ref))
 
     def _enable_license(self):
         message = ''

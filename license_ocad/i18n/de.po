@@ -1,0 +1,59 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* license_ocad
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-08-21 16:07+0000\n"
+"PO-Revision-Date: 2023-08-21 16:07+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: license_ocad
+#: model:ir.model,name:license_ocad.model_res_company
+msgid "Companies"
+msgstr "Unternehmen"
+
+#. module: license_ocad
+#: model:ir.model.fields,field_description:license_ocad.field_license_license__company_id
+msgid "Company"
+msgstr ""
+
+#. module: license_ocad
+#: model:ir.model,name:license_ocad.model_res_config_settings
+msgid "Config Settings"
+msgstr "Konfigurationseinstellungen"
+
+#. module: license_ocad
+#: model:ir.model.fields,field_description:license_ocad.field_license_license__download_link
+msgid "Download Link"
+msgstr ""
+
+#. module: license_ocad
+#: model:ir.model.fields,field_description:license_ocad.field_license_license__download_token
+msgid "Download Token"
+msgstr ""
+
+#. module: license_ocad
+#: model:ir.model,name:license_ocad.model_license_license
+msgid "License"
+msgstr "Lizenz"
+
+#. module: license_ocad
+#: model_terms:ir.ui.view,arch_db:license_ocad.res_config_settings_view_form
+msgid "License OCAD"
+msgstr ""
+
+#. module: license_ocad
+#. odoo-python
+#: code:addons/license_ocad/models/license_license.py:0
+#: code:addons/license_ocad/models/license_license.py:0
+#, python-format
+msgid "New"
+msgstr "Neu"
