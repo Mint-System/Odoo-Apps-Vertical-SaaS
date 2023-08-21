@@ -111,7 +111,7 @@ class License(models.Model):
 
             url = 'https://www.ocad.com/ocadintern/db_increaseCounter/increaseCounter_2018.php'
             params = {
-                'editing': edition_short,
+                'edition': edition_short,
                 'licenseNumber': license.name,
             }
             auth = (self.company_id.ocad_username, self.company_id.ocad_password)
@@ -131,7 +131,7 @@ class License(models.Model):
 
             url = 'https://www.ocad.com/ocadintern/db_newlicense/UpdateNewLicense2018.php'
             params = {
-                'editing': edition_short,
+                'edition': edition_short,
                 'licenseNumber': license.name,
                 'checkSum': license.key,
                 'dwnlink': license.download_token,
