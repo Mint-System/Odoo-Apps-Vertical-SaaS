@@ -8,6 +8,7 @@
         <field name="arch" type="xml">
 
             <field name="type_id" position="after">
+                <field name="registered" />
                 <field name="download_link" widget="url" attrs="{'invisible': [('state', '!=', 'active')]}" />
             </field>
 

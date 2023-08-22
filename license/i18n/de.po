@@ -83,7 +83,7 @@ msgstr "Abgebrochen"
 #. module: license
 #: model:ir.ui.menu,name:license.menu_configuration
 msgid "Configurations"
-msgstr "Konfigurationen"
+msgstr "Konfiguration"
 
 #. module: license
 #: model:ir.model.fields,field_description:license.field_license_license__create_uid
