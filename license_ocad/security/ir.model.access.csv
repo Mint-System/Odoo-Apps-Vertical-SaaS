@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+license_ocad.access_license_activation,access_license_activation,license_ocad.model_license_activation,base.group_user,1,0,0,0

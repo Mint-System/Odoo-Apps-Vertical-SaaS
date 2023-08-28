@@ -102,7 +102,7 @@ class License(models.Model):
     @api.depends('name', 'product_id', 'partner_id', 'client_order_ref')
     def _compute_key(self):
         for license in self:
-            if license.product_id and license.client_order_ref and license.name != _('New'):
+            if license.product_id and license.client_order_ref and license.name != _('New') and isinstance(license.name, int):
                 version = license.product_id.get_value_by_key('Version')
                 edition_long = license.product_id.get_value_by_key('EditionLong')
                 # Values: 2012, 5002, 'Mapping Solutions', 'OCAD AG'
@@ -154,24 +154,6 @@ class License(models.Model):
 
         return message
 
-    def _disable_license(self):
-        message = ''
-        for license in self:
-
-            url = 'https://www.ocad.com/ocadintern/db_increaseCounter/deactivateActivation_2018.php'
-            params = {
-                'ProductKeyValue': '',
-                'LicenseNumberValue': license.name,
-                'StatusValue': 3,
-                'IdValue': ''
-            }
-            auth = (self.company_id.ocad_username, self.company_id.ocad_password)
-
-            response = requests.post(url, params=params, auth=auth)
-            message += response.text + '\n'
-
-        return message
-
     def _get_action_notification(self, message):
         notification_type = 'success'
         notification_sticky = False
@@ -196,7 +178,6 @@ class License(models.Model):
         super().action_activate()
 
         message = self._create_license()
-        # message += self._enable_license()
 
         if not ('FEHLER' in message or 'Unauthorized' in message):
             self.write({'registered': True})
@@ -207,21 +188,21 @@ class License(models.Model):
     #     super().action_reset()
     #     for license in self:
 
-    def action_disable(self):
-        """Disable license."""
-        super().action_disable()
+    # def action_disable(self):
+    #     """Disable license."""
+    #     super().action_disable()
 
-        message = self._disable_license()
+    #     message = self._disable_license()
 
-        return self._get_action_notification(message)
+    #     return self._get_action_notification(message)
 
-    def action_enable(self):
-        """Create and enable license."""
-        super().action_activate()
+    # def action_enable(self):
+    #     """Create and enable license."""
+    #     super().action_activate()
 
-        message = self._enable_license()
+    #     message = self._enable_license()
 
-        return self._get_action_notification(message)
+    #     return self._get_action_notification(message)
 
     # def action_cancel(self):
     #     super().action_cancel()
@@ -233,3 +214,14 @@ class License(models.Model):
 
     # def unlink(self):
     #     return super(License, self).unlink()
+
+    def action_view_activations(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'license.activation',
+            'name': _('License Activations'),
+            'view_mode': 'tree',
+            'views': [[False, 'list']],
+            'context': {'license_id': self.id},
+            'domain': [('license_id', '=', self.id)],
+        }

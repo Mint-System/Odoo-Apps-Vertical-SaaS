@@ -10,9 +10,11 @@
     "license": "AGPL-3",
     "depends": ["license_sale", "product_information_management"],
     "data": [
+        "security/ir.model.access.csv",
         "data/product_information_attribute_data.xml",
         "views/res_config_settings.xml",
         "views/license_license.xml",
+        "views/license_activation.xml",
     ],
     "installable": True,
     "application": False,

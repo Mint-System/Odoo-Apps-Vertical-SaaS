@@ -12,6 +12,12 @@
                 <field name="download_link" widget="url" attrs="{'invisible': [('state', '!=', 'active')]}" />
             </field>
 
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button class="oe_stat_button"
+                    type="object" name="action_view_activations" icon="fa-check-circle-o"
+                    string="Activations" />
+            </xpath>
+
         </field>
     </record>
 
