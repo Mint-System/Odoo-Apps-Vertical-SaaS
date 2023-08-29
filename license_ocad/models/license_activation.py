@@ -1,4 +1,4 @@
-import logging, requests, ast
+import logging, requests, ast, re
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 _logger = logging.getLogger(__name__)
@@ -11,6 +11,7 @@ class LicenseActivation(models.TransientModel):
     name = fields.Char(readonly=True)
     key = fields.Char(readonly=True)
     content = fields.Char(readonly=True)
+    status = fields.Integer(readonly=True)
     license_id = fields.Many2one('license.license')
 
     @api.model
@@ -21,22 +22,25 @@ class LicenseActivation(models.TransientModel):
         if license_id:
             self.sudo().search([('license_id', '=', license_id.id)]).unlink()
             activations_data = self._get_activations(license_id)
+            license_id.write({
+                'current_activations': len(activations_data)
+            })
             self.sudo().create(activations_data)
 
         return super().search_read(domain=domain, fields=fields, offset=offset, limit=limit, order=order)
 
-    def _disable_license(self):
+    def _disable_activation(self):
         message = ''
-        for license in self:
+        for activation in self:
 
             url = 'https://www.ocad.com/ocadintern/db_increaseCounter/deactivateActivation_2018.php'
             params = {
-                'ProductKeyValue': '',
-                'LicenseNumberValue': license.name,
+                'ProductKeyValue': activation.key[6:],
+                'LicenseNumberValue': activation.license_id.name,
                 'StatusValue': 3,
                 'IdValue': ''
             }
-            auth = (self.company_id.ocad_username, self.company_id.ocad_password)
+            auth = (activation.license_id.company_id.ocad_username, activation.license_id.company_id.ocad_password)
 
             response = requests.post(url, params=params, auth=auth)
             message += response.text + '\n'
@@ -67,12 +71,15 @@ class LicenseActivation(models.TransientModel):
             activations = []
             for i in range(0, rows):
                 start = i * columns
-                end = start + columns               
+                end = start + columns
+
+                status = re.search('.+\(\s(.+)\s\)', cells[start])
 
                 activations.append({
                     'name': cells[start],
                     'key': cells[start+1],
                     'content': ' '.join(cells[start+2:end]),
+                    'status': status.group(1) if status else 0,
                     'license_id': license_id.id
                 })
 
@@ -97,11 +104,6 @@ class LicenseActivation(models.TransientModel):
             }
         }
 
-    def action_reset(self):
-        return self._get_action_notification('Reset')
-
-    def action_activate(self):
-        return self._get_action_notification('Activate')
-
-    def action_unlink(self):
-        return self._get_action_notification('Unlink')
+    def action_disable(self):
+        message = self._disable_activation()
+        return self._get_action_notification(message)

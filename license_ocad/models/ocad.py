@@ -1,3 +1,5 @@
+import hashlib
+
 # Get hash string
 def hash_of_string(s):
     return hashlib.sha1(s.encode('utf-16-le')).hexdigest().upper()

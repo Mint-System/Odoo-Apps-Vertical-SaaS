@@ -1,4 +1,4 @@
-import logging, hashlib, random, requests
+import logging, random, requests
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 _logger = logging.getLogger(__name__)
@@ -16,6 +16,8 @@ class License(models.Model):
     download_token = fields.Char(compute='_compute_download_token', readonly=True, store=True, precompute=True)
     download_link = fields.Char(compute='_compute_download_link', readonly=True, store=True)
     registered = fields.Boolean(readonly=True)
+    max_activations = fields.Integer(readonly=True)
+    current_activations = fields.Integer()
 
     @api.depends('name')
     def _compute_download_token(self):
@@ -38,12 +40,12 @@ class License(models.Model):
     @api.depends('name', 'product_id', 'partner_id', 'client_order_ref')
     def _compute_key(self):
         for license in self:
-            if license.product_id and license.client_order_ref and license.name != _('New') and isinstance(license.name, int):
+            if license.product_id and license.client_order_ref and license.name != _('New'):
                 version = license.product_id.get_value_by_key('Version')
                 edition_long = license.product_id.get_value_by_key('EditionLong')
                 # Values: 2012, 5002, 'Mapping Solutions', 'OCAD AG'
                 # Result: 5E27-8047-C507
-                license.key = ''.join(get_ocad2018_checksum(version, int(license.name), edition_long, license.client_order_ref))
+                license.key = ''.join(ocad.get_ocad2018_checksum(version, int(license.name), edition_long, license.client_order_ref))
 
     def _create_license(self):
         message = ''
@@ -72,7 +74,7 @@ class License(models.Model):
 
         return message
 
-    def _enable_license(self):
+    def _increase_counter(self):
         message = ''
         for license in self:
 
@@ -116,40 +118,24 @@ class License(models.Model):
         message = self._create_license()
 
         if not ('FEHLER' in message or 'Unauthorized' in message):
-            self.write({'registered': True})
+            for license in self:
+                license.write({
+                    'registered': True,
+                    'max_activations': license.product_id.get_value_by_key('NumberOfActivations')
+                })
 
         return self._get_action_notification(message)
 
-    # def action_reset(self):
-    #     super().action_reset()
-    #     for license in self:
+    def action_unlock(self):
+        message = self._increase_counter()
 
-    # def action_disable(self):
-    #     """Disable license."""
-    #     super().action_disable()
+        if not ('FEHLER' in message or 'Unauthorized' in message):
+            for license in self:
+                self.write({
+                    'current_activations': license.current_activations + 1
+                })
 
-    #     message = self._disable_license()
-
-    #     return self._get_action_notification(message)
-
-    # def action_enable(self):
-    #     """Create and enable license."""
-    #     super().action_activate()
-
-    #     message = self._enable_license()
-
-    #     return self._get_action_notification(message)
-
-    # def action_cancel(self):
-    #     super().action_cancel()
-    #     for license in self:
-
-    # def action_draft(self):
-    #     super().action_draft()
-    #     for license in self:
-
-    # def unlink(self):
-    #     return super(License, self).unlink()
+        return self._get_action_notification(message)  
 
     def action_view_activations(self):
         return {

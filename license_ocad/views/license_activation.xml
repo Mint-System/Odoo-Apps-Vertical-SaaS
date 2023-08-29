@@ -7,12 +7,11 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name" />
+                <field name="status" />
                 <field name="key" />
                 <field name="content" />
                 <field name="license_id" />
-                <button name="action_reset" type="object" string="Reset" class="btn btn-link float-end"/>
-                <button name="action_activate" type="object" string="Activate" class="btn btn-link float-end"/>
-                <button name="action_unlink" type="object" string="Remove" class="btn btn-link float-end"/>
+                <button name="action_disable" type="object" string="Disable" class="btn btn-link float-end"/>
             </tree>
         </field>
     </record>
