@@ -88,8 +88,8 @@ class License(models.Model):
 
     def action_cancel(self):
         for license in self:
-            license.write(
-                {'state': 'cancelled',
+            license.write({
+                'state': 'cancelled',
                 'date_end': fields.Datetime.now()
             })
 

@@ -7,9 +7,25 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name" />
+                <field name="key" />
+                <field name="content" />
                 <field name="license_id" />
+                <button name="action_reset" type="object" string="Reset" class="btn btn-link float-end"/>
+                <button name="action_activate" type="object" string="Activate" class="btn btn-link float-end"/>
+                <button name="action_unlink" type="object" string="Remove" class="btn btn-link float-end"/>
             </tree>
         </field>
     </record>
+
+    <record id="activation_search" model="ir.ui.view">
+        <field name="name">license_ocad.activation_search</field>
+        <field name="model">license.activation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" filter_domain="['|', '|', ('name', 'ilike', self), ('key', 'ilike', self), ('content', 'ilike', self)]"/>
+            </search>
+        </field>
+    </record>
+
 
 </odoo>
