@@ -6,6 +6,7 @@
         <field name="model">license.activation</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="_id" />
                 <field name="name" />
                 <field name="status" />
                 <field name="key" />

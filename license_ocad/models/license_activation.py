@@ -8,6 +8,7 @@ class LicenseActivation(models.TransientModel):
     _name = 'license.activation'
     _description = 'License Activation'
 
+    _id = fields.Integer('ID', readonly=True)
     name = fields.Char(readonly=True)
     key = fields.Char(readonly=True)
     content = fields.Char(readonly=True)
@@ -35,10 +36,10 @@ class LicenseActivation(models.TransientModel):
 
             url = 'https://www.ocad.com/ocadintern/db_increaseCounter/deactivateActivation_2018.php'
             params = {
-                'ProductKeyValue': activation.key[6:],
-                'LicenseNumberValue': activation.license_id.name,
-                'StatusValue': 3,
-                'IdValue': ''
+                'productKey': activation.key,
+                'licenseNumber': activation.license_id.name,
+                'status': 3,
+                'id': activation._id,
             }
             auth = (activation.license_id.company_id.ocad_username, activation.license_id.company_id.ocad_password)
 
@@ -66,7 +67,7 @@ class LicenseActivation(models.TransientModel):
             
             # Reponse is a semicolon separated string that has to be processed
             columns = 13
-            cells = response.text.split(';') # ast.literal_eval(response.text)
+            cells = response.text.split(';')
             rows = len(cells)//columns
             activations = []
             for i in range(0, rows):
@@ -76,6 +77,7 @@ class LicenseActivation(models.TransientModel):
                 status = re.search('.+\(\s(.+)\s\)', cells[start])
 
                 activations.append({
+                    '_id': cells[end-1],
                     'name': cells[start],
                     'key': cells[start+1],
                     'content': ' '.join(cells[start+2:end]),
