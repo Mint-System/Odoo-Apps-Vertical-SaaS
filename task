@@ -21,7 +21,7 @@ function setup() {
 
 function test() {
     echo "Test modules: $MODULES"
-    docker-compose exec odoo odoo -d odoo -i $MODULES --stop-after-init --test-tags /$MODULES
+    docker-compose exec -T odoo odoo -d odoo -i $MODULES --stop-after-init --test-tags /$MODULES
 }
 
 function kill() {
