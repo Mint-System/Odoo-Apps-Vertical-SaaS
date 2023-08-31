@@ -1,0 +1,59 @@
+#!/bin/bash
+set -e
+
+if [[ -a ".env" ]]; then
+    export $(cat .env | sed 's/#.*//g' | xargs)
+fi
+
+# Generate module list
+: ${MODULES:=$(find . -type f -name "__manifest__.py" | xargs dirname | xargs -n1 basename | sort -u | tr '\n' ',')}
+: ${EXCLUDE:='license_ocad,license_sale,license_website'}
+for MODULE in $(echo $EXCLUDE | sed "s/,/ /g")
+do
+    MODULES=$(echo $MODULES | sed s/$MODULE,//)
+done
+MODULES=$(echo $MODULES | sed 's/,$//g')
+
+
+function setup() {
+    docker-compose up -d
+}
+
+function test() {
+    echo "Test modules: $MODULES"
+    docker-compose exec odoo odoo -d odoo -i $MODULES --stop-after-init --test-tags /$MODULES
+}
+
+function kill() {
+    docker-compose down -v
+}
+
+function help() {
+    echo
+    echo "$1 <command> [options]"
+    echo
+    echo "commands:"
+    echo
+    column -t -s"|" ./task.md | tail -n +3
+    echo
+}
+
+case "$1" in
+    all)
+        setup
+        test
+        kill
+        ;;
+    setup)
+        setup
+        ;;
+    test)
+        test
+        ;;
+    kill)
+        kill
+        ;;
+    *)
+        help task
+        exit 1
+esac

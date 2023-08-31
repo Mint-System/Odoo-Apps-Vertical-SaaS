@@ -1,0 +1,22 @@
+version: "3"
+services:
+  odoo:
+    image: ${ODOO_IMAGE:-odoo:16.0}
+    depends_on:
+      - postgres
+    environment:
+      PGHOST: postgres
+      PGPORT: 5432
+      PGUSER: odoo
+      PGPASSWORD: odoo
+      PGDATABASE: odoo
+    ports:
+      - "8069:8069"
+    volumes:
+      - $PWD:/mnt/extra-addons
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+      POSTGRES_DB: odoo
