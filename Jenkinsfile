@@ -1,10 +1,10 @@
 pipeline {
-  agent any
-  stages {
-    stage('test') {
-      steps {
-        bash ./task all
-      }
-    }
-  }
+	agent any
+    stages {
+        stage('test') {
+	        steps {
+		        sh ./task all
+		    }
+	    }
+	}
 }
