@@ -6,10 +6,20 @@ pipeline {
                 sh 'docker-compose -v'
             }
         }
+        stage('setup') {
+            steps {
+                sh './task setup'
+            }
+        }
         stage('test') {
             steps {
-                sh './task all'
+                sh './task test'
             }
+        }
+    }
+    post { 
+        always {
+            sh './task kill'
         }
     }
 }
