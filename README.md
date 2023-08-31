@@ -10,6 +10,14 @@ Clone module into Odoo addon directory.
 git clone git@github.com:mint-system/odoo-apps-vertical-saas.git ./addons/vertical_saas
 ```
 
+## Test
+
+Run tests locally with Docker Compose.
+
+```
+./task all
+```
+
 ## Available modules
 
 | Module | Summary |

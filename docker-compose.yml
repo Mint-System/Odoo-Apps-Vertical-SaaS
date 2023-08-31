@@ -5,6 +5,10 @@ services:
     depends_on:
       - postgres
     environment:
+      HOST: db
+      PORT: 5432
+      USER: odoo
+      PASSWORD: odoo
       PGHOST: postgres
       PGPORT: 5432
       PGUSER: odoo

@@ -6,8 +6,8 @@ if [[ -a ".env" ]]; then
 fi
 
 # Generate module list
-: ${MODULES:=$(find . -type f -name "__manifest__.py" | xargs dirname | xargs -n1 basename | sort -u | tr '\n' ',')}
 : ${EXCLUDE:='license_ocad,license_sale,license_website'}
+: ${MODULES:=$(find . -type f -name "__manifest__.py" | xargs dirname | xargs -n1 basename | sort -u | tr '\n' ',')}
 for MODULE in $(echo $EXCLUDE | sed "s/,/ /g")
 do
     MODULES=$(echo $MODULES | sed s/$MODULE,//)
@@ -34,7 +34,7 @@ function help() {
     echo
     echo "commands:"
     echo
-    column -t -s"|" ./task.md | tail -n +3
+    column -t -s"|" ./task.md | tail -n +4
     echo
 }
 
