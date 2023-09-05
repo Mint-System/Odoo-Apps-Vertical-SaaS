@@ -62,8 +62,8 @@ class License(models.Model):
                 'checkSum': license.key,
                 'dwnlink': license.download_token,
                 'numberOfActivations': number_of_activations,
-                'subBegin': license.date_start.strftime('yyyy/mm/dd'),
-                'subEnd': license.date_end.strftime('yyyy/mm/dd'),
+                'subBegin': license.date_start.strftime('yyyy-mm-dd'),
+                'subEnd': license.date_end.strftime('yyyy-mm-dd'),
                 'isTeam': is_team,
                 'reseller': ''
             }
@@ -132,7 +132,7 @@ class License(models.Model):
         if not ('FEHLER' in message or 'Unauthorized' in message):
             for license in self:
                 self.write({
-                    'current_activations': license.current_activations + 1
+                    'max_activations': license.max_activations + 1
                 })
 
         return self._get_action_notification(message)  
