@@ -16,6 +16,7 @@
         "views/res_config_settings.xml",
         "views/license_license.xml",
         "views/license_activation.xml",
+        "views/license_status.xml",
     ],
     "installable": True,
     "application": False,

@@ -86,7 +86,7 @@ class LicenseActivation(models.TransientModel):
                 })
 
             return activations
-    
+
     def _get_action_notification(self, message):
         notification_type = 'success'
         notification_sticky = False

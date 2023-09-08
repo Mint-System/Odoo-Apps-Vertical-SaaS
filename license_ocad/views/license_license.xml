@@ -22,6 +22,9 @@
                 <button class="oe_stat_button"
                     type="object" name="action_view_activations" icon="fa-check-circle-o"
                     string="Activations" />
+                <button class="oe_stat_button"
+                    type="object" name="action_view_status" icon="fa-clock-o"
+                    string="Status" />
             </xpath>
 
             <button name="action_activate" position="after">

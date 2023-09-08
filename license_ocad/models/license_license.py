@@ -17,7 +17,8 @@ class License(models.Model):
     download_link = fields.Char(compute='_compute_download_link', readonly=True, store=True)
     registered = fields.Boolean(readonly=True)
     max_activations = fields.Integer(readonly=True)
-    current_activations = fields.Integer()
+    registered_activations = fields.Integer(readonly=True)
+    current_activations = fields.Integer(readonly=True)
 
     @api.depends('name')
     def _compute_download_token(self):
@@ -142,6 +143,17 @@ class License(models.Model):
             'type': 'ir.actions.act_window',
             'res_model': 'license.activation',
             'name': _('License Activations'),
+            'view_mode': 'tree',
+            'views': [[False, 'list']],
+            'context': {'license_id': self.id},
+            'domain': [('license_id', '=', self.id)],
+        }
+
+    def action_view_status(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'license.status',
+            'name': _('License Status'),
             'view_mode': 'tree',
             'views': [[False, 'list']],
             'context': {'license_id': self.id},
