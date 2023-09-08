@@ -23,7 +23,7 @@ class SaleOrderLine(models.Model):
             'sale_line_id': self.id,
             'sale_order_id': self.order_id.id,
             'state': 'assigned',
-            'client_order_ref': self.order_id.client_order_ref
+            'client_order_ref': self.order_id.client_order_ref or self.order_id.partner_id.commercial_partner_id.name
         }
 
     def _create_license(self):

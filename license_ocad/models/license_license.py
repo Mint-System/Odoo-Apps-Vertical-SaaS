@@ -16,9 +16,9 @@ class License(models.Model):
     download_token = fields.Char(compute='_compute_download_token', readonly=True, store=True, precompute=True)
     download_link = fields.Char(compute='_compute_download_link', readonly=True, store=True)
     registered = fields.Boolean(readonly=True)
-    max_activations = fields.Integer(readonly=True)
-    registered_activations = fields.Integer(readonly=True)
-    current_activations = fields.Integer(readonly=True)
+    current_activations = fields.Integer(readonly=True, help='Show license activations to update this field.')
+    registered_activations = fields.Integer(readonly=True, help='Show license activations to update this field.')
+    max_activations = fields.Integer(readonly=True, help='Show license activations to update this field.')
 
     @api.depends('name')
     def _compute_download_token(self):

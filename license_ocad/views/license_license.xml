@@ -9,11 +9,13 @@
 
             <field name="type_id" position="after">
                 <field name="registered" />
-                <label for="max_activations" string="Activations (Current/Max):" attrs="{'invisible': [('registered', '=', 'True')]}" />
+                <label for="product_tooltip" string="" attrs="{'invisible': [('registered', '=', 'True')]}"/>
+                <div class="text-muted" attrs="{'invisible': [('registered', '=', 'True')]}">Current | Registered | Max</div>
+                <label for="current_activations" string="Activations" attrs="{'invisible': [('registered', '=', 'True')]}" />
                 <div class="o_row" attrs="{'invisible': [('registered', '=', 'True')]}">
                     <field name="current_activations" nolabel="1" class="oe_inline" />
-                    <span> / </span>
-                    <field name="max_activations" nolabel="1" />
+                    <field name="registered_activations" nolabel="1"  class="oe_inline"/>
+                    <field name="max_activations" nolabel="1"  class="oe_inline"/>                    
                 </div>
                 <field name="download_link" widget="url" attrs="{'invisible': [('state', '!=', 'active')]}" />
             </field>

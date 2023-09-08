@@ -22,10 +22,8 @@ class LicenseActivation(models.TransientModel):
         license_id = self.env['license.license'].browse(self._context['license_id'])
         if license_id:
             self.sudo().search([('license_id', '=', license_id.id)]).unlink()
-            activations_data = self._get_activations(license_id)
-            license_id.write({
-                'current_activations': len(activations_data)
-            })
+            activations_data, license_data = self._get_activations(license_id)
+            license_id.write(license_data)
             self.sudo().create(activations_data)
 
         return super().search_read(domain=domain, fields=fields, offset=offset, limit=limit, order=order)
@@ -64,11 +62,12 @@ class LicenseActivation(models.TransientModel):
             auth = (license_id.company_id.ocad_username, license_id.company_id.ocad_password)
 
             response = requests.get(url, params=params, auth=auth)
-            
+
             # Reponse is a semicolon separated string that has to be processed
             columns = 13
             cells = response.text.split(';')
             rows = len(cells)//columns
+
             activations = []
             for i in range(0, rows):
                 start = i * columns
@@ -85,7 +84,15 @@ class LicenseActivation(models.TransientModel):
                     'license_id': license_id.id
                 })
 
-            return activations
+            # Last 3 cels contain license activation data
+            start = rows * columns
+            license_data = {
+                'current_activations': cells[start],
+                'registered_activations': cells[start+1],
+                'max_activations': cells[start+2]
+            }
+
+            return activations, license_data
 
     def _get_action_notification(self, message):
         notification_type = 'success'
