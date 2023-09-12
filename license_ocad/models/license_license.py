@@ -16,9 +16,9 @@ class License(models.Model):
     download_token = fields.Char(compute='_compute_download_token', readonly=True, store=True, precompute=True)
     download_link = fields.Char(compute='_compute_download_link', readonly=True, store=True)
     registered = fields.Boolean(readonly=True)
-    current_activations = fields.Integer(readonly=True, help='Show license activations to update this field.')
-    registered_activations = fields.Integer(readonly=True, help='Show license activations to update this field.')
-    max_activations = fields.Integer(readonly=True, help='Show license activations to update this field.')
+    active_activations = fields.Integer(readonly=True)
+    registered_activations = fields.Integer(readonly=True)
+    max_activations = fields.Integer(readonly=True)
 
     @api.depends('name')
     def _compute_download_token(self):
@@ -44,8 +44,10 @@ class License(models.Model):
             if license.product_id and license.client_order_ref and license.name != _('New'):
                 version = license.product_id.get_value_by_key('Version')
                 edition_long = license.product_id.get_value_by_key('EditionLong')
-                # Values: 2012, 5002, 'Mapping Solutions', 'OCAD AG'
+                # Values: 2018, 5002, 'Mapping Solution', 'OCAD AG'
                 # Result: 5E27-8047-C507
+                # Values: 2018, 60019, 'Course Setting', 'OLK Fricktal'
+                # Result: 7A8A-4F7F-7086
                 license.key = ''.join(ocad.get_ocad2018_checksum(version, int(license.name), edition_long, license.client_order_ref))
 
     def _create_license(self):
@@ -63,8 +65,8 @@ class License(models.Model):
                 'checkSum': license.key,
                 'dwnlink': license.download_token,
                 'numberOfActivations': number_of_activations,
-                'subBegin': license.date_start.strftime('yyyy-mm-dd'),
-                'subEnd': license.date_end.strftime('yyyy-mm-dd'),
+                'subBegin': license.date_start.strftime("%Y-%m-%d"),
+                'subEnd': license.date_end.strftime("%Y-%m-%d"),
                 'isTeam': is_team,
                 'reseller': ''
             }
@@ -137,6 +139,9 @@ class License(models.Model):
                 })
 
         return self._get_action_notification(message)  
+
+    def action_get_activations(self):
+        self.env['license.activation'].get_activations(self)
 
     def action_view_activations(self):
         return {

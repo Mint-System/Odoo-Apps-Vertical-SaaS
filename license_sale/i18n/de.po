@@ -1,0 +1,139 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* license_sale
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-09-12 09:16+0000\n"
+"PO-Revision-Date: 2023-09-12 09:16+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: license_sale
+#: model_terms:ir.ui.view,arch_db:license_sale.product_template_search_view
+msgid "Can be License"
+msgstr "Ist eine Lizenz"
+
+#. module: license_sale
+#: model:ir.model.fields,field_description:license_sale.field_product_product__license_ok
+#: model:ir.model.fields,field_description:license_sale.field_product_template__license_ok
+msgid "Can be licensed"
+msgstr "Ist lizenzierbar"
+
+#. module: license_sale
+#: model:ir.model.fields,field_description:license_sale.field_license_license__client_order_ref
+msgid "Customer Reference"
+msgstr "Lizenzname"
+
+#. module: license_sale
+#: model:ir.model.fields,help:license_sale.field_product_product__license_ok
+#: model:ir.model.fields,help:license_sale.field_product_template__license_ok
+msgid ""
+"If set, confirming a sale order with this product will create a license."
+msgstr ""
+"Erstellt eine Lizenz beim Bestätigen des Angebots, wenn Option aktiv ist."
+
+#. module: license_sale
+#: model:ir.model.fields,field_description:license_sale.field_sale_order_line__is_license
+msgid "Is License"
+msgstr "Ist Lizenz"
+
+#. module: license_sale
+#: model:ir.model,name:license_sale.model_license_license
+#: model_terms:ir.ui.view,arch_db:license_sale.product_template_form_view
+msgid "License"
+msgstr "Lizenz"
+
+#. module: license_sale
+#: model:ir.model.fields,field_description:license_sale.field_product_product__license_policy
+#: model:ir.model.fields,field_description:license_sale.field_product_template__license_policy
+msgid "License Policy"
+msgstr "Lizenzregel"
+
+#. module: license_sale
+#: model:ir.model.fields,field_description:license_sale.field_product_product__license_type_id
+#: model:ir.model.fields,field_description:license_sale.field_product_template__license_type_id
+msgid "License Type"
+msgstr "Lizenztyp"
+
+#. module: license_sale
+#: model:ir.model.fields.selection,name:license_sale.selection__product_template__license_policy__product
+msgid "License per product"
+msgstr "Lizenz pro Produkt"
+
+#. module: license_sale
+#: model:ir.model.fields.selection,name:license_sale.selection__product_template__license_policy__quantity
+msgid "License per quantity"
+msgstr "Lizenz pro Menge"
+
+#. module: license_sale
+#: model:ir.model.fields,help:license_sale.field_product_product__license_policy
+#: model:ir.model.fields,help:license_sale.field_product_template__license_policy
+msgid ""
+"License per quantity: Generate a license for each ordered quantity.\n"
+"License per product: Generate a license for each ordered product."
+msgstr ""
+"Lizenz pro Menge: Generiert eine Lizenz für jede Menge.\n"
+"Lizenz pro Produkt: Generiert eine Lizenz pro Produkt."
+
+#. module: license_sale
+#. odoo-python
+#: code:addons/license_sale/models/sale_order.py:0
+#: model:ir.model.fields,field_description:license_sale.field_sale_order__license_count
+#: model_terms:ir.ui.view,arch_db:license_sale.view_order_form
+#, python-format
+msgid "Licenses"
+msgstr "Lizenzen"
+
+#. module: license_sale
+#: model:ir.model.fields,field_description:license_sale.field_sale_order__license_ids
+msgid "Licenses associated to this sale"
+msgstr "Lizenzen verknüpft mit Verkaufsauftrag"
+
+#. module: license_sale
+#: model:ir.model,name:license_sale.model_product_template
+msgid "Product"
+msgstr "Produkt"
+
+#. module: license_sale
+#. odoo-python
+#: code:addons/license_sale/models/license_license.py:0
+#: model:ir.model,name:license_sale.model_sale_order
+#: model:ir.model.fields,field_description:license_sale.field_license_license__sale_order_id
+#: model_terms:ir.ui.view,arch_db:license_sale.license_view_form
+#, python-format
+msgid "Sales Order"
+msgstr "Verkaufsauftrag"
+
+#. module: license_sale
+#: model:ir.model.fields,field_description:license_sale.field_license_license__sale_line_id
+msgid "Sales Order Item"
+msgstr ""
+
+#. module: license_sale
+#: model:ir.model,name:license_sale.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Verkaufsauftragszeile"
+
+#. module: license_sale
+#: model:ir.model.fields,help:license_sale.field_license_license__sale_order_id
+msgid "Sales order to which the license is linked."
+msgstr ""
+
+#. module: license_sale
+#. odoo-python
+#: code:addons/license_sale/models/sale_order_line.py:0
+#, python-format
+msgid "This license has been created from: %s (%s)"
+msgstr "Diese Lizenz wurde erstellt aus: %s (%s)"
+
+#. module: license_sale
+#: model:ir.model.fields,field_description:license_sale.field_sale_order_line__license_ids
+msgid "sale_line_id"
+msgstr ""

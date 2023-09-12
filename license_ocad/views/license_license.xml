@@ -9,13 +9,16 @@
 
             <field name="type_id" position="after">
                 <field name="registered" />
-                <label for="product_tooltip" string="" attrs="{'invisible': [('registered', '=', 'True')]}"/>
-                <div class="text-muted" attrs="{'invisible': [('registered', '=', 'True')]}">Current | Registered | Max</div>
-                <label for="current_activations" string="Activations" attrs="{'invisible': [('registered', '=', 'True')]}" />
+                <label for="active_activations" string="" attrs="{'invisible': [('registered', '=', 'True')]}"/>
+                <div class="text-muted" attrs="{'invisible': [('registered', '=', 'True')]}">Active | Registered | Max</div>
+                <label for="active_activations" string="Activations" attrs="{'invisible': [('registered', '=', 'True')]}" />
                 <div class="o_row" attrs="{'invisible': [('registered', '=', 'True')]}">
-                    <field name="current_activations" nolabel="1" class="oe_inline" />
+                    <field name="active_activations" nolabel="1" class="oe_inline" />
                     <field name="registered_activations" nolabel="1"  class="oe_inline"/>
-                    <field name="max_activations" nolabel="1"  class="oe_inline"/>                    
+                    <field name="max_activations" nolabel="1"  class="oe_inline"/>
+                    <button name="action_get_activations" attrs="{'invisible': [('registered', '=', 'True')]}" type="object" class="btn-link">
+                        <i title="Get Activations" role="img" aria-label="Get Activations" class="fa fa-refresh"/>
+                    </button>
                 </div>
                 <field name="download_link" widget="url" attrs="{'invisible': [('state', '!=', 'active')]}" />
             </field>

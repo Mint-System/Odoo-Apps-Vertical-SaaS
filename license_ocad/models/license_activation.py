@@ -16,16 +16,18 @@ class LicenseActivation(models.TransientModel):
     license_id = fields.Many2one('license.license')
 
     @api.model
+    def get_activations(self, license_id):
+        self.sudo().search([('license_id', '=', license_id.id)]).unlink()
+        activations_data, license_data = self._get_activations(license_id)
+        license_id.write(license_data)
+        self.sudo().create(activations_data)
+
+    @api.model
     def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
         """Reset license activations list when list is shown."""
-
         license_id = self.env['license.license'].browse(self._context['license_id'])
         if license_id:
-            self.sudo().search([('license_id', '=', license_id.id)]).unlink()
-            activations_data, license_data = self._get_activations(license_id)
-            license_id.write(license_data)
-            self.sudo().create(activations_data)
-
+            self.get_activations(license_id)
         return super().search_read(domain=domain, fields=fields, offset=offset, limit=limit, order=order)
 
     def _disable_activation(self):
@@ -87,7 +89,7 @@ class LicenseActivation(models.TransientModel):
             # Last 3 cels contain license activation data
             start = rows * columns
             license_data = {
-                'current_activations': cells[start],
+                'active_activations': cells[start],
                 'registered_activations': cells[start+1],
                 'max_activations': cells[start+2]
             }
