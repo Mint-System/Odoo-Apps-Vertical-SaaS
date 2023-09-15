@@ -23,9 +23,9 @@ def pkv_get_key_byte(seed, a, b, c):
     a = a % 25
     b = b % 3
     if (a % 2 == 0):
-        return ((seed >> a) & 11111111) ^ ((seed >> b) | c)
+        return ((seed >> a) & 0x111111FF) ^ ((seed >> b) | c)
     else:
-        return ((seed >> a) & 11111111) ^ ((seed >> b) & c)
+        return ((seed >> a) & 0x000000FF) ^ ((seed >> b) & c)
 
 # Get OCAD2018 checksum
 def get_ocad2018_checksum(v, lnum, e, lname): 
