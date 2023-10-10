@@ -21,6 +21,7 @@
                     </button>
                 </div>
                 <field name="download_link" widget="url" attrs="{'invisible': [('state', '!=', 'active')]}" />
+                <field name="update_link" widget="url" attrs="{'invisible': [('state', '!=', 'active')]}" />
             </field>
 
             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">

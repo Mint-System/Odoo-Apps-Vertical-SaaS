@@ -15,6 +15,7 @@ class License(models.Model):
     company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)
     download_token = fields.Char(compute='_compute_download_token', readonly=True, store=True, precompute=True)
     download_link = fields.Char(compute='_compute_download_link', readonly=True, store=True)
+    update_link = fields.Char(compute='_compute_update_link', readonly=True, store=True)
     registered = fields.Boolean(readonly=True)
     active_activations = fields.Integer(readonly=True)
     registered_activations = fields.Integer(readonly=True)
@@ -38,6 +39,16 @@ class License(models.Model):
                 version = str(license.product_id.get_value_by_key('Version'))
                 license.download_link = 'https://www.ocad.com/OCAD2018/OCAD_2018_Setup.php?e=' + edition_short + '&l=' + license.name + '&v=' + version + '&d=' + license.download_token
 
+    @api.depends('name', 'product_id', 'key')
+    def _compute_update_link(self):
+        """Generate update link."""
+        for license in self:
+            if license.product_id and license.name != _('New'):
+                edition_short = str(license.product_id.get_value_by_key('EditionShort'))
+                version = str(license.product_id.get_value_by_key('Version'))
+                license.download_link = 'https://www.ocad.com/OCAD2018/OCAD_2018_Update.php?e=' + edition_short + '&l=' + license.name + '&v=' + version + '&c=' + license.key
+
+
     @api.depends('name', 'product_id', 'partner_id', 'client_order_ref')
     def _compute_key(self):
         for license in self:
@@ -57,12 +68,13 @@ class License(models.Model):
             edition_short = license.product_id.get_value_by_key('EditionShort')
             number_of_activations = license.product_id.get_value_by_key('NumberOfActivations')
             is_team = license.product_id.get_value_by_key('IsTeam')
+            checksum = ''.join(substring[0] for substring in license.key.split('-'))
 
             url = 'https://www.ocad.com/ocadintern/db_newlicense/UpdateNewLicense2018.php'
             params = {
                 'edition': edition_short,
                 'licenseNumber': license.name,
-                'checkSum': license.key,
+                'checkSum': checksum,
                 'dwnlink': license.download_token,
                 'numberOfActivations': number_of_activations,
                 'subBegin': license.date_start.strftime("%Y-%m-%d"),
