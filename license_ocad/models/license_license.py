@@ -26,13 +26,20 @@ class License(models.Model):
         compute="_compute_download_token", readonly=True, store=True, precompute=True
     )
     download_link = fields.Char(
-        compute="_compute_download_link", readonly=True, store=True
+        compute="_compute_download_links", readonly=True, store=True
     )
-    update_link = fields.Char(compute="_compute_update_link", readonly=True, store=True)
+    update_link = fields.Char(compute="_compute_download_links", readonly=True, store=True)
     registered = fields.Boolean(readonly=True)
     active_activations = fields.Integer(readonly=True)
     registered_activations = fields.Integer(readonly=True)
     max_activations = fields.Integer(readonly=True)
+    runtime = fields.Integer(compute="_compute_runtime", readonly=False, store=True)
+
+    @api.depends("product_id")
+    def _compute_runtime(self):
+        for license in self:
+            if license.product_id and license.name != _("New"):
+                license.runtime = license.product_id.get_value_by_key("Runtime")*12
 
     @api.depends("name")
     def _compute_download_token(self):
@@ -47,8 +54,8 @@ class License(models.Model):
                 ]  # randint includes both ends of the range
             license.download_token = result
 
-    @api.depends("name", "product_id", "download_token")
-    def _compute_download_link(self):
+    @api.depends("name", "product_id", "download_token", "key")
+    def _compute_download_links(self):
         """Generate download link."""
         for license in self:
             if license.product_id and license.name != _("New"):
@@ -64,15 +71,7 @@ class License(models.Model):
                     + "&d="
                     + license.download_token
                 )
-
-    @api.depends("name", "product_id", "key")
-    def _compute_update_link(self):
-        """Generate update link."""
-        for license in self:
-            if license.product_id and license.name != _("New"):
-                edition_short = str(license.product_id.get_value_by_key("EditionShort"))
-                version = str(license.product_id.get_value_by_key("Version"))
-                license.download_link = (
+                license.update_link = (
                     "https://www.ocad.com/OCAD2018/OCAD_2018_Update.php?e="
                     + edition_short
                     + "&l="

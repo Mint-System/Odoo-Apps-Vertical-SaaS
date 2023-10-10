@@ -72,7 +72,7 @@ msgstr ""
 #. module: license_ocad
 #: model:ir.model.fields,field_description:license_ocad.field_license_license__client_order_ref
 msgid "Customer Reference"
-msgstr ""
+msgstr "License Name"
 
 #. module: license_ocad
 #: model_terms:ir.ui.view,arch_db:license_ocad.activation_view_tree

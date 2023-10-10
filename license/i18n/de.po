@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-18 11:13+0000\n"
-"PO-Revision-Date: 2023-08-18 11:13+0000\n"
+"POT-Creation-Date: 2023-10-10 07:36+0000\n"
+"PO-Revision-Date: 2023-10-10 07:36+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -95,6 +95,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:license.field_license_license__create_date
 #: model:ir.model.fields,field_description:license.field_license_type__create_date
 msgid "Created on"
+msgstr ""
+
+#. module: license
+#: model:ir.model.fields,field_description:license.field_license_license__partner_id
+msgid "Customer"
 msgstr ""
 
 #. module: license
@@ -197,7 +202,7 @@ msgstr ""
 #. module: license
 #: model:ir.model.fields,field_description:license.field_license_license__key
 msgid "Key"
-msgstr "Schlüssel"
+msgstr "Checksum"
 
 #. module: license
 #: model:ir.model.fields,field_description:license.field_license_license____last_update
@@ -318,11 +323,6 @@ msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: license
-#: model:ir.model.fields,field_description:license.field_license_license__partner_id
-msgid "Partner"
-msgstr ""
-
-#. module: license
 #: model:ir.model.fields,field_description:license.field_license_license__product_id
 msgid "Product"
 msgstr "Produkt"
@@ -339,7 +339,7 @@ msgstr ""
 
 #. module: license
 #: model:ir.model.fields,field_description:license.field_license_license__runtime
-msgid "Runtime Months"
+msgid "Runtime"
 msgstr ""
 
 #. module: license
