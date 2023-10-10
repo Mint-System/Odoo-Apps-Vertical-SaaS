@@ -11,9 +11,9 @@
   <record id="license0" model="license.license">
     <field name="name">L00001</field>
     <field name="key">GUZK-GFKD-YNAK-72OM</field>
-    <field name="product_id" ref="license.license_product0"/>
-    <field name="type_id" ref="license.type0"/>
-    <field name="partner_id" ref="base.res_partner_2"/>
+    <field name="product_id" ref="license.license_product0" />
+    <field name="type_id" ref="license.type0" />
+    <field name="partner_id" ref="base.res_partner_2" />
   </record>
 
 </odoo>

@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo noupdate="1">
 
   <record id="license.seq_license_license" model="ir.sequence">
-    <field name="prefix"></field>
+    <field name="prefix" />
     <field name="padding">5</field>
     <field name="number_next_actual">60000</field>
   </record>

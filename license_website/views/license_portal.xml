@@ -56,9 +56,7 @@
                     <t t-foreach="licenses" t-as="license">
                         <tr>
                             <td>
-                                <a
-                                    t-att-href="license.get_portal_url()"
-                                >
+                                <a t-att-href="license.get_portal_url()">
                                     <t t-out="license.name" />
                                 </a>
                             </td>
@@ -119,7 +117,7 @@
                                         />
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                         <div class="row mt32" id="product_information">
                             <div class="col-12 col-md-6 mb-4 mb-md-0">

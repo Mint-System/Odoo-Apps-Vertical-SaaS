@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
   <record id="license_type_view_form" model="ir.ui.view">
@@ -7,13 +7,13 @@
     <field name="arch" type="xml">
       <form string="License Type">
         <sheet>
-          
+
           <div class="oe_title">
             <div class="oe_edit_only">
-              <label for="name"/>
+              <label for="name" />
             </div>
             <h1>
-              <field name="name"/>
+              <field name="name" />
             </h1>
           </div>
         </sheet>
@@ -26,7 +26,7 @@
     <field name="model">license.type</field>
     <field name="arch" type="xml">
       <tree>
-        <field name="name"/>
+        <field name="name" />
       </tree>
     </field>
   </record>
@@ -37,7 +37,16 @@
     <field name="view_mode">tree,form</field>
   </record>
 
-  <menuitem name="Configurations" id="license.menu_configuration" parent="license.menu_root"/>
-  <menuitem name="License Type" id="license.menu_license_type" parent="license.menu_configuration" action="license.license_type_open_view_tree"/>
+  <menuitem
+        name="Configurations"
+        id="license.menu_configuration"
+        parent="license.menu_root"
+    />
+  <menuitem
+        name="License Type"
+        id="license.menu_license_type"
+        parent="license.menu_configuration"
+        action="license.license_type_open_view_tree"
+    />
 
 </odoo>

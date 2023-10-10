@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <record id="license_view_form" model="ir.ui.view">
@@ -9,34 +9,81 @@
 
             <field name="type_id" position="after">
                 <field name="registered" />
-                <label for="active_activations" string="" attrs="{'invisible': [('registered', '=', 'True')]}"/>
-                <div class="text-muted" attrs="{'invisible': [('registered', '=', 'True')]}">Active | Registered | Max</div>
-                <label for="active_activations" string="Activations" attrs="{'invisible': [('registered', '=', 'True')]}" />
+                <label
+                    for="active_activations"
+                    string=""
+                    attrs="{'invisible': [('registered', '=', 'True')]}"
+                />
+                <div
+                    class="text-muted"
+                    attrs="{'invisible': [('registered', '=', 'True')]}"
+                >Active | Registered | Max</div>
+                <label
+                    for="active_activations"
+                    string="Activations"
+                    attrs="{'invisible': [('registered', '=', 'True')]}"
+                />
                 <div class="o_row" attrs="{'invisible': [('registered', '=', 'True')]}">
                     <field name="active_activations" nolabel="1" class="oe_inline" />
-                    <field name="registered_activations" nolabel="1"  class="oe_inline"/>
-                    <field name="max_activations" nolabel="1"  class="oe_inline"/>
-                    <button name="action_get_activations" attrs="{'invisible': [('registered', '=', 'True')]}" type="object" class="btn-link">
-                        <i title="Get Activations" role="img" aria-label="Get Activations" class="fa fa-refresh"/>
+                    <field
+                        name="registered_activations"
+                        nolabel="1"
+                        class="oe_inline"
+                    />
+                    <field name="max_activations" nolabel="1" class="oe_inline" />
+                    <button
+                        name="action_get_activations"
+                        attrs="{'invisible': [('registered', '=', 'True')]}"
+                        type="object"
+                        class="btn-link"
+                    >
+                        <i
+                            title="Get Activations"
+                            role="img"
+                            aria-label="Get Activations"
+                            class="fa fa-refresh"
+                        />
                     </button>
                 </div>
-                <field name="download_link" widget="url" attrs="{'invisible': [('state', '!=', 'active')]}" />
-                <field name="update_link" widget="url" attrs="{'invisible': [('state', '!=', 'active')]}" />
+                <field
+                    name="download_link"
+                    widget="url"
+                    attrs="{'invisible': [('state', '!=', 'active')]}"
+                />
+                <field
+                    name="update_link"
+                    widget="url"
+                    attrs="{'invisible': [('state', '!=', 'active')]}"
+                />
             </field>
 
             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
-                <button class="oe_stat_button"
-                    type="object" name="action_view_activations" icon="fa-check-circle-o"
-                    string="Activations" />
-                <button class="oe_stat_button"
-                    type="object" name="action_view_status" icon="fa-clock-o"
-                    string="Status" />
+                <button
+                    class="oe_stat_button"
+                    type="object"
+                    name="action_view_activations"
+                    icon="fa-check-circle-o"
+                    string="Activations"
+                />
+                <button
+                    class="oe_stat_button"
+                    type="object"
+                    name="action_view_status"
+                    icon="fa-clock-o"
+                    string="Status"
+                />
             </xpath>
 
             <button name="action_activate" position="after">
-                <button name="action_unlock" states="active" type="object" string="Unlock" class="btn-primary"/>
+                <button
+                    name="action_unlock"
+                    states="active"
+                    type="object"
+                    string="Unlock"
+                    class="btn-primary"
+                />
             </button>
-            
+
         </field>
     </record>
 

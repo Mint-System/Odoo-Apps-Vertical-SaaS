@@ -1,8 +1,9 @@
 <odoo>
 
   <record id="license.license_product0" model="product.product">
-    <field name="attribute_ids"
-      eval="[
+    <field
+            name="attribute_ids"
+            eval="[
       (4, ref('product_information_attribute_ocad0')),
       (4, ref('product_information_attribute_ocad1')),
       (4, ref('product_information_attribute_ocad2')),
@@ -11,12 +12,13 @@
       (4, ref('product_information_attribute_ocad5')),
       (4, ref('product_information_attribute_ocad6')),
       (4, ref('product_information_attribute_ocad7'))
-      ]" />
+      ]"
+        />
   </record>
 
   <record id="license.seq_license_license" model="ir.sequence">
     <field name="number_next_actual">60000</field>
-    <field name="prefix"></field>
+    <field name="prefix" />
     <field name="padding">5</field>
   </record>
 

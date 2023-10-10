@@ -1,13 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="product_template_search_view" model="ir.ui.view">
         <field name="name">license_sale.product_template_search_view</field>
         <field name="model">product.template</field>
-        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="inherit_id" ref="product.product_template_search_view" />
         <field name="arch" type="xml">
             <filter name="filter_to_purchase" position="after">
-                <filter name="filter_license" string="Can be License"
-                        domain="[('license_ok', '=', True)]"/>
+                <filter
+                    name="filter_license"
+                    string="Can be License"
+                    domain="[('license_ok', '=', True)]"
+                />
             </filter>
         </field>
     </record>
@@ -15,28 +18,36 @@
     <record id="product_template_form_view" model="ir.ui.view">
         <field name="name">license_sale.product_template_form_view</field>
         <field name="model">product.template</field>
-        <field name="inherit_id" ref="sale.product_template_form_view"/>
+        <field name="inherit_id" ref="sale.product_template_form_view" />
         <field name="arch" type="xml">
 
             <page name="sales" position="attributes">
-                <attribute name="attrs">{'invisible': [('sale_ok', '=', False), ('license_ok', '=', False)]}
+                <attribute
+                    name="attrs"
+                >{'invisible': [('sale_ok', '=', False), ('license_ok', '=', False)]}
                 </attribute>
                 <attribute name="class">page_sales</attribute>
             </page>
 
             <div name="options" position="inside">
                 <span class="d-inline-block">
-                    <field name="license_ok"/>
-                    <label for="license_ok" string="License"/>
+                    <field name="license_ok" />
+                    <label for="license_ok" string="License" />
                 </span>
             </div>
 
             <field name="invoice_policy" position="before">
-                <field name="license_policy" attrs="{'invisible': [('license_ok', '=', False)]}"/>
+                <field
+                    name="license_policy"
+                    attrs="{'invisible': [('license_ok', '=', False)]}"
+                />
             </field>
 
             <field name="categ_id" position="before">
-                <field name="license_type_id" attrs="{'invisible': [('license_ok', '=', False)]}"/>
+                <field
+                    name="license_type_id"
+                    attrs="{'invisible': [('license_ok', '=', False)]}"
+                />
             </field>
 
         </field>

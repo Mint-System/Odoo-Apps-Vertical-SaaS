@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <record id="license_view_form" model="ir.ui.view">
@@ -7,17 +7,63 @@
         <field name="arch" type="xml">
             <form string="License">
                 <header>
-                    <button name="action_assign" states="draft" type="object" string="Assign" class="btn-primary"/>
-                    <button name="action_activate" states="assigned" type="object" string="Activate" class="btn-primary"/>
-                    <button name="action_reset" states="active" type="object" string="Reset"/>
-                    <button name="action_disable" states="active" type="object" string="Disable"/>                    
-                    <button name="action_enable" states="disabled" type="object" string="Enable" class="btn-primary"/>                    
-                    <button name="action_cancel" states="active,disabled,expired" type="object" string="Cancel"/>
-                    <button name="action_draft" states="assigned,cancelled" type="object" string="Set to Draft"/>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,assigned,active,disabled,cancelled" />
+                    <button
+                        name="action_assign"
+                        states="draft"
+                        type="object"
+                        string="Assign"
+                        class="btn-primary"
+                    />
+                    <button
+                        name="action_activate"
+                        states="assigned"
+                        type="object"
+                        string="Activate"
+                        class="btn-primary"
+                    />
+                    <button
+                        name="action_reset"
+                        states="active"
+                        type="object"
+                        string="Reset"
+                    />
+                    <button
+                        name="action_disable"
+                        states="active"
+                        type="object"
+                        string="Disable"
+                    />
+                    <button
+                        name="action_enable"
+                        states="disabled"
+                        type="object"
+                        string="Enable"
+                        class="btn-primary"
+                    />
+                    <button
+                        name="action_cancel"
+                        states="active,disabled,expired"
+                        type="object"
+                        string="Cancel"
+                    />
+                    <button
+                        name="action_draft"
+                        states="assigned,cancelled"
+                        type="object"
+                        string="Set to Draft"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,assigned,active,disabled,cancelled"
+                    />
                 </header>
                 <sheet>
-                    <div class="oe_button_box" name="button_box" attrs="{'invisible': [('id', '=', False)]}">
+                    <div
+                        class="oe_button_box"
+                        name="button_box"
+                        attrs="{'invisible': [('id', '=', False)]}"
+                    >
                     </div>
                     <div class="oe_title">
                         <div class="oe_edit_only">
@@ -61,7 +107,14 @@
                 <field name="key" />
                 <field name="product_id" />
                 <field name="partner_id" />
-                <field name="state" decoration-success="state in ['assigned', 'active']" decoration-info="state == 'draft'" decoration-danger="state in ['disabled', 'expired']"  decoration-muted="state == 'closed'" widget="badge" />
+                <field
+                    name="state"
+                    decoration-success="state in ['assigned', 'active']"
+                    decoration-info="state == 'draft'"
+                    decoration-danger="state in ['disabled', 'expired']"
+                    decoration-muted="state == 'closed'"
+                    widget="badge"
+                />
             </tree>
         </field>
     </record>
@@ -72,12 +125,18 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem name="License" id="license.menu_root"
-        web_icon="license,static/description/icon.png" />
+    <menuitem
+        name="License"
+        id="license.menu_root"
+        web_icon="license,static/description/icon.png"
+    />
 
-    <menuitem name="Licenses" id="license.menu_licenses"
-        parent="license.menu_root" />
-    <menuitem name="Licenses" id="license.menu_license"
-        parent="license.menu_licenses" action="license.license_open_view_tree" />
+    <menuitem name="Licenses" id="license.menu_licenses" parent="license.menu_root" />
+    <menuitem
+        name="Licenses"
+        id="license.menu_license"
+        parent="license.menu_licenses"
+        action="license.license_open_view_tree"
+    />
 
 </odoo>

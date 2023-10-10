@@ -4,7 +4,7 @@
         <field name="license_ok" eval="True" />
         <field name="list_price">80</field>
         <field name="license_policy">quantity</field>
-        <field name="license_type_id" ref="license.type0"/>
+        <field name="license_type_id" ref="license.type0" />
     </record>
 
     <record id="sale_order_50" model="sale.order">
