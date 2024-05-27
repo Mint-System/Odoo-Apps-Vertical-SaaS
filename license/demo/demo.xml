@@ -10,10 +10,18 @@
 
   <record id="license0" model="license.license">
     <field name="name">L00001</field>
-    <field name="key">GUZK-GFKD-YNAK-72OM</field>
+    <field name="key">41A56126-3FB9-4B91-B249-20199E6434F9</field>
     <field name="product_id" ref="license.license_product0" />
     <field name="type_id" ref="license.type0" />
     <field name="partner_id" ref="base.res_partner_2" />
+  </record>
+
+  <record id="license1" model="license.license">
+    <field name="name">L00002</field>
+    <field name="key">A8E846EB-8823-45D2-8CA0-091B0D6C1014</field>
+    <field name="product_id" ref="license.license_product0" />
+    <field name="type_id" ref="license.type0" />
+    <field name="partner_id" ref="base.res_partner_address_31" />
   </record>
 
 </odoo>

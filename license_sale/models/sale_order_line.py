@@ -10,13 +10,26 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     is_license = fields.Boolean(compute="_compute_is_license", store=True)
-    license_ids = fields.Many2one("license.license", "sale_line_id")
+    license_ids = fields.One2many("license.license", "sale_line_id")
+    active_license_ids_count = fields.Integer(
+        compute="_compute_active_license_ids_count"
+    )
+
+    def _compute_active_license_ids_count(self):
+        for line in self:
+            line.active_license_ids_count = len(
+                self.license_ids.filtered(
+                    lambda l: l.state in ["draft", "assigned", "active"]
+                )
+            )
 
     @api.depends("product_uom_qty", "discount", "price_unit", "tax_id")
     def _compute_amount(self):
         res = super()._compute_amount()
-        for line in self.filtered(lambda l: not isinstance(l.id, models.NewId) and l.state in ['sale', 'done'] and (l.product_uom_qty > l.order_id.license_count)):
-            line._create_license(qty=line.product_uom_qty-line.order_id.license_count)
+        for line in self.filtered(
+            lambda l: not isinstance(l.id, models.NewId) and l.state in ["sale", "done"]
+        ):
+            line._create_license(qty=line.product_uom_qty)
         return res
 
     @api.depends("product_id")
@@ -27,10 +40,10 @@ class SaleOrderLine(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         lines = super(SaleOrderLine, self).create(vals_list)
-        for line in lines.filtered(lambda l: l.order_id.state == 'sale'):
+        for line in lines.filtered(lambda l: l.order_id.state == "sale"):
             line._create_license()
         return lines
-    
+
     def _create_license_prepare_values(self):
         self.ensure_one()
         if not self.order_id.client_order_ref:
@@ -53,7 +66,9 @@ class SaleOrderLine(models.Model):
         elif not qty and self.product_id.license_policy == "product":
             qty = 1
 
-        for _qty in range(int(qty)):
+        count_new_licenses = int(qty) - self.active_license_ids_count
+
+        for _qty in range(count_new_licenses):
             values = self._create_license_prepare_values()
             license = self.env["license.license"].sudo().create(values)
             license_msg = _("This license has been created from: %s (%s)") % (

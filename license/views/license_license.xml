@@ -119,6 +119,17 @@
         </field>
     </record>
 
+    <record id="license_view_search" model="ir.ui.view">
+        <field name="name">license.license_view_search</field>
+        <field name="model">license.license</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="partner_id" />
+            </search>
+        </field>
+    </record>
+
     <record id="license_open_view_tree" model="ir.actions.act_window">
         <field name="name">Licenses</field>
         <field name="res_model">license.license</field>

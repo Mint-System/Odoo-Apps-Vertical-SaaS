@@ -28,7 +28,9 @@ class License(models.Model):
     download_link = fields.Char(
         compute="_compute_download_links", readonly=True, store=True
     )
-    update_link = fields.Char(compute="_compute_download_links", readonly=True, store=True)
+    update_link = fields.Char(
+        compute="_compute_download_links", readonly=True, store=True
+    )
     registered = fields.Boolean(readonly=True)
     active_activations = fields.Integer(readonly=True)
     registered_activations = fields.Integer(readonly=True)
@@ -39,7 +41,7 @@ class License(models.Model):
     def _compute_runtime(self):
         for license in self:
             if license.product_id and license.name != _("New"):
-                license.runtime = license.product_id.get_value_by_key("Runtime")*12
+                license.runtime = license.product_id.get_value_by_key("Runtime") * 12
 
     @api.depends("name")
     def _compute_download_token(self):
