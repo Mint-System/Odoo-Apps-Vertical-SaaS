@@ -94,10 +94,6 @@ class License(models.Model):
             ):
                 version = license.product_id.get_value_by_key("Version")
                 edition_long = license.product_id.get_value_by_key("EditionLong")
-                # Values: 2018, 5002, 'Mapping Solution', 'OCAD AG'
-                # Result: 5E27-8047-C507
-                # Values: 2018, 60019, 'Course Setting', 'OLK Fricktal'
-                # Result: 7A8A-4F7F-7086
                 license.key = "".join(
                     ocad.get_ocad2018_checksum(
                         version,

@@ -22,13 +22,14 @@ def hex_to_int(s):
 
 
 # Get key byte
-def pkv_get_key_byte(seed, a, b, c): 
+def pkv_get_key_byte(seed, a, b, c):
     a = a % 25
     b = b % 3
-    if (a % 2 == 0):
+    if a % 2 == 0:
         return (((seed >> a) & 0x000000FF) ^ ((seed >> b) | c)) & 0x000000FF
     else:
         return (((seed >> a) & 0x000000FF) ^ ((seed >> b) & c)) & 0x000000FF
+
 
 # Get OCAD2018 checksum
 def get_ocad2018_checksum(v, lnum, e, lname):
@@ -79,6 +80,7 @@ def get_ocad2018_checksum(v, lnum, e, lname):
     # print(checksum)
     return checksum
 
+
 # Ausgabe Admin:
 # Version = OCAD 2018 Orienteering
 # Name = OL Ishikawa
@@ -87,12 +89,14 @@ def get_ocad2018_checksum(v, lnum, e, lname):
 # Download link = https://www.ocad.com/OCAD2018/OCAD_2018_Setup.php?e=ORI&l=19277&v=2018&d=un8ifnoj
 
 # Korrekte Checksum:
-checksum = "".join(get_ocad2018_checksum(
-    2018,
-    int("19277"),
-    "Orienteering",
-    "OL Ishikawa",
-))
+checksum = "".join(
+    get_ocad2018_checksum(
+        2018,
+        int("19277"),
+        "Orienteering",
+        "OL Ishikawa",
+    )
+)
 print(checksum)
 print("BB83-215D-EE94" == checksum)
 
@@ -104,11 +108,13 @@ print("BB83-215D-EE94" == checksum)
 # Download link = https://www.ocad.com/OCAD2018/OCAD_2018_Setup.php?e=ORI&l=19278&v=2018&d=v78pM3ZH
 
 # Korrekte Checksum:
-checksum = "".join(get_ocad2018_checksum(
-    2018,
-    int("19278"),
-    "Orienteering",
-    "OL Ishikawa",
-))
+checksum = "".join(
+    get_ocad2018_checksum(
+        2018,
+        int("19278"),
+        "Orienteering",
+        "OL Ishikawa",
+    )
+)
 print(checksum)
 print("C130-69AF-D0FA" == checksum)

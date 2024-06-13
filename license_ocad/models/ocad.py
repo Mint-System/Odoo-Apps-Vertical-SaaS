@@ -22,13 +22,14 @@ def hex_to_int(s):
 
 
 # Get key byte
-def pkv_get_key_byte(seed, a, b, c): 
+def pkv_get_key_byte(seed, a, b, c):
     a = a % 25
     b = b % 3
-    if (a % 2 == 0):
+    if a % 2 == 0:
         return (((seed >> a) & 0x000000FF) ^ ((seed >> b) | c)) & 0x000000FF
     else:
         return (((seed >> a) & 0x000000FF) ^ ((seed >> b) & c)) & 0x000000FF
+
 
 # Get OCAD2018 checksum
 def get_ocad2018_checksum(v, lnum, e, lname):

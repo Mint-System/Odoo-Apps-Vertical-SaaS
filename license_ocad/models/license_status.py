@@ -12,8 +12,21 @@ class LicenseStatus(models.TransientModel):
     _description = "License Status"
 
     _id = fields.Integer("ID", readonly=True)
-    name = fields.Char(readonly=True)
     license_id = fields.Many2one("license.license")
+    # 13 fields
+    name = fields.Char(readonly=True, string="ID")
+    license_number = fields.Char(readonly=True)
+    license_status = fields.Char(readonly=True)
+    build = fields.Char(readonly=True)
+    uuid = fields.Char(readonly=True)
+    ip = fields.Char(readonly=True)
+    country = fields.Char(readonly=True)
+    timestamp = fields.Char(readonly=True)
+    performance = fields.Char(readonly=True)
+    product_key = fields.Char(readonly=True)
+    windows_version = fields.Char(readonly=True)
+    computer_name = fields.Char(readonly=True)
+    parameter_change = fields.Char(readonly=True)
 
     @api.model
     def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
@@ -56,10 +69,25 @@ class LicenseStatus(models.TransientModel):
             activation_status = []
             for i in range(0, rows):
                 start = i * columns
-                end = start + columns
+                start + columns
 
                 activation_status.append(
-                    {"name": " ".join(cells[start:end]), "license_id": license_id.id}
+                    {
+                        "license_id": license_id.id,
+                        "name": cells[start],
+                        "license_number": cells[start + 1],
+                        "license_status": cells[start + 2],
+                        "build": cells[start + 3],
+                        "uuid": cells[start + 4],
+                        "ip": cells[start + 5],
+                        "country": cells[start + 6],
+                        "timestamp": cells[start + 7],
+                        "performance": cells[start + 8],
+                        "product_key": cells[start + 9],
+                        "windows_version": cells[start + 10],
+                        "computer_name": cells[start + 11],
+                        "parameter_change": cells[start + 12],
+                    }
                 )
 
             return activation_status

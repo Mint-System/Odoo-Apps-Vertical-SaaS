@@ -6,8 +6,20 @@
         <field name="model">license.status</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="license_id" optional="hide" />
                 <field name="name" />
-                <field name="license_id" />
+                <field name="license_number" />
+                <field name="license_status" />
+                <field name="build" />
+                <field name="uuid" />
+                <field name="ip" />
+                <field name="country" />
+                <field name="timestamp" />
+                <field name="performance" />
+                <field name="product_key" />
+                <field name="windows_version" />
+                <field name="computer_name" />
+                <field name="parameter_change" />
             </tree>
         </field>
     </record>
@@ -18,6 +30,14 @@
         <field name="arch" type="xml">
             <search>
                 <field name="name" filter_domain="[('name', 'ilike', self)]" />
+                <field
+                    name="license_number"
+                    filter_domain="[('license_number', 'ilike', self)]"
+                />
+                <field
+                    name="product_key"
+                    filter_domain="[('product_key', 'ilike', self)]"
+                />
             </search>
         </field>
     </record>
