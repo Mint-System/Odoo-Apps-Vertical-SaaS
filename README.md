@@ -25,4 +25,5 @@ Run tests locally with Docker Compose.
 | [license](license) |         Manage software licensens. |
 | [license_ocad](license_ocad) |         Sync licenses with the OCAD license activation service. |
 | [license_sale](license_sale) |         Sell software licenses. |
+| [license_subscription](license_subscription) |         Update license based on subscription changes. |
 | [license_website](license_website) |         Portal view for licenses. |
