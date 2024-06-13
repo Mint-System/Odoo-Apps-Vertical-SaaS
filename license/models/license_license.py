@@ -61,10 +61,7 @@ class License(models.Model):
         default="draft",
     )
     date_start = fields.Date()
-    runtime = fields.Float(
-        "Runtime Months",
-        default=12
-    )
+    runtime = fields.Float("Runtime Months", default=12)
     date_end = fields.Date(
         compute="_compute_date_end",
         inverse="_inverse_date_end",

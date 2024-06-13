@@ -13,8 +13,6 @@ class License(models.Model):
         string="Sales Order Item",
         copy=False,
         domain="[('is_license', '=', True), ('state', 'in', ['sale', 'done']), ('order_partner_id', '=?', partner_id)]",
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     sale_order_id = fields.Many2one(
         string="Sales Order",

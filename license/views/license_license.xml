@@ -133,7 +133,7 @@
     <record id="license_open_view_tree" model="ir.actions.act_window">
         <field name="name">Licenses</field>
         <field name="res_model">license.license</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,kanban</field>
     </record>
 
     <menuitem

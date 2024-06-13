@@ -6,6 +6,8 @@ import requests
 from odoo import _, api, fields, models
 
 _logger = logging.getLogger(__name__)
+from odoo.exceptions import ValidationError
+
 from . import ocad
 
 
@@ -155,7 +157,7 @@ class License(models.Model):
 
     def _update_end_date(self):
         message = ""
-        for license in self:
+        for license in self.filtered(lambda l: l.state == "active" and l.date_end):
 
             edition_short = license.product_id.get_value_by_key("EditionShort")
 

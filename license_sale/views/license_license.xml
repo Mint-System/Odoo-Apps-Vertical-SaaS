@@ -28,4 +28,21 @@
         </field>
     </record>
 
+    <record id="license_view_search" model="ir.ui.view">
+        <field name="name">license_sale.license_view_search</field>
+        <field name="model">license.license</field>
+        <field name="inherit_id" ref="license.license_view_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <filter
+                    string="Sales Order"
+                    domain="[('sale_order_id', '!=', False)]"
+                    context="{'group_by': 'sale_order_id'}"
+                    name="sale_order_filter"
+                    icon="fa-dollar"
+                />
+            </xpath>
+        </field>
+    </record>
+
 </odoo>
