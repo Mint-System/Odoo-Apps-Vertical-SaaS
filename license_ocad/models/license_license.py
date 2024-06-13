@@ -31,7 +31,7 @@ class License(models.Model):
     update_link = fields.Char(
         compute="_compute_download_links", readonly=True, store=True
     )
-    registered = fields.Boolean(readonly=True)
+    registered = fields.Boolean(readonly=True, help="License registered with Odoo.")
     active_activations = fields.Integer(readonly=True)
     registered_activations = fields.Integer(readonly=True)
     max_activations = fields.Integer(readonly=True)
@@ -153,6 +153,25 @@ class License(models.Model):
 
         return message
 
+    def _update_end_date(self):
+        message = ""
+        for license in self:
+
+            edition_short = license.product_id.get_value_by_key("EditionShort")
+
+            url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateSubscriptionEndDate2018.php"
+            params = {
+                "edition": edition_short,
+                "licenseNumber": license.name,
+                "subEnd": license.date_end.strftime("%Y-%m-%d"),
+            }
+            auth = (self.company_id.ocad_username, self.company_id.ocad_password)
+
+            response = requests.post(url, params=params, auth=auth)
+            message += response.text + "\n"
+
+        return message
+
     def _get_action_notification(self, message):
         notification_type = "success"
         notification_sticky = False
@@ -202,6 +221,10 @@ class License(models.Model):
 
     def action_get_activations(self):
         self.env["license.activation"].get_activations(self)
+
+    def action_update_end_date(self):
+        message = self._update_end_date()
+        return self._get_action_notification(message)
 
     def action_view_activations(self):
         return {

@@ -60,17 +60,14 @@ class License(models.Model):
         copy=False,
         default="draft",
     )
-    date_start = fields.Date(readonly=True, states={"draft": [("readonly", False)]})
+    date_start = fields.Date()
     runtime = fields.Float(
         "Runtime Months",
-        default=12,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
+        default=12
     )
     date_end = fields.Date(
         compute="_compute_date_end",
-        readonly=True,
-        states={"draft": [("readonly", False)]},
+        inverse="_inverse_date_end",
     )
 
     @api.depends("date_start", "runtime")
@@ -81,8 +78,13 @@ class License(models.Model):
                 license.date_end = license.date_start + relativedelta(
                     months=license.runtime
                 )
-            else:
-                license.date_end = False
+
+    def _inverse_date_end(self):
+        for license in self:
+            if license.date_end:
+                license.date_start = license.date_end - relativedelta(
+                    months=license.runtime
+                )
 
     @api.model_create_multi
     def create(self, vals_list):
