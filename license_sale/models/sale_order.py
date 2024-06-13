@@ -47,13 +47,6 @@ class SaleOrder(models.Model):
             action["views"] = [(view_tree_id, "tree"), (view_form_id, "form")]
         return action
 
-    def _action_confirm(self):
-        """On SO confirmation, some lines should generate a license."""
-        res = super()._action_confirm()
-        for line in self.order_line.filtered(lambda l: l.is_license):
-            line._create_license()
-        return res
-
     def _action_cancel(self):
         """On SO cancel, set related state on linked licenses."""
         self.license_ids.write({"state": "cancelled"})

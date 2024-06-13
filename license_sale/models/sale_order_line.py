@@ -23,8 +23,14 @@ class SaleOrderLine(models.Model):
                 )
             )
 
+    @api.depends("product_id")
+    def _compute_is_license(self):
+        for rec in self:
+            rec.is_license = rec.product_id.license_ok
+
     @api.depends("product_uom_qty", "discount", "price_unit", "tax_id")
     def _compute_amount(self):
+        """Create a license when order is confirmed or when amount of line is updated."""
         res = super()._compute_amount()
         for line in self.filtered(
             lambda l: not isinstance(l.id, models.NewId) and l.state in ["sale", "done"]
@@ -32,19 +38,8 @@ class SaleOrderLine(models.Model):
             line._create_license(qty=line.product_uom_qty)
         return res
 
-    @api.depends("product_id")
-    def _compute_is_license(self):
-        for rec in self:
-            rec.is_license = rec.product_id.license_ok
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        lines = super(SaleOrderLine, self).create(vals_list)
-        for line in lines.filtered(lambda l: l.order_id.state == "sale"):
-            line._create_license()
-        return lines
-
     def _create_license_prepare_values(self):
+        """Prepare values for license creation."""
         self.ensure_one()
         if not self.order_id.client_order_ref:
             raise UserError(_("Cannot create license without customer reference."))
@@ -60,13 +55,14 @@ class SaleOrderLine(models.Model):
 
     def _create_license(self, qty=None):
         """Create a license based on policy."""
+        self.ensure_one()
 
         if not qty and self.product_id.license_policy == "quantity":
             qty = self.product_uom_qty
         elif not qty and self.product_id.license_policy == "product":
             qty = 1
-
         count_new_licenses = int(qty) - self.active_license_ids_count
+        # _logger.warning([qty, self.active_license_ids_count, count_new_licenses])
 
         for _qty in range(count_new_licenses):
             values = self._create_license_prepare_values()
