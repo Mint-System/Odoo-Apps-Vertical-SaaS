@@ -88,7 +88,6 @@ def get_ocad2018_checksum(v, lnum, e, lname):
 # Checksum = BB83-215D-EE94
 # Download link = https://www.ocad.com/OCAD2018/OCAD_2018_Setup.php?e=ORI&l=19277&v=2018&d=un8ifnoj
 
-# Korrekte Checksum:
 checksum = "".join(
     get_ocad2018_checksum(
         2018,
@@ -107,7 +106,6 @@ print("BB83-215D-EE94" == checksum)
 # Checksum = C130-69AF-D0FA
 # Download link = https://www.ocad.com/OCAD2018/OCAD_2018_Setup.php?e=ORI&l=19278&v=2018&d=v78pM3ZH
 
-# Korrekte Checksum:
 checksum = "".join(
     get_ocad2018_checksum(
         2018,
@@ -118,3 +116,39 @@ checksum = "".join(
 )
 print(checksum)
 print("C130-69AF-D0FA" == checksum)
+
+# Ausgabe Admin:
+# Version = OCAD 2018 Orienteering
+# Name = Tsukuba44comp
+# Number = 25664
+# Checksum = 6E9D-030B-ADA1
+# Download link = https://www.ocad.com/OCAD2018/OCAD_2018_Setup.php?e=ORI&l=25664&v=2018&d=hhXX9wux
+
+checksum = "".join(
+    get_ocad2018_checksum(
+        2018,
+        int("25664"),
+        "Orienteering",
+        "Tsukuba44comp",
+    )
+)
+print(checksum)
+print("6E9D-030B-ADA1" == checksum)
+
+# Ausgabe Admin:
+# Version = OCAD 2018 Orienteering
+# Name = Tsukuba44comp
+# Number = 25665
+# Checksum = 743D-1013-5624
+# Download link = https://www.ocad.com/OCAD2018/OCAD_2018_Setup.php?e=ORI&l=25665&v=2018&d=LYZ39ruh
+
+checksum = "".join(
+    get_ocad2018_checksum(
+        2018,
+        int("25665"),
+        "Orienteering",
+        "Tsukuba44comp",
+    )
+)
+print(checksum)
+print("743D-1013-5624" == checksum)
