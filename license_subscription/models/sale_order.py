@@ -13,12 +13,13 @@ class SaleOrder(models.Model):
         compute="_compute_end_date", inverse="_inverse_end_date", store=True
     )
 
-    @api.depends("recurrence_id")
+    @api.depends("recurrence_id", "start_date")
     def _compute_end_date(self):
         for order in self:
-            order.end_date = order.start_date + get_timedelta(
-                order.recurrence_id.duration, order.recurrence_id.unit
-            )
+            if order.start_date and order.recurrence_id:
+                order.end_date = order.start_date + get_timedelta(
+                    order.recurrence_id.duration, order.recurrence_id.unit
+                )
 
     def _inverse_end_date(self):
         for order in self:
