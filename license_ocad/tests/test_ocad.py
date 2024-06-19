@@ -81,7 +81,6 @@ def get_ocad2018_checksum(v, lnum, e, lname):
     return checksum
 
 
-# Ausgabe Admin:
 # Version = OCAD 2018 Orienteering
 # Name = OL Ishikawa
 # Number = 19277
@@ -99,7 +98,6 @@ checksum = "".join(
 print(checksum)
 print("BB83-215D-EE94" == checksum)
 
-# Ausgabe Admin:
 # Version = OCAD 2018 Orienteering
 # Name = OL Ishikawa
 # Number = 19278
@@ -117,7 +115,6 @@ checksum = "".join(
 print(checksum)
 print("C130-69AF-D0FA" == checksum)
 
-# Ausgabe Admin:
 # Version = OCAD 2018 Orienteering
 # Name = Tsukuba44comp
 # Number = 25664
@@ -135,7 +132,6 @@ checksum = "".join(
 print(checksum)
 print("6E9D-030B-ADA1" == checksum)
 
-# Ausgabe Admin:
 # Version = OCAD 2018 Orienteering
 # Name = Tsukuba44comp
 # Number = 25665
@@ -148,6 +144,21 @@ checksum = "".join(
         int("25665"),
         "Orienteering",
         "Tsukuba44comp",
+    )
+)
+print(checksum)
+print("743D-1013-5624" == checksum)
+
+# Name = Långhundra IF
+# Number = 5323
+# Checksum Admin = 8EF8-7CFA-3E4B
+
+checksum = "".join(
+    get_ocad2018_checksum(
+        2018,
+        int("5323"),
+        "Orienteering",
+        "Långhundra IF",
     )
 )
 print(checksum)
