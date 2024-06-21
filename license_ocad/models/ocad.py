@@ -20,6 +20,15 @@ def hex_to_int(s):
         # print(c+" .. "+ str(hx)  +"--- "+ str(ord(c)) )
     return hx
 
+def uppercase(oldStr: str):    
+    newStr = ''
+    for c in oldStr:  
+        if 'a' <= c <= 'z':    
+            newStr += chr(ord(c)-32)     
+        else:      
+            newStr += c
+    return newStr
+
 
 # Get key byte
 def pkv_get_key_byte(seed, a, b, c):
@@ -40,7 +49,7 @@ def get_ocad2018_checksum(v, lnum, e, lname):
     for i in [5, 6, 7, 8, 10, 11]:
         slist = list(
             hash_of_string(
-                "".join(slist).upper() + lname.upper() + str(lnum) + lname.upper()
+                "".join(slist).upper() + uppercase(lname) + str(lnum) + uppercase(lname)
             )
         )
         # print(''.join(slist))
@@ -58,7 +67,7 @@ def get_ocad2018_checksum(v, lnum, e, lname):
         + checksum[10]
         + checksum[11]
     )
-    # print(s)
+    #print(s)
     a = pkv_get_key_byte(hex_to_int(s), lnum % 256, v % 2000, 13)
     # a = pkv_get_key_byte(8406981, ln % 256, v % 2000, 13)
     sl = list("{0:02X}".format(a))
@@ -72,7 +81,7 @@ def get_ocad2018_checksum(v, lnum, e, lname):
     slist = list(s)
     # print(s)
 
-    slist = list(hash_of_string(e + "".join(slist).upper() + str(lnum) + lname.upper()))
+    slist = list(hash_of_string(e + "".join(slist).upper() + str(lnum) + uppercase(lname)))
     checksum[0] = slist[8]
     checksum[1] = slist[23]
     checksum[2] = slist[12]
