@@ -36,7 +36,7 @@ class SaleOrderLine(models.Model):
             "sale_line_id": self.id,
             "sale_order_id": self.order_id.id,
             "state": "assigned",
-            # "client_order_ref": self.order_id.client_order_ref,
+            "client_order_ref": self.order_id.client_order_ref,
         }
 
     def _update_license_quantity(self, qty=None):
