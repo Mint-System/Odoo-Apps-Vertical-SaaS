@@ -7,6 +7,13 @@
         <field name="license_type_id" ref="license.type0" />
     </record>
 
+    <record id="license.license_product1" model="product.product">
+        <field name="license_ok" eval="True" />
+        <field name="list_price">200</field>
+        <field name="license_policy">quantity</field>
+        <field name="license_type_id" ref="license.type1" />
+    </record>
+
     <record id="sale_order_50" model="sale.order">
         <field name="partner_id" ref="base.res_partner_address_5" />
         <field name="client_order_ref">Gemini Furniture</field>
@@ -18,7 +25,6 @@
         <field name="order_id" ref="sale_order_50" />
         <field name="product_id" ref="license.license_product0" />
         <field name="product_uom_qty">1</field>
-        <field name="price_unit">80</field>
     </record>
 
     <record id="sale_order_51" model="sale.order">
@@ -32,7 +38,6 @@
         <field name="order_id" ref="sale_order_51" />
         <field name="product_id" ref="license.license_product0" />
         <field name="product_uom_qty">2</field>
-        <field name="price_unit">100</field>
     </record>
 
     <record id="license.license1" model="license.license">

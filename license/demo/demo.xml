@@ -4,8 +4,16 @@
     <field name="name">Software License</field>
   </record>
 
+  <record id="license_product1" model="product.product">
+    <field name="name">Software License (Team)</field>
+  </record>
+
   <record id="type0" model="license.type">
-    <field name="name">Perpetual</field>
+    <field name="name">Single</field>
+  </record>
+
+  <record id="type1" model="license.type">
+    <field name="name">Team</field>
   </record>
 
   <record id="license0" model="license.license">

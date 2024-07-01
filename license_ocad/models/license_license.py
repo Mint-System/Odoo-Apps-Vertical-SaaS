@@ -6,7 +6,6 @@ import requests
 from odoo import _, api, fields, models
 
 _logger = logging.getLogger(__name__)
-from odoo.exceptions import ValidationError
 
 from . import ocad
 

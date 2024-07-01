@@ -12,6 +12,7 @@ class License(models.Model):
         "sale.order.line",
         string="Sales Order Item",
         copy=False,
+        tracking=True,
         domain="[('is_license', '=', True), ('state', 'in', ['sale', 'done']), ('order_partner_id', '=?', partner_id)]",
     )
     sale_order_id = fields.Many2one(
@@ -20,12 +21,7 @@ class License(models.Model):
         store=True,
         help="Sales order to which the license is linked.",
     )
-    client_order_ref = fields.Char(
-        string="Customer Reference",
-        copy=False,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
-    )
+    client_order_ref = fields.Char(related="sale_order_id.client_order_ref", store=True)
 
     def action_view_so(self):
         self.ensure_one()

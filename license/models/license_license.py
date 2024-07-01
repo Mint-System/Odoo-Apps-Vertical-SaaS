@@ -45,6 +45,7 @@ class License(models.Model):
         tracking=True,
         readonly=True,
         states={"draft": [("readonly", False)]},
+        domain=[("license_ok", "=", True)],
     )
     state = fields.Selection(
         selection=[
