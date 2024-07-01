@@ -52,7 +52,7 @@ class SaleOrderLine(models.Model):
                     lambda l: l.state in ["draft", "assigned", "active"]
                 )
             )
-            count_new_licenses = int(qty) - self.active_license_ids_count
+            count_new_licenses = int(qty) - active_license_ids_count
 
             for _qty in range(count_new_licenses):
                 values = self._prepare_license_values()

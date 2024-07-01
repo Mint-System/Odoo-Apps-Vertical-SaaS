@@ -93,6 +93,15 @@ class License(models.Model):
                 ) or _("New")
         return super().create(vals_list)
 
+    def copy(self, default=None):
+        self.ensure_one()
+        default = default or {}
+        if not default.get("name"):
+            default["name"] = self.env["ir.sequence"].next_by_code(
+                "license.license"
+            ) or _("New")
+        return super().copy(default)
+
     @api.depends("create_date")
     def _compute_key(self):
         for license in self.filtered(lambda l: l.key == _("New")):

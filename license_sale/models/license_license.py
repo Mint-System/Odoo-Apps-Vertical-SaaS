@@ -1,6 +1,6 @@
 import logging
 
-from odoo import _, fields, models
+from odoo import _, api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -11,7 +11,6 @@ class License(models.Model):
     sale_line_id = fields.Many2one(
         "sale.order.line",
         string="Sales Order Item",
-        copy=False,
         tracking=True,
         domain="[('is_license', '=', True), ('state', 'in', ['sale', 'done']), ('order_partner_id', '=?', partner_id)]",
     )
@@ -22,6 +21,13 @@ class License(models.Model):
         help="Sales order to which the license is linked.",
     )
     client_order_ref = fields.Char(related="sale_order_id.client_order_ref", store=True)
+    product_id = fields.Many2one(compute="_compute_product", copy=True, store=True)
+
+    @api.depends("sale_line_id", "sale_line_id.product_id")
+    def _compute_product(self):
+        for rec in self:
+            if rec.sale_line_id:
+                rec.product_id = rec.sale_line_id.product_id
 
     def action_view_so(self):
         self.ensure_one()
