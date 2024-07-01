@@ -54,6 +54,7 @@ class SaleOrderLine(models.Model):
             )
             count_new_licenses = int(qty) - active_license_ids_count
 
+            # _logger.warning([self.name, qty, active_license_ids_count, count_new_licenses])
             for _qty in range(count_new_licenses):
                 values = self._prepare_license_values()
                 license = self.env["license.license"].sudo().create(values)

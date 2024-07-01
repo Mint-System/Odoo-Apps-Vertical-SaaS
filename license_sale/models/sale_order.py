@@ -51,8 +51,3 @@ class SaleOrder(models.Model):
         else:
             action["views"] = [(view_tree_id, "tree"), (view_form_id, "form")]
         return action
-
-    def _action_cancel(self):
-        """On SO cancel, set related state on linked licenses."""
-        self.license_ids.write({"state": "cancelled"})
-        return super()._action_cancel()

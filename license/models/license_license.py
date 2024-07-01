@@ -13,6 +13,7 @@ class License(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _name = "license.license"
     _description = "License"
+    _order = "name desc"
 
     name = fields.Char(
         default=lambda self: _("New"),

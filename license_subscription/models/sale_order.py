@@ -37,3 +37,10 @@ class SaleOrder(models.Model):
             for line in new_order.order_line:
                 line.parent_line_id.license_ids.write({"sale_line_id": line.id})
         return action
+
+    def _action_cancel(self):
+        """Link licenses with previous sale order lines."""
+        for order in self:
+            for line in order.order_line:
+                line.license_ids.write({"sale_line_id": line.parent_line_id.id})
+        return super()._action_cancel()
