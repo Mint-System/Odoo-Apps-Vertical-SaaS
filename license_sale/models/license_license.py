@@ -20,14 +20,33 @@ class License(models.Model):
         store=True,
         help="Sales order to which the license is linked.",
     )
-    client_order_ref = fields.Char(related="sale_order_id.client_order_ref", store=True)
-    product_id = fields.Many2one(compute="_compute_product", copy=True, store=True)
+    client_order_ref = fields.Char(
+        string="Customer Reference",
+        compute="_compute_client_order_ref",
+        copy=True,
+        store=True,
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+    )
+    product_id = fields.Many2one(
+        compute="_compute_product",
+        copy=True,
+        store=True,
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+    )
 
     @api.depends("sale_line_id", "sale_line_id.product_id")
     def _compute_product(self):
         for rec in self:
             if rec.sale_line_id:
                 rec.product_id = rec.sale_line_id.product_id
+
+    @api.depends("sale_order_id", "sale_order_id.client_order_ref")
+    def _compute_product(self):
+        for rec in self:
+            if rec.sale_order_id:
+                rec.client_order_ref = rec.sale_order_id.client_order_ref
 
     def action_view_so(self):
         self.ensure_one()
