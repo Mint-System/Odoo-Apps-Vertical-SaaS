@@ -42,7 +42,7 @@
                     />
                     <button
                         name="action_cancel"
-                        states="active,disabled,expired"
+                        states="active,disabled"
                         type="object"
                         string="Cancel"
                     />
@@ -111,7 +111,7 @@
                     name="state"
                     decoration-success="state in ['assigned', 'active']"
                     decoration-info="state == 'draft'"
-                    decoration-danger="state in ['disabled', 'expired']"
+                    decoration-danger="state in ['disabled']"
                     decoration-muted="state == 'closed'"
                     widget="badge"
                 />

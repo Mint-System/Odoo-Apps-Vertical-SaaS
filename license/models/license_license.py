@@ -54,7 +54,6 @@ class License(models.Model):
             ("assigned", "Assigned"),
             ("active", "Active"),
             ("disabled", "Disabled"),
-            ("expired", "Expired"),
             ("cancelled", "Cancelled"),
         ],
         tracking=True,
@@ -107,6 +106,21 @@ class License(models.Model):
     def _compute_key(self):
         for license in self.filtered(lambda l: l.key == _("New")):
             license.key = str(uuid.uuid4()).upper()
+
+    # === Model Actions ===#
+
+    """
+    flowchart TD
+        A[Draft] -->|action_assign| B(Assigned)
+        B -->|action_draft| A
+        B -->|action_activate| C(Active)
+        C -->|action_reset| B
+        C -->|action_disable| D(Disabled)
+        D -->|action_enable| C
+        C -->|action_cancel| E(Cancelled)
+        D -->|action_cancel| E
+        E -->|action_draft| A
+    """
 
     def action_assign(self):
         for license in self:

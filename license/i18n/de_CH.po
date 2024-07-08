@@ -139,11 +139,6 @@ msgid "Enable"
 msgstr "Reaktivieren"
 
 #. module: license
-#: model:ir.model.fields.selection,name:license.selection__license_license__state__expired
-msgid "Expired"
-msgstr "Abgelaufen"
-
-#. module: license
 #: model:ir.model.fields,field_description:license.field_license_license__message_follower_ids
 msgid "Followers"
 msgstr ""

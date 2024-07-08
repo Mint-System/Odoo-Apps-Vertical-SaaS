@@ -13,10 +13,12 @@ from . import ocad
 class License(models.Model):
     _inherit = "license.license"
 
-    # Existing fields
+    # === Existing Fields ===#
+
     client_order_ref = fields.Char(required=True)
 
-    # New fields
+    # === New Fields ===#
+
     company_id = fields.Many2one(
         "res.company",
         string="Company",
@@ -56,6 +58,8 @@ class License(models.Model):
                     random.randint(0, 57)
                 ]  # randint includes both ends of the range
             license.download_token = result
+
+    # === API Methods ===#
 
     @api.depends("name", "product_id", "download_token", "key")
     def _compute_download_links(self):
@@ -119,8 +123,8 @@ class License(models.Model):
                 "https://www.ocad.com/ocadintern/db_newlicense/UpdateNewLicense2018.php"
             )
             params = {
-                "edition": edition_short,
                 "licenseNumber": license.name,
+                "edition": edition_short,
                 "checkSum": checksum,
                 "dwnlink": license.download_token,
                 "numberOfActivations": number_of_activations,
@@ -144,8 +148,8 @@ class License(models.Model):
 
             url = "https://www.ocad.com/ocadintern/db_increaseCounter/increaseCounter_2018.php"
             params = {
-                "edition": edition_short,
                 "licenseNumber": license.name,
+                "edition": edition_short,
             }
             auth = (self.company_id.ocad_username, self.company_id.ocad_password)
 
@@ -162,9 +166,28 @@ class License(models.Model):
 
             url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateSubscriptionEndDate2018.php"
             params = {
-                "edition": edition_short,
                 "licenseNumber": license.name,
+                "edition": edition_short,
                 "subEnd": license.date_end.strftime("%Y-%m-%d"),
+            }
+            auth = (self.company_id.ocad_username, self.company_id.ocad_password)
+
+            response = requests.post(url, params=params, auth=auth)
+            message += response.text + "\n"
+
+        return message
+
+    def _update_license_status(self, valid=True):
+        message = ""
+        for license in self.filtered(lambda l: l.state == "active" and l.date_end):
+
+            edition_short = license.product_id.get_value_by_key("EditionShort")
+
+            url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateLicenseStatus_2018.php"
+            params = {
+                "licenseNumber": license.name,
+                "edition": edition_short,
+                "valid": 1 if valid else 0,
             }
             auth = (self.company_id.ocad_username, self.company_id.ocad_password)
 
@@ -191,6 +214,18 @@ class License(models.Model):
                 "next": {"type": "ir.actions.act_window_close"},  # Refresh the form
             },
         }
+
+    # === Model Actions ===#
+
+    def action_disable(self):
+        super().action_disable()
+        message = self._update_license_status(valid=False)
+        return self._get_action_notification(message)
+
+    def action_enable(self):
+        super().action_enable()
+        message = self._update_license_status(valid=True)
+        return self._get_action_notification(message)
 
     def action_activate(self):
         """Create and enable license."""

@@ -36,6 +36,8 @@ class LicenseActivation(models.TransientModel):
             domain=domain, fields=fields, offset=offset, limit=limit, order=order
         )
 
+    # === API Methods ===#
+
     def _disable_activation(self):
         message = ""
         for activation in self:
@@ -128,6 +130,8 @@ class LicenseActivation(models.TransientModel):
                 "next": {"type": "ir.actions.act_window_close"},  # Refresh the form
             },
         }
+
+    # === Model Actions ===#
 
     def action_disable(self):
         message = self._disable_activation()

@@ -42,6 +42,8 @@ class LicenseStatus(models.TransientModel):
             domain=domain, fields=fields, offset=offset, limit=limit, order=order
         )
 
+    # === API Methods ===#
+
     @api.model
     def _get_activation_status(self, license_id):
         """Retrieve activations status data from license activation server."""
