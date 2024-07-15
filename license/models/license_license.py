@@ -61,11 +61,12 @@ class License(models.Model):
         copy=False,
         default="draft",
     )
-    date_start = fields.Date()
+    date_start = fields.Date(tracking=True)
     runtime = fields.Float("Runtime Months", default=12)
     date_end = fields.Date(
         compute="_compute_date_end",
         inverse="_inverse_date_end",
+        tracking=True,
     )
 
     @api.depends("date_start", "runtime")
@@ -127,6 +128,7 @@ class License(models.Model):
             license.write({"state": "assigned"})
 
     def action_activate(self):
+        """Set start date if not already set."""
         for license in self:
             license.write(
                 {
@@ -138,10 +140,12 @@ class License(models.Model):
             )
 
     def action_reset(self):
+        """Reset start and end date."""
         for license in self:
             license.write({"state": "assigned", "date_start": False, "date_end": False})
 
     def action_disable(self):
+        """Set end date if not already set."""
         for license in self:
             license.write({"state": "disabled", "date_end": fields.Datetime.now()})
 

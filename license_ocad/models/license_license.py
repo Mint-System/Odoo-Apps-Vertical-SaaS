@@ -179,7 +179,7 @@ class License(models.Model):
 
     def _update_license_status(self, valid=True):
         message = ""
-        for license in self.filtered(lambda l: l.state == "active" and l.date_end):
+        for license in self:
 
             edition_short = license.product_id.get_value_by_key("EditionShort")
 
@@ -217,16 +217,6 @@ class License(models.Model):
 
     # === Model Actions ===#
 
-    def action_disable(self):
-        super().action_disable()
-        message = self._update_license_status(valid=False)
-        return self._get_action_notification(message)
-
-    def action_enable(self):
-        super().action_enable()
-        message = self._update_license_status(valid=True)
-        return self._get_action_notification(message)
-
     def action_activate(self):
         """Create and enable license."""
         super().action_activate()
@@ -244,6 +234,16 @@ class License(models.Model):
                     }
                 )
 
+        return self._get_action_notification(message)
+
+    def action_disable(self):
+        super().action_disable()
+        message = self._update_license_status(valid=False)
+        return self._get_action_notification(message)
+
+    def action_enable(self):
+        super().action_enable()
+        message = self._update_license_status(valid=True)
         return self._get_action_notification(message)
 
     def action_unlock(self):

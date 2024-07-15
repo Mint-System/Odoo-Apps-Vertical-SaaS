@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-12 09:16+0000\n"
-"PO-Revision-Date: 2023-09-12 09:16+0000\n"
+"POT-Creation-Date: 2024-07-15 10:47+0000\n"
+"PO-Revision-Date: 2024-07-15 10:47+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -27,9 +27,16 @@ msgid "Can be licensed"
 msgstr "Ist lizenzierbar"
 
 #. module: license_sale
+#. odoo-python
+#: code:addons/license_sale/models/sale_order_line.py:0
+#, python-format
+msgid "Cannot create license without customer reference."
+msgstr ""
+
+#. module: license_sale
 #: model:ir.model.fields,field_description:license_sale.field_license_license__client_order_ref
 msgid "Customer Reference"
-msgstr "Lizenzname"
+msgstr "License Name"
 
 #. module: license_sale
 #: model:ir.model.fields,help:license_sale.field_product_product__license_ok
@@ -46,6 +53,7 @@ msgstr "Ist Lizenz"
 
 #. module: license_sale
 #: model:ir.model,name:license_sale.model_license_license
+#: model:ir.model.fields,field_description:license_sale.field_sale_order_line__license_ids
 #: model_terms:ir.ui.view,arch_db:license_sale.product_template_form_view
 msgid "License"
 msgstr "Lizenz"
@@ -98,6 +106,7 @@ msgstr "Lizenzen verknüpft mit Verkaufsauftrag"
 
 #. module: license_sale
 #: model:ir.model,name:license_sale.model_product_template
+#: model:ir.model.fields,field_description:license_sale.field_license_license__product_id
 msgid "Product"
 msgstr "Produkt"
 
@@ -107,6 +116,7 @@ msgstr "Produkt"
 #: model:ir.model,name:license_sale.model_sale_order
 #: model:ir.model.fields,field_description:license_sale.field_license_license__sale_order_id
 #: model_terms:ir.ui.view,arch_db:license_sale.license_view_form
+#: model_terms:ir.ui.view,arch_db:license_sale.license_view_search
 #, python-format
 msgid "Sales Order"
 msgstr "Verkaufsauftrag"
@@ -131,9 +141,4 @@ msgstr ""
 #: code:addons/license_sale/models/sale_order_line.py:0
 #, python-format
 msgid "This license has been created from: %s (%s)"
-msgstr "Diese Lizenz wurde erstellt aus: %s (%s)"
-
-#. module: license_sale
-#: model:ir.model.fields,field_description:license_sale.field_sale_order_line__license_ids
-msgid "sale_line_id"
-msgstr ""
+msgstr "Diese Lizens wurde erstellt aus: %s (%s)"
