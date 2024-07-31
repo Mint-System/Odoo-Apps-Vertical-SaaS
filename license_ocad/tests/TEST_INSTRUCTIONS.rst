@@ -11,6 +11,14 @@ Create license:
 - Click on the download link
 - The executeable "OCAD_2020_Mapping_Solution_Setup.exe" should be download
 
-Disable license:
+Disable/enable license:
 - Open the license created in the last step
 - Click on deactivate
+- The license is now locked
+- Click reactivate
+- The license is now enabled
+
+Update end date:
+- Change the end date
+- Click on "update end date"
+- The license end date should be updated

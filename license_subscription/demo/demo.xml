@@ -5,19 +5,19 @@
     </record>
 
     <record id="license_sale.sale_order_50" model="sale.order">
-        <field name="partner_id" ref="sale_temporal.recurrence_yearly" />
-        <field
+        <field name="recurrence_id" ref="sale_temporal.recurrence_yearly" />
+        <!-- <field
             name="end_date"
             eval="(DateTime.now() + timedelta(days=365)).strftime('%Y-%m-%d')"
-        />
+        /> -->
     </record>
 
     <record id="license_sale.sale_order_51" model="sale.order">
-        <field name="partner_id" ref="sale_temporal.recurrence_3_year" />
-        <field
+        <field name="recurrence_id" ref="sale_temporal.recurrence_3_year" />
+        <!-- <field
             name="end_date"
             eval="(DateTime.now() + timedelta(days=730)).strftime('%Y-%m-%d')"
-        />
+        /> -->
     </record>
 
 </odoo>

@@ -40,6 +40,10 @@ class License(models.Model):
     max_activations = fields.Integer(readonly=True)
     runtime = fields.Integer(compute="_compute_runtime", readonly=False, store=True)
 
+    def _inverse_date_end(self):
+        super()._inverse_date_end()
+        self._update_end_date()
+
     @api.depends("product_id")
     def _compute_runtime(self):
         for license in self:
@@ -135,7 +139,7 @@ class License(models.Model):
             }
             auth = (self.company_id.ocad_username, self.company_id.ocad_password)
 
-            response = requests.post(url, params=params, auth=auth)
+            response = requests.post(url, params=params, auth=auth, timeout=10)
             message += response.text + "\n"
 
         return message
@@ -153,7 +157,7 @@ class License(models.Model):
             }
             auth = (self.company_id.ocad_username, self.company_id.ocad_password)
 
-            response = requests.post(url, params=params, auth=auth)
+            response = requests.post(url, params=params, auth=auth, timeout=10)
             message += response.text + "\n"
 
         return message
@@ -172,7 +176,7 @@ class License(models.Model):
             }
             auth = (self.company_id.ocad_username, self.company_id.ocad_password)
 
-            response = requests.post(url, params=params, auth=auth)
+            response = requests.post(url, params=params, auth=auth, timeout=10)
             message += response.text + "\n"
 
         return message
@@ -191,7 +195,7 @@ class License(models.Model):
             }
             auth = (self.company_id.ocad_username, self.company_id.ocad_password)
 
-            response = requests.post(url, params=params, auth=auth)
+            response = requests.post(url, params=params, auth=auth, timeout=10)
             message += response.text + "\n"
 
         return message
@@ -199,7 +203,7 @@ class License(models.Model):
     def _get_action_notification(self, message):
         notification_type = "success"
         notification_sticky = False
-        if "FEHLER" in message or "Unauthorized" in message:
+        if "Error" in message or "FEHLER" in message or "Unauthorized" in message:
             notification_type = "danger"
             notification_sticky = True
 

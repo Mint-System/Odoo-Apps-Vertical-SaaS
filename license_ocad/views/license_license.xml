@@ -95,15 +95,18 @@
         </field>
     </record>
 
-    <record id="action_license_license_update_end_date" model="ir.actions.server">
+    <!-- <record id="action_license_license_update_end_date" model="ir.actions.server">
         <field name="name">Update Enddate</field>
         <field name="model_id" ref="license.model_license_license" />
         <field name="binding_model_id" ref="license.model_license_license" />
         <field name="binding_view_types" />
         <field name="state">code</field>
         <field name="code">message = records._update_end_date()
-action = env['license.license']._get_action_notification('End date of licenses have been updated: ' + message)
+if message:
+    action = env['license.license']._get_action_notification(message)
+else:
+    action = env['license.license']._get_action_notification("Error: Response empty.")
         </field>
-      </record>
+      </record> -->
 
 </odoo>

@@ -54,7 +54,7 @@ class LicenseActivation(models.TransientModel):
                 activation.license_id.company_id.ocad_password,
             )
 
-            response = requests.post(url, params=params, auth=auth)
+            response = requests.post(url, params=params, auth=auth, timeout=10)
             message += response.text + "\n"
 
         return message
@@ -77,7 +77,7 @@ class LicenseActivation(models.TransientModel):
                 license_id.company_id.ocad_password,
             )
 
-            response = requests.get(url, params=params, auth=auth)
+            response = requests.get(url, params=params, auth=auth, timeout=10)
 
             # Reponse is a semicolon separated string that has to be processed
             columns = 13
