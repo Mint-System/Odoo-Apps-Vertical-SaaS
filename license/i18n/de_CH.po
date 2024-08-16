@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-15 10:46+0000\n"
-"PO-Revision-Date: 2024-07-15 10:46+0000\n"
+"POT-Creation-Date: 2024-08-16 12:24+0000\n"
+"PO-Revision-Date: 2024-08-16 12:24+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -84,6 +84,11 @@ msgstr "Abgebrochen"
 #: model:ir.ui.menu,name:license.menu_configuration
 msgid "Configurations"
 msgstr "Konfiguration"
+
+#. module: license
+#: model:ir.model,name:license.model_res_partner
+msgid "Contact"
+msgstr ""
 
 #. module: license
 #: model:ir.model.fields,field_description:license.field_license_license__create_uid
@@ -219,10 +224,18 @@ msgstr ""
 
 #. module: license
 #: model:ir.model,name:license.model_license_license
+#: model:ir.model.fields,field_description:license.field_res_partner__license_ids
+#: model:ir.model.fields,field_description:license.field_res_users__license_ids
 #: model:ir.ui.menu,name:license.menu_root
 #: model_terms:ir.ui.view,arch_db:license.license_view_form
 msgid "License"
 msgstr "Lizenz"
+
+#. module: license
+#: model:ir.model.fields,field_description:license.field_res_partner__license_count
+#: model:ir.model.fields,field_description:license.field_res_users__license_count
+msgid "License Count"
+msgstr ""
 
 #. module: license
 #: model:ir.module.category,name:license.module_category_services_license
@@ -238,9 +251,13 @@ msgid "License Type"
 msgstr "Lizenztyp"
 
 #. module: license
+#. odoo-python
+#: code:addons/license/models/res_partner.py:0
 #: model:ir.actions.act_window,name:license.license_open_view_tree
 #: model:ir.ui.menu,name:license.menu_license
 #: model:ir.ui.menu,name:license.menu_licenses
+#: model_terms:ir.ui.view,arch_db:license.view_partner_form
+#, python-format
 msgid "Licenses"
 msgstr "Lizenzen"
 
@@ -272,12 +289,6 @@ msgstr ""
 
 #. module: license
 #. odoo-python
-#: code:addons/license/models/license_license.py:0
-#: code:addons/license/models/license_license.py:0
-#: code:addons/license/models/license_license.py:0
-#: code:addons/license/models/license_license.py:0
-#: code:addons/license/models/license_license.py:0
-#: code:addons/license/models/license_license.py:0
 #: code:addons/license/models/license_license.py:0
 #, python-format
 msgid "New"
@@ -335,7 +346,7 @@ msgstr ""
 
 #. module: license
 #: model:ir.model.fields,field_description:license.field_license_license__runtime
-msgid "Runtime"
+msgid "Runtime Months"
 msgstr "Laufzeit"
 
 #. module: license
