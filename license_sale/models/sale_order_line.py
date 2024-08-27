@@ -17,10 +17,16 @@ class SaleOrderLine(models.Model):
         for rec in self:
             rec.is_license = rec.product_id.license_ok
 
+    def write(self, vals):
+        res = super().write(vals)
+        for line in self:
+            line.update_license()
+        return res
+
     def update_license(self):
         """Public method to update licenses."""
         for line in self.filtered(
-            lambda l: not isinstance(l.id, models.NewId) and l.state in ["sale", "done"]
+            lambda l: not isinstance(l.id, models.NewId) and l.state in ["sale"] and l.is_license
         ):
             line._update_license_quantity(qty=line.product_uom_qty)
 

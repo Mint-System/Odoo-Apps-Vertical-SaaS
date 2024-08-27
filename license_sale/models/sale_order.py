@@ -17,11 +17,6 @@ class SaleOrder(models.Model):
         string="Licenses", compute="_compute_license_ids", groups="license.group_user"
     )
 
-    def write(self, vals):
-        res = super().write(vals)
-        self.order_line.filtered(lambda l: l.is_license).update_license()
-        return res
-
     @api.depends("order_line.product_id")
     def _compute_license_ids(self):
         for order in self:
