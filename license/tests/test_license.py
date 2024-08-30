@@ -1,7 +1,7 @@
 from odoo.tests import TransactionCase
 
 
-class test_license(TransactionCase):
+class TestLicense(TransactionCase):
     def test_action_assign(self):
         rec = self.env["license.license"].create(
             {

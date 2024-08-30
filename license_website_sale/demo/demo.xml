@@ -1,0 +1,11 @@
+<odoo>
+
+    <record id="license.license_product0" model="product.product">
+        <field name="website_published">True</field>
+    </record>
+
+    <record id="license.license_product1" model="product.product">
+        <field name="website_published">True</field>
+    </record>
+
+</odoo>

@@ -27,3 +27,4 @@ Run tests locally with Docker Compose.
 | [license_sale](license_sale) |         Sell software licenses. |
 | [license_subscription](license_subscription) |         Update license based on subscription changes. |
 | [license_website](license_website) |         Portal view for licenses. |
+| [license_website_sale](license_website_sale) |         Purchase licenses in the Odoo shop. |
