@@ -71,7 +71,7 @@ def get_ocad2018_checksum(v, lnum, e, lname):
     # print(s)
     a = pkv_get_key_byte(hex_to_int(s), lnum % 256, v % 2000, 13)
     # a = pkv_get_key_byte(8406981, ln % 256, v % 2000, 13)
-    sl = list("{0:02X}".format(a))
+    sl = list("{:02X}".format(a))
     checksum[12] = sl[0]
     checksum[13] = sl[1]
     # print(checksum)

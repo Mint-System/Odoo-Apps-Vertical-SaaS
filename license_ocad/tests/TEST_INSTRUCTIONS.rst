@@ -22,3 +22,24 @@ Update end date:
 - Change the end date
 - Click on "update end date"
 - The license end date should be updated
+
+Mail license inforamtion:
+- Open the sale order "S00021"
+- Set license quantity to 2
+- Open the "send message" dialog
+- Select the mail template "Sale: License Information"
+- Check if the generated mail is correct
+
+Mail subscription renewal:
+- Open the sale order "S00021"
+- Click on "Renew" and select "send by e-mail"
+- Open the "send message" dialog
+- Select the mail template "Sale: Subscription Renewal"
+- Check if the generated mail is correct
+
+Mail license unlock:
+- Show the licenses
+- Select license "L00004"
+- Open the "send message" dialog
+- Select the mail template "License: License Ulock"
+- Check if the generated mail is correct

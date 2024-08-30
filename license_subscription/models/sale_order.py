@@ -23,6 +23,7 @@ class SaleOrder(models.Model):
         )
         new_order = self.env["sale.order"].browse(action["res_id"])
         if new_order:
+            new_order.write({"validity_date": self.next_invoice_date})
             for line in new_order.order_line:
                 line.parent_line_id.license_ids.write({"sale_line_id": line.id})
         return action

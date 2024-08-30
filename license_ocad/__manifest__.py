@@ -13,6 +13,7 @@
         "security/ir.model.access.csv",
         "data/product_information_attribute_data.xml",
         "data/ir_sequence.xml",
+        "data/mail_templates.xml",
         "views/res_config_settings.xml",
         "views/license_license.xml",
         "views/license_activation.xml",

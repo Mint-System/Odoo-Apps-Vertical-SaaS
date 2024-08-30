@@ -89,7 +89,7 @@ class LicenseActivation(models.TransientModel):
                 start = i * columns
                 end = start + columns
 
-                status = re.search(".+\(\s(.+)\s\)", cells[start])
+                status = re.search(r".+\(\s(.+)\s\)", cells[start])
 
                 activations.append(
                     {

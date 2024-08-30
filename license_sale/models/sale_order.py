@@ -17,12 +17,6 @@ class SaleOrder(models.Model):
         string="Licenses", compute="_compute_license_ids", groups="license.group_user"
     )
 
-    def action_confirm(self):
-        """Update licenses on confimation."""
-        res = super().action_confirm()
-        self.order_line.update_license()
-        return res
-
     @api.depends("order_line.product_id")
     def _compute_license_ids(self):
         for order in self:
