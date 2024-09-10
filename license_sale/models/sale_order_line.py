@@ -18,12 +18,17 @@ class SaleOrderLine(models.Model):
             rec.is_license = rec.product_id.license_ok
 
     def _compute_qty_to_invoice(self):
+        """
+        Create licenses if qty to invice changes.
+        """
         super()._compute_qty_to_invoice()
         for line in self:
             line.update_license()
 
     def update_license(self):
-        """Public method to update licenses."""
+        """
+        Public method to update licenses.
+        """
         for line in self.filtered(
             lambda l: not isinstance(l.id, models.NewId)
             and l.state in ["sale"]
@@ -32,7 +37,9 @@ class SaleOrderLine(models.Model):
             line._update_license_quantity(qty=line.product_uom_qty)
 
     def _prepare_license_values(self):
-        """Prepare values for license creation."""
+        """
+        Prepare values for license creation.
+        """
         self.ensure_one()
         if not self.order_id.client_order_ref:
             raise UserError(_("Cannot create license without customer reference."))
@@ -47,7 +54,9 @@ class SaleOrderLine(models.Model):
         }
 
     def _update_license_quantity(self, qty=None):
-        """Create a license based on policy."""
+        """
+        Create a license based on policy.
+        """
         self.ensure_one()
         if self.product_id.license_ok:
             if not qty and self.product_id.license_policy == "quantity":

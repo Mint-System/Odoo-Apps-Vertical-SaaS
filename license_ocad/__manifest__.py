@@ -8,7 +8,7 @@
     "category": "Services",
     "version": "16.0.1.5.1",
     "license": "AGPL-3",
-    "depends": ["license_sale", "product_information_management"],
+    "depends": ["license_website_sale", "product_information_management"],
     "data": [
         "security/ir.model.access.csv",
         "data/product_information_attribute_data.xml",

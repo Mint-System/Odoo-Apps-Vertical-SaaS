@@ -6,6 +6,7 @@
         <field name="model_id" ref="sale.model_sale_order" />
         <field name="subject">OCAD License Information</field>
         <field name="email_from">{{ user.email_formatted }}</field>
+        <field name="partner_to">{{ object.partner_id.id }}</field>
         <field name="body_html" type="html">
             <div style="margin: 0px; padding: 0px;">
                 <p style="margin: 0px; padding: 0px; font-size: 13px;">Hello <t
@@ -34,7 +35,7 @@
                             t-out="license.product_id.get_value_by_key('EditionLong')"
                         /><br />
                     Checksum: <t t-out="license.key" /><br /> Start date: <t
-                            t-out="object.start_date.strftime('%d.%m.%Y')"
+                            t-out="license.date_start.strftime('%d.%m.%Y') or ''"
                         /><br /> End date: <t
                             t-out="license.date_end.strftime('%d.%m.%Y')"
                         /><br /> Download-Link: <a t-att-href="license.download_link">
@@ -121,6 +122,7 @@
         <field name="model_id" ref="license.model_license_license" />
         <field name="subject">OCAD License Unlock</field>
         <field name="email_from">{{ user.email_formatted }}</field>
+        <field name="partner_to">{{ object.partner_id.id }}</field>
         <field name="body_html" type="html">
             <div style="margin: 0px; padding: 0px; font-size: 13px;">
                 <p style="margin: 0px; padding: 0px; font-size: 13px;">Hello <t

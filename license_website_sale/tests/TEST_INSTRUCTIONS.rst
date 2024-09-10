@@ -1,5 +1,5 @@
 Product purchase:
-- Enable the demo payment provider
+- Enable the "Demo" payment provider
 - Enable "additional step in checkout"
 - Configure the form and set reference to required
 - Open the webshop site

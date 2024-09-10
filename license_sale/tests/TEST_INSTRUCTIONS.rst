@@ -13,6 +13,11 @@ New so line:
 - Add new line with product "Software License"
 - Check if there are 3 licenses
 
+Edit the licenses:
+- Open sale order "S00021"
+- Click on licenses link
+- Change name of the first license
+
 Duplicate order:
 - Open confirmed sale order "S00021"
 - Duplicate the order

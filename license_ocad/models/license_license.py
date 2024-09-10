@@ -103,6 +103,10 @@ class License(models.Model):
             ):
                 version = license.product_id.get_value_by_key("Version")
                 edition_long = license.product_id.get_value_by_key("EditionLong")
+
+                if not version or not edition_long:
+                    raise UserError(_("Missing product information fields"))
+
                 license.key = "".join(
                     ocad.get_ocad2018_checksum(
                         version,
@@ -114,89 +118,103 @@ class License(models.Model):
 
     def _create_license(self):
         message = ""
-        for license in self:
+        ocad_username = self.company_id.ocad_username
+        ocad_password = self.company_id.ocad_password
 
-            edition_short = license.product_id.get_value_by_key("EditionShort")
-            number_of_activations = license.product_id.get_value_by_key(
-                "NumberOfActivations"
-            )
-            is_team = license.product_id.get_value_by_key("IsTeam")
-            checksum = "".join(substring[0] for substring in license.key.split("-"))
+        if ocad_username and ocad_password:
+            for license in self:
 
-            url = (
-                "https://www.ocad.com/ocadintern/db_newlicense/UpdateNewLicense2018.php"
-            )
-            params = {
-                "licenseNumber": license.name,
-                "edition": edition_short,
-                "checkSum": checksum,
-                "dwnlink": license.download_token,
-                "numberOfActivations": number_of_activations,
-                "subBegin": license.date_start.strftime("%Y-%m-%d"),
-                "subEnd": license.date_end.strftime("%Y-%m-%d"),
-                "isTeam": is_team,
-                "reseller": "",
-            }
-            auth = (self.company_id.ocad_username, self.company_id.ocad_password)
+                edition_short = license.product_id.get_value_by_key("EditionShort")
+                number_of_activations = license.product_id.get_value_by_key(
+                    "NumberOfActivations"
+                )
+                is_team = license.product_id.get_value_by_key("IsTeam")
+                checksum = "".join(substring[0] for substring in license.key.split("-"))
 
-            response = requests.post(url, params=params, auth=auth, timeout=10)
-            message += response.text + "\n"
+                url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateNewLicense2018.php"
+                params = {
+                    "licenseNumber": license.name,
+                    "edition": edition_short,
+                    "checkSum": checksum,
+                    "dwnlink": license.download_token,
+                    "numberOfActivations": number_of_activations,
+                    "subBegin": license.date_start.strftime("%Y-%m-%d"),
+                    "subEnd": license.date_end.strftime("%Y-%m-%d"),
+                    "isTeam": is_team,
+                    "reseller": "",
+                }
+                auth = (ocad_username, ocad_password)
+
+                response = requests.post(url, params=params, auth=auth, timeout=10)
+                message += response.text + "\n"
 
         return message
 
     def _increase_counter(self):
         message = ""
-        for license in self:
+        ocad_username = self.company_id.ocad_username
+        ocad_password = self.company_id.ocad_password
 
-            edition_short = license.product_id.get_value_by_key("EditionShort")
+        if ocad_username and ocad_password:
+            for license in self:
 
-            url = "https://www.ocad.com/ocadintern/db_increaseCounter/increaseCounter_2018.php"
-            params = {
-                "licenseNumber": license.name,
-                "edition": edition_short,
-            }
-            auth = (self.company_id.ocad_username, self.company_id.ocad_password)
+                edition_short = license.product_id.get_value_by_key("EditionShort")
 
-            response = requests.post(url, params=params, auth=auth, timeout=10)
-            message += response.text + "\n"
+                url = "https://www.ocad.com/ocadintern/db_increaseCounter/increaseCounter_2018.php"
+                params = {
+                    "licenseNumber": license.name,
+                    "edition": edition_short,
+                }
+                auth = (ocad_username, ocad_password)
+
+                response = requests.post(url, params=params, auth=auth, timeout=10)
+                message += response.text + "\n"
 
         return message
 
     def _update_end_date(self):
         message = ""
-        for license in self.filtered(lambda l: l.state == "active" and l.date_end):
+        ocad_username = self.company_id.ocad_username
+        ocad_password = self.company_id.ocad_password
 
-            edition_short = license.product_id.get_value_by_key("EditionShort")
+        if ocad_username and ocad_password:
+            for license in self.filtered(lambda l: l.state == "active" and l.date_end):
 
-            url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateSubscriptionEndDate2018.php"
-            params = {
-                "licenseNumber": license.name,
-                "edition": edition_short,
-                "subEnd": license.date_end.strftime("%Y-%m-%d"),
-            }
-            auth = (self.company_id.ocad_username, self.company_id.ocad_password)
+                edition_short = license.product_id.get_value_by_key("EditionShort")
 
-            response = requests.post(url, params=params, auth=auth, timeout=10)
-            message += response.text + "\n"
+                url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateSubscriptionEndDate2018.php"
+                params = {
+                    "licenseNumber": license.name,
+                    "edition": edition_short,
+                    "subEnd": license.date_end.strftime("%Y-%m-%d"),
+                }
+                auth = (ocad_username, ocad_password)
+
+                response = requests.post(url, params=params, auth=auth, timeout=10)
+                message += response.text + "\n"
 
         return message
 
     def _update_license_status(self, valid=True):
         message = ""
-        for license in self:
+        ocad_username = self.company_id.ocad_username
+        ocad_password = self.company_id.ocad_password
 
-            edition_short = license.product_id.get_value_by_key("EditionShort")
+        if ocad_username and ocad_password:
+            for license in self:
 
-            url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateLicenseStatus_2018.php"
-            params = {
-                "licenseNumber": license.name,
-                "edition": edition_short,
-                "valid": 1 if valid else 0,
-            }
-            auth = (self.company_id.ocad_username, self.company_id.ocad_password)
+                edition_short = license.product_id.get_value_by_key("EditionShort")
 
-            response = requests.post(url, params=params, auth=auth, timeout=10)
-            message += response.text + "\n"
+                url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateLicenseStatus_2018.php"
+                params = {
+                    "licenseNumber": license.name,
+                    "edition": edition_short,
+                    "valid": 1 if valid else 0,
+                }
+                auth = (ocad_username, ocad_password)
+
+                response = requests.post(url, params=params, auth=auth, timeout=10)
+                message += response.text + "\n"
 
         return message
 
