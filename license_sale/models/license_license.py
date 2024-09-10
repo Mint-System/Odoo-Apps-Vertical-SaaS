@@ -26,14 +26,14 @@ class License(models.Model):
         copy=True,
         store=True,
         readonly=False,
-        states={"draft": [("readonly", False)]},
+        states={"draft": [("readonly", False)], "assigned": [("readonly", False)]},
     )
     product_id = fields.Many2one(
         compute="_compute_product",
         copy=True,
         store=True,
         readonly=True,
-        states={"draft": [("readonly", False)]},
+        states={"draft": [("readonly", False)], "assigned": [("readonly", False)]},
     )
 
     @api.depends("sale_order_id", "sale_order_id.client_order_ref")

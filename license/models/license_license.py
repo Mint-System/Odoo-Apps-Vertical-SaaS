@@ -19,7 +19,8 @@ class License(models.Model):
         default=lambda self: _("New"),
         required=True,
         readonly=True,
-        states={"draft": [("readonly", False)]},
+        states={"draft": [("readonly", False)], "assigned": [("readonly", False)]},
+        tracking=True,
     )
     key = fields.Char(
         default=lambda self: _("New"),
@@ -30,7 +31,9 @@ class License(models.Model):
         states={"draft": [("readonly", False)]},
     )
     type_id = fields.Many2one(
-        "license.type", readonly=True, states={"draft": [("readonly", False)]}
+        "license.type",
+        readonly=True,
+        states={"draft": [("readonly", False)], "assigned": [("readonly", False)]},
     )
     partner_id = fields.Many2one(
         "res.partner",
@@ -38,20 +41,20 @@ class License(models.Model):
         required=True,
         tracking=True,
         readonly=True,
-        states={"draft": [("readonly", False)]},
+        states={"draft": [("readonly", False)], "assigned": [("readonly", False)]},
     )
     product_id = fields.Many2one(
         "product.product",
         required=True,
         tracking=True,
         readonly=True,
-        states={"draft": [("readonly", False)]},
+        states={"draft": [("readonly", False)], "assigned": [("readonly", False)]},
         domain=[("license_ok", "=", True)],
     )
     state = fields.Selection(
         selection=[
             ("draft", "Draft"),
-            ("assigned", "Assigned"),
+            ("assigned", "Ready"),
             ("active", "Active"),
             ("disabled", "Disabled"),
             ("cancelled", "Cancelled"),

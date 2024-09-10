@@ -31,7 +31,7 @@ class SaleOrder(models.Model):
     def action_view_license(self):
         self.ensure_one()
         view_form_id = self.env.ref("license.license_view_form").id
-        view_tree_id = self.env.ref("license.license_view_tree").id
+        view_tree_id = self.env.ref("license.license_view_tree_editable").id
         action = {
             "type": "ir.actions.act_window",
             "domain": [("id", "in", self.license_ids.ids)],

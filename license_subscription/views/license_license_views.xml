@@ -5,6 +5,7 @@
         <field name="name">license_ocad.license_view_form</field>
         <field name="model">license.license</field>
         <field name="inherit_id" ref="license.license_view_form" />
+        <field name="priority">99</field>
         <field name="arch" type="xml">
 
             <field name="date_start" position="replace" />

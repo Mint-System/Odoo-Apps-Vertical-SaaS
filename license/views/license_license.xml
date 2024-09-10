@@ -119,6 +119,33 @@
         </field>
     </record>
 
+    <record id="license_view_tree_editable" model="ir.ui.view">
+        <field name="name">license.license_view_tree_editable</field>
+        <field name="model">license.license</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name" />
+                <field name="key" />
+                <field name="product_id" />
+                <field name="partner_id" />
+                <field
+                    name="state"
+                    decoration-success="state in ['assigned', 'active']"
+                    decoration-info="state == 'draft'"
+                    decoration-danger="state in ['disabled']"
+                    decoration-muted="state == 'closed'"
+                    widget="badge"
+                />
+                <button
+                    type="object"
+                    name="get_formview_action"
+                    string="Open"
+                    icon="fa-edit"
+                />
+            </tree>
+        </field>
+    </record>
+
     <record id="license_view_search" model="ir.ui.view">
         <field name="name">license.license_view_search</field>
         <field name="model">license.license</field>

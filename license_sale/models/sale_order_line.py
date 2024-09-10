@@ -17,11 +17,10 @@ class SaleOrderLine(models.Model):
         for rec in self:
             rec.is_license = rec.product_id.license_ok
 
-    def write(self, vals):
-        res = super().write(vals)
+    def _compute_qty_to_invoice(self):
+        super()._compute_qty_to_invoice()
         for line in self:
             line.update_license()
-        return res
 
     def update_license(self):
         """Public method to update licenses."""
