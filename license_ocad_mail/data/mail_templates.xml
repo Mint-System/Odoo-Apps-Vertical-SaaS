@@ -63,7 +63,7 @@
                     hesitate to contact us at <a
                         href="mailto:info@ocad.com"
                     >info@ocad.com</a>.<br /><br /> Best Regards,<br />
-                    <t t-out="team_id.name" />
+                    <t t-out="object.team_id.name" />
                 </p>
             </div>
         </field>
