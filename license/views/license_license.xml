@@ -126,6 +126,7 @@
             <tree editable="bottom">
                 <field name="name" />
                 <field name="key" />
+                <field name="date_end" />
                 <field name="product_id" />
                 <field name="partner_id" />
                 <field

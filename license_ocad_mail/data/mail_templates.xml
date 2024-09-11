@@ -63,7 +63,7 @@
                     hesitate to contact us at <a
                         href="mailto:info@ocad.com"
                     >info@ocad.com</a>.<br /><br /> Best Regards,<br />
-                    <t t-out="user.name" />
+                    <t t-out="team_id.name" />
                 </p>
             </div>
         </field>
@@ -124,7 +124,7 @@
         <field name="email_from">{{ user.email_formatted }}</field>
         <field name="partner_to">{{ object.partner_id.id }}</field>
         <field name="body_html" type="html">
-            <div style="margin: 0px; padding: 0px; font-size: 13px;">
+            <div style="margin: 0px; padding: 0px;">
                 <p style="margin: 0px; padding: 0px; font-size: 13px;">Hello <t
                         t-out="object.partner_id.name"
                     />,<br /><br />We have reset the license <strong>

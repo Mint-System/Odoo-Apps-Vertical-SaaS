@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-16 12:24+0000\n"
-"PO-Revision-Date: 2024-08-16 12:24+0000\n"
+"POT-Creation-Date: 2024-09-11 07:03+0000\n"
+"PO-Revision-Date: 2024-09-11 07:03+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -61,11 +61,6 @@ msgid "Assign"
 msgstr "Bestätigen"
 
 #. module: license
-#: model:ir.model.fields.selection,name:license.selection__license_license__state__assigned
-msgid "Assigned"
-msgstr "Ready"
-
-#. module: license
 #: model:ir.model.fields,field_description:license.field_license_license__message_attachment_count
 msgid "Attachment Count"
 msgstr ""
@@ -88,7 +83,7 @@ msgstr "Konfiguration"
 #. module: license
 #: model:ir.model,name:license.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #. module: license
 #: model:ir.model.fields,field_description:license.field_license_license__create_uid
@@ -290,9 +285,15 @@ msgstr ""
 #. module: license
 #. odoo-python
 #: code:addons/license/models/license_license.py:0
+#: code:addons/license/models/license_license.py:0
+#: code:addons/license/models/license_license.py:0
+#: code:addons/license/models/license_license.py:0
+#: code:addons/license/models/license_license.py:0
+#: code:addons/license/models/license_license.py:0
+#: code:addons/license/models/license_license.py:0
 #, python-format
 msgid "New"
-msgstr "Neu"
+msgstr ""
 
 #. module: license
 #: model:ir.model.fields,field_description:license.field_license_license__activity_date_deadline
@@ -330,9 +331,19 @@ msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: license
+#: model_terms:ir.ui.view,arch_db:license.license_view_tree_editable
+msgid "Open"
+msgstr ""
+
+#. module: license
 #: model:ir.model.fields,field_description:license.field_license_license__product_id
 msgid "Product"
 msgstr "Produkt"
+
+#. module: license
+#: model:ir.model.fields.selection,name:license.selection__license_license__state__assigned
+msgid "Ready"
+msgstr "Bereit"
 
 #. module: license
 #: model_terms:ir.ui.view,arch_db:license.license_view_form
@@ -346,8 +357,8 @@ msgstr ""
 
 #. module: license
 #: model:ir.model.fields,field_description:license.field_license_license__runtime
-msgid "Runtime Months"
-msgstr "Laufzeit"
+msgid "Runtime"
+msgstr ""
 
 #. module: license
 #: model_terms:ir.ui.view,arch_db:license.license_view_form

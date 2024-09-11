@@ -22,3 +22,8 @@ Close:
 - Confirm the renewal order
 - Return the original order that has been locked
 - Ensure no new license has been created
+
+Price rule:
+- Enable pricelists with discount
+- Add quantity discount 10% for 2 "software licenses"
+-

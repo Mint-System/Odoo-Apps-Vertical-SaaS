@@ -22,7 +22,7 @@ class License(models.Model):
     )
     client_order_ref = fields.Char(
         string="Customer Reference",
-        compute="_compute_client_order_ref",
+        # compute="_compute_client_order_ref",
         copy=True,
         store=True,
         readonly=False,
@@ -36,11 +36,11 @@ class License(models.Model):
         states={"draft": [("readonly", False)], "assigned": [("readonly", False)]},
     )
 
-    @api.depends("sale_order_id", "sale_order_id.client_order_ref")
-    def _compute_client_order_ref(self):
-        for rec in self:
-            if rec.sale_order_id:
-                rec.client_order_ref = rec.sale_order_id.client_order_ref
+    # @api.depends("sale_order_id", "sale_order_id.client_order_ref")
+    # def _compute_client_order_ref(self):
+    #     for rec in self:
+    #         if rec.sale_order_id:
+    #             rec.client_order_ref = rec.sale_order_id.client_order_ref
 
     @api.depends("sale_line_id", "sale_line_id.product_id")
     def _compute_product(self):

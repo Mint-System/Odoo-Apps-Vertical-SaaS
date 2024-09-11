@@ -1,0 +1,166 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* license_ocad_mail
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-09-11 07:04+0000\n"
+"PO-Revision-Date: 2024-09-11 07:04+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: license_ocad_mail
+#: model:mail.template,body_html:license_ocad_mail.mail_template_license_information
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">Hello <t t-out=\"object.partner_id.name\"></t>,<br><br> Thank you for your order. We\n"
+"                    hope you will enjoy using OCAD.<br><br>\n"
+"\n"
+"                    <strong>Important:</strong> This\n"
+"                    message contains the necessary information to get access to OCAD. Please store\n"
+"                    the message safely for future use.<br><br>\n"
+"\n"
+"                    <strong>Installing:</strong><br>\n"
+"                    New license: You can download, install, and activate the license using the\n"
+"                    license information below.<br> License renewal: You do not need to do\n"
+"                    anything. The license data remains the same, and the subscription expiration\n"
+"                    date is automatically extended.<br><br>\n"
+"\n"
+"                    <strong>License information:</strong><br><br>\n"
+"\n"
+"                    <t t-foreach=\"object.order_line.license_ids\" t-as=\"license\"> License name: <t t-out=\"license.client_order_ref\"></t><br>\n"
+"                    License number: <t t-out=\"license.name\"></t><br> Edition: <t t-out=\"license.product_id.get_value_by_key('EditionLong')\"></t><br>\n"
+"                    Checksum: <t t-out=\"license.key\"></t><br> Start date: <t t-out=\"license.date_start.strftime('%d.%m.%Y') or ''\"></t><br> End date: <t t-out=\"license.date_end.strftime('%d.%m.%Y')\"></t><br> Download-Link: <a t-att-href=\"license.download_link\">\n"
+"                            <t t-out=\"license.download_link\"></t>\n"
+"                        </a><br><br>\n"
+"                    </t>\n"
+"                    OCAD can be activated once. A second activation for Single User licenses is\n"
+"                    possible on request. For more information, see also our FAQ: <a href=\"https://www.ocad.com/en/faq/#subscription-model\">\n"
+"                    https://www.ocad.com/en/faq/#subscription-model</a><br><br>\n"
+"\n"
+"                    <strong>Introduction\n"
+"                    to OCAD:</strong><br> The OCAD Quick Start page is the perfect way to start\n"
+"                    with OCAD: <a href=\"https://www.ocad.com/wiki/ocad/en/index.php?title=OCAD_Quick_Start\">\n"
+"                    https://www.ocad.com/wiki/ocad/en/index.php?title=OCAD_Quick_Start</a><br><br>\n"
+"\n"
+"                    <strong>Questions\n"
+"                    and Feedback:</strong><br> If you have any questions or feedback, don't\n"
+"                    hesitate to contact us at <a href=\"mailto:info@ocad.com\">info@ocad.com</a>.<br><br> Best Regards,<br>\n"
+"                    <t t-out=\"team_id.name\"></t>\n"
+"                </p>\n"
+"            </div>\n"
+"        "
+msgstr ""
+
+#. module: license_ocad_mail
+#: model:mail.template,body_html:license_ocad_mail.mail_template_extend_subscription
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">Hello <t t-out=\"object.partner_id.name\"></t>,<br><br> Your existing OCAD subscription\n"
+"                    will expire on <strong>\n"
+"                        <t t-out=\"object.validity_date.strftime('%d.%m.%Y') or ''\"></t>\n"
+"                    </strong>\n"
+"                    :<br><br>\n"
+"\n"
+"                    <ul t-foreach=\"object.order_line\" t-as=\"line\">\n"
+"                        <t t-foreach=\"line.license_ids\" t-as=\"license\">\n"
+"                            <li>\n"
+"                                <t t-out=\"license.name\"></t> (<t t-out=\"license.client_order_ref\"></t>) <t t-out=\"license.product_id.display_name\"></t>: <t t-out=\"format_amount(line.price_subtotal, object.pricelist_id.currency_id)\"></t>\n"
+"                            </li>\n"
+"                        </t>\n"
+"                    </ul>\n"
+"                    To renew your OCAD subscription this offer <strong>\n"
+"                        <t t-out=\"object.name\"></t>\n"
+"                    </strong> in the amount of <strong>\n"
+"                        <t t-out=\"format_amount(object.amount_total, object.pricelist_id.currency_id)\"></t>\n"
+"                    </strong>\n"
+"                    is ready for payment.<br><br> If you would like to change your subscription,\n"
+"                    please reply to this mail or contact <a href=\"mailto:order@ocad.com\">\n"
+"                        order@ocad.com</a>.<br><br> If you have any questions, we are happy to\n"
+"                    assist you.<br><br> Best Regards,<br>\n"
+"                    <t t-out=\"object.team_id.name\"></t>\n"
+"                </p>\n"
+"            </div>\n"
+"        "
+msgstr ""
+
+#. module: license_ocad_mail
+#: model:mail.template,body_html:license_ocad_mail.mail_template_license_unlock
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">Hello <t t-out=\"object.partner_id.name\"></t>,<br><br>We have reset the license <strong>\n"
+"                        <t t-out=\"object.name\"></t>\n"
+"                    </strong> and activated it\n"
+"                    again.<br><br> Please find the license information below: <br><br>\n"
+"                    License name: <t t-out=\"object.client_order_ref\"></t><br> License number: <t t-out=\"object.name\"></t><br> Edition: <t t-out=\"object.product_id.get_value_by_key('EditionLong')\"></t> Checksum: <t t-out=\"object.key\"></t><br> Start date: <t t-out=\"object.sale_order_id.start_date.strftime('%d.%m.%Y')\"></t><br> End date: <t t-out=\"object.date_end.strftime('%d.%m.%Y')\"></t><br> Download link: <a t-att-href=\"object.download_link\">\n"
+"                        <t t-out=\"object.download_link\"></t>\n"
+"                    </a><br><br> Hint:\n"
+"                    Use the <a href=\"https://www.ocad.com/wiki/ocad/en/index.php?title=License_Transfer_Utility\">license\n"
+"                    transfer program</a> in the OCAD menu \"Help\" to transfer the license to another\n"
+"                    user.<br><br> Best Regards,<br>\n"
+"                    <t t-out=\"user.name\"></t>\n"
+"                </p>\n"
+"            </div>\n"
+"        "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">Hello <t t-out=\"object.partner_id.name\"></t>,<br><br>We have reset the license <strong>\n"
+"                        <t t-out=\"object.name\"></t>\n"
+"                    </strong> and activated it\n"
+"                    again.<br><br> Please find the license information below: <br><br>\n"
+"                    License name: <t t-out=\"object.client_order_ref\"></t><br> License number: <t t-out=\"object.name\"></t><br> Edition: <t t-out=\"object.product_id.get_value_by_key('EditionLong')\"></t> Checksum: <t t-out=\"object.key\"></t><br> Start date: <t t-out=\"object.sale_order_id.start_date.strftime('%d.%m.%Y')\"></t><br> End date: <t t-out=\"object.date_end.strftime('%d.%m.%Y')\"></t><br> Download link:\n"
+"                    Download-Link:&nbsp;<a t-att-href=\"object.download_link\">\n"
+"                        <t t-out=\"object.download_link\"></t>&nbsp;</a><br><br> Hint:\n"
+"                    If possible, please use the <a href=\"https://www.ocad.com/wiki/ocad/en/index.php?title=License_Transfer_Utility\">license\n"
+"                    transfer program</a> in the OCAD menu \"Help\" to transfer the license to another\n"
+"                    user.<br><br> Best Regards,<br>\n"
+"                    <t t-out=\"user.name\"></t>\n"
+"                </p>\n"
+"            </div>\n"
+"        "
+
+#. module: license_ocad_mail
+#: model:mail.template,name:license_ocad_mail.mail_template_license_unlock
+msgid "License: License Unlock "
+msgstr "Lizenz: Freischaltung Lizenz"
+
+#. module: license_ocad_mail
+#: model:mail.template,subject:license_ocad_mail.mail_template_license_information
+msgid "OCAD License Information"
+msgstr "OCAD Lizenzinformationen"
+
+#. module: license_ocad_mail
+#: model:mail.template,subject:license_ocad_mail.mail_template_license_unlock
+msgid "OCAD License Unlock"
+msgstr "OCAD Freischaltung Lizenz"
+
+#. module: license_ocad_mail
+#: model:mail.template,subject:license_ocad_mail.mail_template_extend_subscription
+msgid "OCAD Subscription Renewal"
+msgstr "OCAD Erneuerung Abonnement"
+
+#. module: license_ocad_mail
+#: model:mail.template,name:license_ocad_mail.mail_template_license_information
+msgid "Sale: License Information"
+msgstr "Verkauf: Lizenzinformationen"
+
+#. module: license_ocad_mail
+#: model:mail.template,name:license_ocad_mail.mail_template_extend_subscription
+msgid "Sale: Subscription Renewal"
+msgstr "Verkauf: Erneuerung Abonnement"
+
+#. module: license_ocad_mail
+#: model:ir.model,name:license_ocad_mail.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: license_ocad_mail
+#: model:ir.model,name:license_ocad_mail.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""

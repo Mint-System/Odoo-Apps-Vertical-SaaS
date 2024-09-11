@@ -17,7 +17,10 @@ class SaleOrder(models.Model):
             )
 
     def _prepare_renew_upsell_order(self, subscription_management, message_body):
-        """Link existing licenses to new sale order lines."""
+        """
+        Link existing licenses to new sale order lines.
+        Recaclulate prices from pricelist.
+        """
         action = super()._prepare_renew_upsell_order(
             subscription_management, message_body
         )
@@ -26,17 +29,22 @@ class SaleOrder(models.Model):
             new_order.write({"validity_date": self.next_invoice_date})
             for line in new_order.order_line:
                 line.parent_line_id.license_ids.write({"sale_line_id": line.id})
+            new_order._recompute_prices()
         return action
 
     def _action_cancel(self):
-        """Link licenses with previous sale order lines."""
+        """
+        Link licenses with previous sale order lines.
+        """
         for order in self:
             for line in order.order_line:
                 line.license_ids.write({"sale_line_id": line.parent_line_id.id})
         return super()._action_cancel()
 
     def unlink(self):
-        """Link licenses with previous sale order lines."""
+        """
+        Link licenses with previous sale order lines.
+        """
         for order in self:
             for line in order.order_line:
                 line.license_ids.write({"sale_line_id": line.parent_line_id.id})
