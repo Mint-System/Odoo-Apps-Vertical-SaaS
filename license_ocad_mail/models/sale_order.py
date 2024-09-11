@@ -25,7 +25,7 @@ class SaleOrder(models.Model):
 
                 # Send mail with license information
                 mail_template = self.env.ref(
-                    "license_ocad.mail_template_license_information"
+                    "license_ocad_mail.mail_template_license_information"
                 )
                 order.with_context(force_send=True).message_post_with_template(
                     mail_template.id,
