@@ -1,12 +1,12 @@
-End date:
-- Open sale order "S00021"
-- Confirm the sale order
-- Create an invoice
-- Open and post the invoice
+Start and end date:
+- Open sale order "S00021", change the start date plus 1 month.
+- Change the next invoice date to plus 1 month and create an invoice
+- Open and post the invoice then return to the sale order
 - Note the next invoice date of the sale order
-- Open the licenses and check the end date matches
+- Open the licenses and check if end dates are matching
 - Return to sale order and change the next invoice date
 - Check if the licenses have been updated accordingly
+- Then check if the license start date is the date of today
 
 Renew and cancel:
 - Create a new sale order for "Deco Addict"

@@ -13,6 +13,7 @@ class SaleOrderLine(models.Model):
         Add end date from subscription.
         """
         res = super()._prepare_license_values()
+        res["date_start"] = self.order_id.start_date
         res["date_end"] = self.order_id.next_invoice_date
         return res
 
