@@ -2,9 +2,9 @@
     :target: http://www.gnu.org/licenses/gpl-3.0-standalone.html
     :alt: License: GPL-3
 
-==========================
-License Management Website
-==========================
+=========================
+License Management Portal
+=========================
 
 Portal view for licenses.
 

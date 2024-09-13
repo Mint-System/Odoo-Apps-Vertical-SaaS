@@ -1,5 +1,5 @@
 {
-    "name": "License Management Website",
+    "name": "License Management Portal",
     "summary": """
         Portal view for licenses.
     """,

@@ -20,17 +20,19 @@ class SaleOrder(models.Model):
                 # Create licenses
                 order.order_line.update_license()
 
-                # Activate licenses
-                order.order_line.license_ids.action_activate()
+                if not order.licenses_already_exist:
 
-                # Send mail with license information
-                mail_template = self.env.ref(
-                    "license_ocad_mail.mail_template_license_information"
-                )
-                order.with_context(force_send=True).message_post_with_template(
-                    mail_template.id,
-                    composition_mode="comment",
-                    email_layout_xmlid="mail.mail_notification_light",
-                )
+                    # Activate licenses
+                    order.order_line.license_ids.action_activate()
+
+                    # Send mail with license information
+                    mail_template = self.env.ref(
+                        "license_ocad_mail.mail_template_license_information"
+                    )
+                    order.with_context(force_send=True).message_post_with_template(
+                        mail_template.id,
+                        composition_mode="comment",
+                        email_layout_xmlid="mail.mail_notification_light",
+                    )
 
         return res
