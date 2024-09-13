@@ -8,7 +8,11 @@
     "category": "Services",
     "version": "16.0.1.0.0",
     "license": "AGPL-3",
-    "depends": ["license_sale", "sale_subscription"],
+    "depends": [
+        "license_sale",
+        "sale_subscription",
+        "sale_order_line_pricelist_fixed_discount",
+    ],
     "data": ["views/license_license_views.xml"],
     "installable": True,
     "application": False,

@@ -29,7 +29,7 @@ class SaleOrder(models.Model):
             new_order.write({"validity_date": self.next_invoice_date})
             for line in new_order.order_line:
                 line.parent_line_id.license_ids.write({"sale_line_id": line.id})
-            new_order._recompute_prices()
+                line._compute_price_unit()
         return action
 
     def _action_cancel(self):

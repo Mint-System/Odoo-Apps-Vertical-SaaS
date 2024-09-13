@@ -24,6 +24,7 @@ Close:
 - Ensure no new license has been created
 
 Price rule:
-- Enable pricelists with discount
-- Add quantity discount 10% for 2 "Software Licenses"
--
+- Add fixed price discount 10% for min qty 2.0 of "Software License"
+- Change discount policy to not include discount in price
+- Open sale orer "S00021" and ensure there are 2.0 qty
+- Renew the order and ensure that the discount is applied
