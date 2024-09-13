@@ -49,7 +49,6 @@ class License(models.Model):
         tracking=True,
         readonly=True,
         states={"draft": [("readonly", False)], "assigned": [("readonly", False)]},
-        domain=[("license_ok", "=", True)],
     )
     state = fields.Selection(
         selection=[
@@ -67,24 +66,15 @@ class License(models.Model):
     date_start = fields.Date(tracking=True)
     runtime = fields.Float("Runtime Months", default=12)
     date_end = fields.Date(
-        compute="_compute_date_end",
-        inverse="_inverse_date_end",
-        tracking=True,
+        compute="_compute_date_end", tracking=True, store=True, readonly=False
     )
 
     @api.depends("date_start", "runtime")
     def _compute_date_end(self):
         """If runtime changes or date start update date end accordingly."""
         for license in self:
-            if license.date_start:
+            if license.date_start and not license.date_end:
                 license.date_end = license.date_start + relativedelta(
-                    months=license.runtime
-                )
-
-    def _inverse_date_end(self):
-        for license in self:
-            if license.date_end:
-                license.date_start = license.date_end - relativedelta(
                     months=license.runtime
                 )
 

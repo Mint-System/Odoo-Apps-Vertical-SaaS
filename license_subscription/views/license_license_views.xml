@@ -8,7 +8,6 @@
         <field name="priority">99</field>
         <field name="arch" type="xml">
 
-            <field name="date_start" position="replace" />
             <field name="runtime" position="replace" />
 
         </field>

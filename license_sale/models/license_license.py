@@ -22,10 +22,9 @@ class License(models.Model):
     )
     client_order_ref = fields.Char(
         string="Customer Reference",
-        # compute="_compute_client_order_ref",
         copy=True,
         store=True,
-        readonly=False,
+        readonly=True,
         states={"draft": [("readonly", False)], "assigned": [("readonly", False)]},
     )
     product_id = fields.Many2one(
@@ -34,13 +33,8 @@ class License(models.Model):
         store=True,
         readonly=True,
         states={"draft": [("readonly", False)], "assigned": [("readonly", False)]},
+        domain=[("license_ok", "=", True)],
     )
-
-    # @api.depends("sale_order_id", "sale_order_id.client_order_ref")
-    # def _compute_client_order_ref(self):
-    #     for rec in self:
-    #         if rec.sale_order_id:
-    #             rec.client_order_ref = rec.sale_order_id.client_order_ref
 
     @api.depends("sale_line_id", "sale_line_id.product_id")
     def _compute_product(self):

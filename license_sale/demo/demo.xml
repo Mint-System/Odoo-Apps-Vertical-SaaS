@@ -40,7 +40,6 @@
         <field name="product_uom_qty">2</field>
     </record>
 
-
     <record id="license.license0" model="license.license">
         <field name="client_order_ref">None</field>
     </record>

@@ -28,11 +28,6 @@ class SaleOrder(models.Model):
             )
             order.license_count = len(order.license_ids)
 
-    # def _compute_invoice_status(self):
-    #     super()._compute_invoice_status()
-    #     for order in self:
-    #         order.order_line.update_license()
-
     def action_view_license(self):
         self.ensure_one()
         view_form_id = self.env.ref("license.license_view_form").id

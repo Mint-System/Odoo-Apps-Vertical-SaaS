@@ -1,4 +1,5 @@
 One license:
+- Install the sale management app
 - Open sale order "S00021"
 - Confirm the sale order
 - Check if 1 license entry has been created

@@ -16,7 +16,7 @@ Mail license unlock:
 
 Mail license information:
 
-- Open website and by the "software license"
+- Open website and by the "Software License"
 - Open the sale order in the backend
 - Check if license information mail has been sent
 

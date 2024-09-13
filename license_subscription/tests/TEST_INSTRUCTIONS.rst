@@ -10,7 +10,7 @@ End date:
 
 Renew and cancel:
 - Create a new sale order for "Deco Addict"
-- Add product "software license" and recurrence yearly
+- Add product "Software License" and recurrence yearly
 - Set customer reference "OCAD" and confirm the order
 - Click on Renew
 - Check if license is linked with the new order
@@ -25,5 +25,5 @@ Close:
 
 Price rule:
 - Enable pricelists with discount
-- Add quantity discount 10% for 2 "software licenses"
+- Add quantity discount 10% for 2 "Software Licenses"
 -
