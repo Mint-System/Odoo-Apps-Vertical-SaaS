@@ -10,6 +10,7 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Added
 
 - Add product information attributes to team license demo data
+- Show tax name of mail template for license renewal
 
 ### Changed
 
@@ -27,7 +28,6 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Show runtime field on license form
 - Make sure runtime is editable
 - Added help to runtime field
-- 
 
 ### Removed
 

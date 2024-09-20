@@ -10,35 +10,52 @@
         <field name="body_html" type="html">
             <div style="margin: 0px; padding: 0px;">
                 <p style="margin: 0px; padding: 0px; font-size: 13px;">
-                    Hello <t t-out="object.partner_id.name"/>,<br /><br />
-                    Thank you for your order. We hope you will enjoy using OCAD.<br /><br />
+                    Hello <t t-out="object.partner_id.name" />,<br /><br />
+                    Thank you for your order. We hope you will enjoy using OCAD.<br
+                    /><br />
 
-                    <strong>Important:</strong> This message contains the necessary information to get access to OCAD. Please store the message safely for future use.<br /><br />
+                    <strong
+                    >Important:</strong> This message contains the necessary information to get access to OCAD. Please store the message safely for future use.<br
+                    /><br />
 
                     <strong>Installing:</strong><br />
 
-                    New license: You can download, install, and activate the license using the license information below.<br />
-                    License renewal: You do not need to do anything. The license data remains the same, and the subscription expiration date is automatically extended.<br /><br />
+                    New license: You can download, install, and activate the license using the license information below.<br
+                    />
+                    License renewal: You do not need to do anything. The license data remains the same, and the subscription expiration date is automatically extended.<br
+                    /><br />
 
                     <strong>License information:</strong><br /><br />
 
-                    <t t-foreach="object.order_line.license_ids" t-as="license" >
+                    <t t-foreach="object.order_line.license_ids" t-as="license">
                     License name: <t t-out="license.client_order_ref" /><br />
                     License number: <t t-out="license.name" /><br />
-                    Edition: <t t-out="license.product_id.get_value_by_key('EditionLong')" /><br />
+                    Edition: <t
+                            t-out="license.product_id.get_value_by_key('EditionLong')"
+                        /><br />
                     Checksum: <t t-out="license.key" /><br />
                     Runtime: <t t-out="license.runtime" /> months<br />
                     End date: <t t-out="license.date_end.strftime('%d.%m.%Y')" /><br />
-                    Download-Link: <a t-att-href="license.download_link"><t t-out="license.download_link" /></a><br /><br />
+                    Download-Link: <a t-att-href="license.download_link"><t
+                                t-out="license.download_link"
+                            /></a><br /><br />
                     </t>
 
-                    OCAD can be activated once. A second activation for Single User licenses is possible on request. For more information, see also our FAQ: <a href="https://www.ocad.com/en/faq/#subscription-model">https://www.ocad.com/en/faq/#subscription-model</a><br /><br />
+                    OCAD can be activated once. A second activation for Single User licenses is possible on request. For more information, see also our FAQ: <a
+                        href="https://www.ocad.com/en/faq/#subscription-model"
+                    >https://www.ocad.com/en/faq/#subscription-model</a><br /><br />
 
                     <strong>Introduction to OCAD:</strong><br />
-                    The OCAD Quick Start page is the perfect way to start with OCAD: <a href="https://www.ocad.com/wiki/ocad/en/index.php?title=OCAD_Quick_Start" >https://www.ocad.com/wiki/ocad/en/index.php?title=OCAD_Quick_Start</a><br /><br />
+                    The OCAD Quick Start page is the perfect way to start with OCAD: <a
+                        href="https://www.ocad.com/wiki/ocad/en/index.php?title=OCAD_Quick_Start"
+                    >https://www.ocad.com/wiki/ocad/en/index.php?title=OCAD_Quick_Start</a><br
+                    /><br />
 
-                    <strong>Questions and Feedback:</strong><br /> If you have any questions or feedback, don't hesitate to contact us at <a href="mailto:info@ocad.com">info@ocad.com</a>.<br /><br />
-                    
+                    <strong>Questions and Feedback:</strong><br
+                    /> If you have any questions or feedback, don't hesitate to contact us at <a
+                        href="mailto:info@ocad.com"
+                    >info@ocad.com</a>.<br /><br />
+
                     Best Regards,<br />
                     <t t-out="object.team_id.name" />
                 </p>
@@ -55,9 +72,11 @@
         <field name="body_html" type="html">
             <div style="margin: 0px; padding: 0px;">
                 <p style="margin: 0px; padding: 0px; font-size: 13px;">
-                    Hello <t t-out="object.partner_id.name"/>,<br /><br />
-                    
-                    Your existing OCAD subscription will expire on <strong><t t-out="object.validity_date.strftime('%d.%m.%Y') or ''" /></strong>:<br /><br />
+                    Hello <t t-out="object.partner_id.name" />,<br /><br />
+
+                    Your existing OCAD subscription will expire on <strong><t
+                            t-out="object.validity_date.strftime('%d.%m.%Y') or ''"
+                        /></strong>:<br /><br />
 
                     <ul t-foreach="object.order_line" t-as="line">
                         <t t-foreach="line.license_ids" t-as="license">
@@ -65,20 +84,28 @@
                                 <t t-out="license.name" /> (<t
                                     t-out="license.client_order_ref"
                                 />) <t t-out="license.product_id.display_name" />: <t
-                                    t-out="format_amount(line.unit_price_subtotal, object.pricelist_id.currency_id)"
+                                    t-out="format_amount(line.price_unit, object.pricelist_id.currency_id)"
                                 />
+                                <t t-if="line.tax_id"> + <t
+                                        t-out="line.tax_id.name"
+                                    /></t>
                             </li>
                         </t>
                     </ul>
-                    <t t-if="object.amount_tax">*Tax not included.</t><br />
 
-                    To renew your OCAD subscription this offer <strong><t t-out="object.name" /></strong> in the amount of <strong><t t-out="format_amount(object.amount_total, object.pricelist_id.currency_id)"/></strong>
+                    To renew your OCAD subscription this offer <strong><t
+                            t-out="object.name"
+                        /></strong> in the amount of <strong><t
+                            t-out="format_amount(object.amount_total, object.pricelist_id.currency_id)"
+                        /></strong>
                     is ready for payment.<br /><br />
-                    
-                    If you would like to change your subscription, please reply to this mail or contact <a href="mailto:order@ocad.com">order@ocad.com</a>.<br /><br /> 
-                    
+
+                    If you would like to change your subscription, please reply to this mail or contact <a
+                        href="mailto:order@ocad.com"
+                    >order@ocad.com</a>.<br /><br />
+
                     If you have any questions, we are happy to assist you.<br /><br />
-                    
+
                     Best Regards,<br />
                     <t t-out="object.team_id.name" />
                 </p>
@@ -96,21 +123,32 @@
             <div style="margin: 0px; padding: 0px;">
                 <p style="margin: 0px; padding: 0px; font-size: 13px;">
                     Hello <t t-out="object.partner_id.name" />,<br /><br />
-                    
-                    We have reset the license <strong> <t t-out="object.name" /></strong> and activated it again.<br /><br />
-                    
+
+                    We have reset the license <strong> <t
+                            t-out="object.name"
+                        /></strong> and activated it again.<br /><br />
+
                     Please find the license information below: <br /><br />
 
                     License name: <t t-out="object.client_order_ref" /><br />
                     License number: <t t-out="object.name" /><br />
-                    Edition: <t t-out="object.product_id.get_value_by_key('EditionLong')" />
+                    Edition: <t
+                        t-out="object.product_id.get_value_by_key('EditionLong')"
+                    />
                     Checksum: <t t-out="object.key" /><br />
-                    Start date: <t t-out="object.sale_order_id.start_date.strftime('%d.%m.%Y')" /><br />
+                    Start date: <t
+                        t-out="object.sale_order_id.start_date.strftime('%d.%m.%Y')"
+                    /><br />
                     End date: <t t-out="object.date_end.strftime('%d.%m.%Y')" /><br />
-                    Download link: <a t-att-href="object.download_link"><t t-out="object.download_link" /></a><br /><br />
-                    
-                    Hint: Use the <a href="https://www.ocad.com/wiki/ocad/en/index.php?title=License_Transfer_Utility">license transfer program</a> in the OCAD menu "Help" to transfer the license to another user.<br /><br />
-                    
+                    Download link: <a t-att-href="object.download_link"><t
+                            t-out="object.download_link"
+                        /></a><br /><br />
+
+                    Hint: Use the <a
+                        href="https://www.ocad.com/wiki/ocad/en/index.php?title=License_Transfer_Utility"
+                    >license transfer program</a> in the OCAD menu "Help" to transfer the license to another user.<br
+                    /><br />
+
                     Best Regards,<br />
                     <t t-out="user.name" />
                 </p>
