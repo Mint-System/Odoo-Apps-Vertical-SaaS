@@ -58,6 +58,7 @@
         <field name="attribute_type">integer</field>
     </record>
 
+    <!-- Version 2018 -->
     <record
         id="product_information_attribute_ocad0"
         model="product.information.attribute"
@@ -66,6 +67,7 @@
         <field name="attribute_type">integer</field>
         <field name="value_id" ref="product_information_value_ocad0" />
     </record>
+    <!-- Edition 70 -->
     <record
         id="product_information_attribute_ocad1"
         model="product.information.attribute"
@@ -74,6 +76,7 @@
         <field name="attribute_type">integer</field>
         <field name="value_id" ref="product_information_value_ocad1" />
     </record>
+    <!-- Edition Long Mapping Solution -->
     <record
         id="product_information_attribute_ocad2"
         model="product.information.attribute"
@@ -82,6 +85,7 @@
         <field name="attribute_type">char</field>
         <field name="value_id" ref="product_information_value_ocad2" />
     </record>
+    <!-- EditionShort MAS -->
     <record
         id="product_information_attribute_ocad3"
         model="product.information.attribute"
@@ -90,6 +94,7 @@
         <field name="attribute_type">char</field>
         <field name="value_id" ref="product_information_value_ocad3" />
     </record>
+    <!-- NumberOfActivations 1 -->
     <record
         id="product_information_attribute_ocad4"
         model="product.information.attribute"
@@ -98,6 +103,7 @@
         <field name="attribute_type">integer</field>
         <field name="value_id" ref="product_information_value_ocad4" />
     </record>
+    <!-- IsTeam 0 -->
     <record
         id="product_information_attribute_ocad5"
         model="product.information.attribute"
@@ -106,6 +112,7 @@
         <field name="attribute_type">integer</field>
         <field name="value_id" ref="product_information_value_ocad5" />
     </record>
+    <!-- Runtime 1 -->
     <record
         id="product_information_attribute_ocad6"
         model="product.information.attribute"
@@ -114,6 +121,7 @@
         <field name="attribute_type">integer</field>
         <field name="value_id" ref="product_information_value_ocad4" />
     </record>
+    <!-- Runtime 3 -->
     <record
         id="product_information_attribute_ocad7"
         model="product.information.attribute"
@@ -122,6 +130,7 @@
         <field name="attribute_type">integer</field>
         <field name="value_id" ref="product_information_value_ocad6" />
     </record>
+    <!-- IsTeam 1 -->
     <record
         id="product_information_attribute_ocad8"
         model="product.information.attribute"
