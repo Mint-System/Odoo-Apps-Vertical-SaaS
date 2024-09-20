@@ -122,5 +122,13 @@
         <field name="attribute_type">integer</field>
         <field name="value_id" ref="product_information_value_ocad6" />
     </record>
+    <record
+        id="product_information_attribute_ocad8"
+        model="product.information.attribute"
+    >
+        <field name="key_id" ref="product_information_key_ocad5" />
+        <field name="attribute_type">integer</field>
+        <field name="value_id" ref="product_information_value_ocad4" />
+    </record>
 
 </odoo>

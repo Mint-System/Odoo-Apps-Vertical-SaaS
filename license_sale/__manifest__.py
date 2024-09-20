@@ -8,7 +8,11 @@
     "category": "Services",
     "version": "16.0.1.4.0",
     "license": "AGPL-3",
-    "depends": ["license", "sale"],
+    "depends": [
+        "license",
+        "sale_order_line_pricelist_fixed_discount",
+        "sale_management",
+    ],
     "data": [
         "views/product_template.xml",
         "views/license_license.xml",

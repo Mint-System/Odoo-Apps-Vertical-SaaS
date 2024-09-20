@@ -10,10 +10,10 @@
     "license": "AGPL-3",
     "depends": ["base", "product"],
     "data": [
+        "security/security.xml",
         "views/license_license.xml",
         "views/license_type.xml",
         "views/res_partner.xml",
-        "security/security.xml",
         "data/ir_sequence.xml",
         "security/ir.model.access.csv",
     ],

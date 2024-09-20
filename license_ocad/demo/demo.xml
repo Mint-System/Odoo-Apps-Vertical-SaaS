@@ -4,17 +4,32 @@
         <field
             name="attribute_ids"
             eval="[
-      (4, ref('product_information_attribute_ocad0')),
-      (4, ref('product_information_attribute_ocad1')),
-      (4, ref('product_information_attribute_ocad2')),
-      (4, ref('product_information_attribute_ocad3')),
-      (4, ref('product_information_attribute_ocad4')),
-      (4, ref('product_information_attribute_ocad5')),
-      (4, ref('product_information_attribute_ocad6')),
-      (4, ref('product_information_attribute_ocad7'))
+        (4, ref('product_information_attribute_ocad0')),
+        (4, ref('product_information_attribute_ocad1')),
+        (4, ref('product_information_attribute_ocad2')),
+        (4, ref('product_information_attribute_ocad3')),
+        (4, ref('product_information_attribute_ocad4')),
+        (4, ref('product_information_attribute_ocad5')),
+        (4, ref('product_information_attribute_ocad6')),
       ]"
         />
     </record>
+
+    <record id="license.license_product1" model="product.product">
+        <field
+            name="attribute_ids"
+            eval="[
+        (4, ref('product_information_attribute_ocad0')),
+        (4, ref('product_information_attribute_ocad1')),
+        (4, ref('product_information_attribute_ocad2')),
+        (4, ref('product_information_attribute_ocad3')),
+        (4, ref('product_information_attribute_ocad4')),
+        (4, ref('product_information_attribute_ocad7')),
+        (4, ref('product_information_attribute_ocad8'))
+      ]"
+        />
+    </record>
+
 
     <record id="license.seq_license_license" model="ir.sequence">
         <field name="number_next_actual">60000</field>
@@ -24,11 +39,18 @@
 
     <record id="license2" model="license.license">
         <field name="name">5002</field>
-        <!-- <field name="key">5E27-8047-C507</field> -->
         <field name="product_id" ref="license.license_product0" />
         <field name="client_order_ref">OCAD AG</field>
         <field name="type_id" ref="license.type0" />
         <field name="partner_id" ref="base.res_partner_address_31" />
+    </record>
+
+    <record id="license.license0" model="license.license">
+        <field name="name">60000</field>
+    </record>
+
+    <record id="license.license1" model="license.license">
+        <field name="name">60001</field>
     </record>
 
 </odoo>

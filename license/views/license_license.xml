@@ -55,7 +55,7 @@
                     <field
                         name="state"
                         widget="statusbar"
-                        statusbar_visible="draft,assigned,active,disabled,cancelled"
+                        statusbar_visible="draft,assigned,active,disabled"
                     />
                 </header>
                 <sheet>

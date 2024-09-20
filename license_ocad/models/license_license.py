@@ -16,6 +16,12 @@ class License(models.Model):
 
     # === Existing Fields ===#
 
+    # name = fields.Integer(
+    #     required=True,
+    #     readonly=True,
+    #     states={"draft": [("readonly", False)], "assigned": [("readonly", False)]},
+    #     tracking=True,
+    # )
     client_order_ref = fields.Char(required=True)
 
     # === New Fields ===#
@@ -39,7 +45,12 @@ class License(models.Model):
     active_activations = fields.Integer(readonly=True)
     registered_activations = fields.Integer(readonly=True)
     max_activations = fields.Integer(readonly=True)
-    runtime = fields.Integer(compute="_compute_runtime", readonly=False, store=True)
+    runtime = fields.Integer(
+        compute="_compute_runtime",
+        readonly=True,
+        store=True,
+        help="Computed from production information attribute.",
+    )
 
     def _inverse_date_end(self):
         super()._inverse_date_end()

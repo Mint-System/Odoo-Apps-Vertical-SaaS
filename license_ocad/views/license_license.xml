@@ -76,14 +76,6 @@
 
             <button name="action_activate" position="after">
                 <button
-                    name="action_update_end_date"
-                    states="active"
-                    type="object"
-                    string="Update Enddate"
-                    class="btn-primary"
-                    attrs="{'invisible': [('state', '!=', 'active')]}"
-                />
-                <button
                     name="action_unlock"
                     states="active"
                     type="object"

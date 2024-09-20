@@ -1,6 +1,6 @@
 import logging
 
-from odoo import models, fields
+from odoo import fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -8,4 +8,7 @@ _logger = logging.getLogger(__name__)
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    licenses_already_exist = fields.Boolean(string="I already have an OCAD license/subscription", default=False)
+    license_exists = fields.Boolean(
+        help="Mark this option if you already own a OCAD license/subscription.",
+        default=False,
+    )

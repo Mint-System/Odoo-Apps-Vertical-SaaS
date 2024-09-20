@@ -13,7 +13,6 @@
         "sale_subscription",
         "sale_order_line_pricelist_fixed_discount",
     ],
-    "data": ["views/license_license_views.xml"],
     "installable": True,
     "application": False,
     "auto_install": False,

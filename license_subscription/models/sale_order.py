@@ -37,7 +37,7 @@ class SaleOrder(models.Model):
         Link licenses with previous sale order lines.
         """
         for order in self:
-            for line in order.order_line:
+            for line in order.order_line.filtered(lambda l: l.parent_line_id):
                 line.license_ids.write({"sale_line_id": line.parent_line_id.id})
         return super()._action_cancel()
 
@@ -46,6 +46,6 @@ class SaleOrder(models.Model):
         Link licenses with previous sale order lines.
         """
         for order in self:
-            for line in order.order_line:
+            for line in order.order_line.filtered(lambda l: l.parent_line_id):
                 line.license_ids.write({"sale_line_id": line.parent_line_id.id})
         return super().unlink()

@@ -7,6 +7,16 @@
         <field name="license_type_id" ref="license.type0" />
     </record>
 
+    <record id="license_product0_pricelist" model="product.pricelist.item">
+        <field name="base">list_price</field>
+        <field name="applied_on">1_product</field>
+        <field name="pricelist_id" ref="product.list0" />
+        <field name="product_tmpl_id" ref="license.license_product0_product_template" />
+        <field name="fixed_price">80</field>
+        <field name="price_discount">10</field>
+        <field name="min_quantity">2</field>
+    </record>
+
     <record id="license.license_product1" model="product.product">
         <field name="license_ok" eval="True" />
         <field name="list_price">200</field>
@@ -43,7 +53,6 @@
     <record id="license.license0" model="license.license">
         <field name="client_order_ref">None</field>
     </record>
-
 
     <record id="license.license1" model="license.license">
         <field name="client_order_ref">Gemini Furniture</field>
