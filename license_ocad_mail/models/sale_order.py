@@ -20,7 +20,7 @@ class SaleOrder(models.Model):
                 # Create licenses
                 order.order_line.update_license()
 
-                if not order.licenses_already_exist:
+                if not order.license_exists:
 
                     # Activate licenses
                     order.order_line.license_ids.action_activate()
