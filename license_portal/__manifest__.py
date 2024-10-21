@@ -8,7 +8,7 @@
     "category": "Services",
     "version": "16.0.1.1.0",
     "license": "AGPL-3",
-    "depends": ["license", "portal"],
+    "depends": ["license", "website_sale"],
     "data": [
         "views/license_portal.xml",
         "views/license_license.xml",

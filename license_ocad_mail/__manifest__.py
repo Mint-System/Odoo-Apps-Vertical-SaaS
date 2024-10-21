@@ -8,7 +8,7 @@
     "category": "Services",
     "version": "16.0.1.0.0",
     "license": "AGPL-3",
-    "depends": ["license_ocad"],
+    "depends": ["license_ocad", "license_subscription"],
     "data": [
         "data/mail_templates.xml",
     ],

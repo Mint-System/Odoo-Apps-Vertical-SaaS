@@ -86,7 +86,7 @@
                                 />) <t t-out="license.product_id.display_name" />: <t
                                     t-out="format_amount(line.price_unit, object.pricelist_id.currency_id)"
                                 />
-                                <t t-if="line.tax_id"> + <t
+                                <t t-if="line.tax_id.amount"> + <t
                                         t-out="line.tax_id.name"
                                     /></t>
                             </li>
@@ -97,7 +97,7 @@
                             t-out="object.name"
                         /></strong> in the amount of <strong><t
                             t-out="format_amount(object.amount_total, object.pricelist_id.currency_id)"
-                        /></strong>
+                        /><t t-if="object.amount_tax"> (incl. VAT)</t></strong>
                     is ready for payment.<br /><br />
 
                     If you would like to change your subscription, please reply to this mail or contact <a
