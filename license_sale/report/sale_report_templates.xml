@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//td[@name='td_name']/span" position="after">
+            <t t-if="line.license_ids">
+                <br />
+                <span>License number (name): <t t-out="', '.join(['%s (%s)' % (license.name, license.client_order_ref) for license in line.license_ids])" /></span>
+            </t>
+        </xpath>
+    </template>
+</odoo>

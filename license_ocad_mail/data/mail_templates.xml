@@ -87,7 +87,7 @@
                                     t-out="format_amount(line.price_unit, object.pricelist_id.currency_id)"
                                 />
                                 <t t-if="line.tax_id.amount"> + <t
-                                        t-out="line.tax_id.name"
+                                        t-out="line.tax_id.description or line.tax_id.name"
                                     /></t>
                             </li>
                         </t>
