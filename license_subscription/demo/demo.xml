@@ -1,7 +1,25 @@
 <odoo>
 
+    <record id="license_product_pricing_0" model="product.pricing">
+        <field name="recurrence_id" ref="sale_temporal.recurrence_yearly" />
+        <field name="pricelist_id" ref="product.list0" />
+        <field name="price" eval="80" />
+        <field name="currency_id" ref="base.USD" />
+    </record>
+
+    <record id="license_product_pricing_1" model="product.pricing">
+        <field name="recurrence_id" ref="sale_temporal.recurrence_3_year" />
+        <field name="pricelist_id" ref="product.list0" />
+        <field name="price" eval="240" />
+        <field name="currency_id" ref="base.USD" />
+    </record>
+
     <record id="license.license_product0" model="product.product">
         <field name="recurring_invoice" eval="True" />
+        <field
+            name="product_pricing_ids"
+            eval="[(6,0,[ref('license_product_pricing_0'), ref('license_product_pricing_1')])]"
+        />
     </record>
 
     <record id="license_sale.sale_order_50" model="sale.order">

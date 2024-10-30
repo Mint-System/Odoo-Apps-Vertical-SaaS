@@ -11,6 +11,7 @@ class License(models.Model):
     sale_line_id = fields.Many2one(
         "sale.order.line",
         string="Sales Order Item",
+        ondelete="restrict",
         tracking=True,
         domain="[('is_license', '=', True), ('state', 'in', ['sale', 'done']), ('order_partner_id', '=?', partner_id)]",
     )

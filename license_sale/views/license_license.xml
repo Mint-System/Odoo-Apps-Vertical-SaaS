@@ -36,6 +36,7 @@
 
             <field name="name" position="after">
                 <field name="client_order_ref" />
+                <field name="sale_line_id" optional="show" />
             </field>
 
         </field>
