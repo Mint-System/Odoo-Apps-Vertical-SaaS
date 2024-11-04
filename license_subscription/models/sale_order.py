@@ -30,7 +30,6 @@ class SaleOrder(models.Model):
             for line in new_order.order_line:
                 parent_line_id = line.parent_line_id
                 parent_line_id.license_ids.write({"sale_line_id": line.id})
-                # (line + parent_line_id).write({"price_unit": False})
 
             # When prices are updated the link to parent lines is broken
             # Update the prices for this order and new order
