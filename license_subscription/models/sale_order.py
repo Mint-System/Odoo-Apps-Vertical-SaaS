@@ -33,8 +33,8 @@ class SaleOrder(models.Model):
 
             # When prices are updated the link to parent lines is broken
             # Update the prices for this order and new order
-            self.action_update_prices()
             new_order.action_update_prices()
+            self.action_update_prices()
 
         return action
 
