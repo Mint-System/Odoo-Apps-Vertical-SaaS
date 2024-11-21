@@ -28,13 +28,16 @@ class SaleOrder(models.Model):
         if new_order:
             new_order.write({"validity_date": self.next_invoice_date})
             for line in new_order.order_line:
-                parent_line_id = line.parent_line_id
-                parent_line_id.license_ids.write({"sale_line_id": line.id})
+                line.parent_line_id.license_ids.write(
+                    {
+                        "sale_line_id": line.id,
+                        "parent_sale_line_id": line.parent_line_id.id,
+                    }
+                )
 
             # When prices are updated the link to parent lines is broken
             # Update the prices for this order and new order
             new_order.action_update_prices()
-            self.action_update_prices()
 
         return action
 
@@ -42,17 +45,18 @@ class SaleOrder(models.Model):
         """
         Link licenses with previous sale order lines.
         """
-        for order in self:
-            for line in order.order_line.filtered(lambda l: l.parent_line_id):
-                line.license_ids.write({"sale_line_id": line.parent_line_id.id})
+        for license in self.order_line.license_ids.filtered(
+            lambda l: l.parent_sale_line_id
+        ):
+            license.write({"sale_line_id": license.parent_line_id.id})
         return super()._action_cancel()
 
     def unlink(self):
         """
         Link licenses with previous sale order lines.
         """
-        for order in self:
-            _logger.warning(order.order_line.parent_line_id)
-            for line in order.order_line.filtered(lambda l: l.parent_line_id):
-                line.license_ids.write({"sale_line_id": line.parent_line_id.id})
+        for license in self.order_line.license_ids.filtered(
+            lambda l: l.parent_sale_line_id
+        ):
+            license.write({"sale_line_id": license.parent_sale_line_id.id})
         return super().unlink()
