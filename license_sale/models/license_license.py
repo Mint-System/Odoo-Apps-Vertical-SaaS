@@ -13,7 +13,7 @@ class License(models.Model):
         string="Sales Order Item",
         ondelete="restrict",
         tracking=True,
-        domain="[('is_license', '=', True), ('state', 'in', ['draft', 'sale']), ('order_partner_id', '=?', partner_id)]",
+        domain="[('is_license', '=', True), ('state', 'in', ['draft', 'sale'])]",
     )
     sale_order_id = fields.Many2one(
         string="Sales Order",
