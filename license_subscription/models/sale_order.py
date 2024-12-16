@@ -28,6 +28,12 @@ class SaleOrder(models.Model):
         if new_order:
             new_order.write({"validity_date": self.next_invoice_date})
             for line in new_order.order_line:
+
+                # Transfer discounts
+                line.discount2 = line.parent_line_id.discount2
+                line.discount3 = line.parent_line_id.discount3
+
+                # Link license to new line
                 line.parent_line_id.license_ids.write(
                     {
                         "sale_line_id": line.id,
