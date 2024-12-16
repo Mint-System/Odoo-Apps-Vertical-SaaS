@@ -31,19 +31,6 @@
                         class="oe_inline"
                     />
                     <field name="max_activations" nolabel="1" class="oe_inline" />
-                    <button
-                        name="action_get_activations"
-                        attrs="{'invisible': [('registered', '=', 'True')]}"
-                        type="object"
-                        class="btn-link"
-                    >
-                        <i
-                            title="Get Activations"
-                            role="img"
-                            aria-label="Get Activations"
-                            class="fa fa-refresh"
-                        />
-                    </button>
                 </div>
                 <field
                     name="download_link"

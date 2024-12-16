@@ -42,9 +42,18 @@ class License(models.Model):
         compute="_compute_download_links", readonly=True, store=True
     )
     registered = fields.Boolean(readonly=True, help="License registered with Odoo.")
-    active_activations = fields.Integer(readonly=True)
-    registered_activations = fields.Integer(readonly=True)
-    max_activations = fields.Integer(readonly=True)
+    active_activations = fields.Integer(
+        compute="_compute_license_activations", compute_sudo=True, readonly=True
+    )
+    registered_activations = fields.Integer(
+        compute="_compute_license_activations", compute_sudo=True, readonly=True
+    )
+    max_activations = fields.Integer(
+        compute="_compute_license_activations",
+        compute_sudo=True,
+        store=True,
+        readonly=True,
+    )
     runtime = fields.Integer(
         compute="_compute_runtime",
         readonly=True,
@@ -61,6 +70,25 @@ class License(models.Model):
         for license in self:
             if license.product_id and license.name != _("New"):
                 license.runtime = license.product_id.get_value_by_key("Runtime") * 12
+
+    def _compute_license_activations(self):
+        for license in self:
+            if len(self) == 1:
+                activations, license_data = self.env[
+                    "license.activation"
+                ]._get_activations(license)
+                if license_data:
+                    license.active_activations = license_data["active_activations"]
+                    license.registered_activations = license_data[
+                        "registered_activations"
+                    ]
+                    license.max_activations = license_data["max_activations"]
+                else:
+                    license.active_activations = 0
+                    license.registered_activations = 0
+            else:
+                license.active_activations = 0
+                license.registered_activations = 0
 
     @api.depends("name")
     def _compute_download_token(self):
@@ -288,9 +316,6 @@ class License(models.Model):
                 self.write({"max_activations": license.max_activations + 1})
 
         return self._get_action_notification(message)
-
-    def action_get_activations(self):
-        self.env["license.activation"].get_activations(self)
 
     def action_update_end_date(self):
         message = self._update_end_date()

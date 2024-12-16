@@ -20,23 +20,18 @@ class LicenseActivation(models.TransientModel):
     license_id = fields.Many2one("license.license")
 
     @api.model
-    def get_activations(self, license_id):
-        self.sudo().search([("license_id", "=", license_id.id)]).unlink()
-        activations_data, license_data = self._get_activations(license_id)
-        license_id.write(license_data)
-        self.sudo().create(activations_data)
-
-    @api.model
     def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
         """Reset license activations list when list is shown."""
         license_id = self.env["license.license"].browse(self._context["license_id"])
         if license_id:
-            self.get_activations(license_id)
+            self.sudo().search([("license_id", "=", license_id.id)]).unlink()
+            activations_data, license_data = self._get_activations(license_id)
+            self.sudo().create(activations_data)
         return super().search_read(
             domain=domain, fields=fields, offset=offset, limit=limit, order=order
         )
 
-    # === API Methods ===#
+    # API Methods
 
     def _disable_activation(self):
         message = ""
@@ -65,7 +60,15 @@ class LicenseActivation(models.TransientModel):
 
         edition_short = str(license_id.product_id.get_value_by_key("EditionShort"))
 
-        if edition_short and license_id.name != _("New"):
+        ocad_username = license_id.company_id.ocad_username
+        ocad_password = license_id.company_id.ocad_password
+
+        if (
+            ocad_username
+            and ocad_password
+            and edition_short
+            and license_id.name != _("New")
+        ):
 
             url = "https://www.ocad.com/ocadintern/db_increaseCounter/getActivations_2018.php"
             params = {
@@ -73,8 +76,8 @@ class LicenseActivation(models.TransientModel):
                 "licenseNumber": license_id.name,
             }
             auth = (
-                license_id.company_id.ocad_username,
-                license_id.company_id.ocad_password,
+                ocad_username,
+                ocad_password,
             )
 
             response = requests.get(url, params=params, auth=auth, timeout=10)
@@ -111,6 +114,8 @@ class LicenseActivation(models.TransientModel):
             }
 
             return activations, license_data
+        else:
+            return False, False
 
     def _get_action_notification(self, message):
         notification_type = "success"
@@ -131,7 +136,7 @@ class LicenseActivation(models.TransientModel):
             },
         }
 
-    # === Model Actions ===#
+    # Model Actions
 
     def action_disable(self):
         message = self._disable_activation()
