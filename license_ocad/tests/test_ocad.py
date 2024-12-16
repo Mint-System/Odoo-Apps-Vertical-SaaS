@@ -175,3 +175,18 @@ checksum = "".join(
 )
 print(checksum)
 print("8EF8-7CFA-3E4B" == checksum)
+
+# Name = FHNW - Schulungslizenz
+# Number = 14479
+# Checksum Admin = 0E37-AAC6-3A15
+
+checksum = "".join(
+    get_ocad2018_checksum(
+        2018,
+        int("14479"),
+        "Academic",
+        "FHNW - Schulungslizenz",
+    )
+)
+print(checksum)
+print("0E37-AAC6-3A15" == checksum)
