@@ -14,7 +14,7 @@ from . import ocad
 class License(models.Model):
     _inherit = "license.license"
 
-    # === Existing Fields ===#
+    # Update Fields
 
     # name = fields.Integer(
     #     required=True,
@@ -24,7 +24,7 @@ class License(models.Model):
     # )
     client_order_ref = fields.Char(required=True)
 
-    # === New Fields ===#
+    # New Fields
 
     company_id = fields.Many2one(
         "res.company",
@@ -32,15 +32,9 @@ class License(models.Model):
         required=True,
         default=lambda self: self.env.company,
     )
-    download_token = fields.Char(
-        compute="_compute_download_token", readonly=False, store=True, precompute=True
-    )
-    download_link = fields.Char(
-        compute="_compute_download_links", readonly=True, store=True
-    )
-    update_link = fields.Char(
-        compute="_compute_download_links", readonly=True, store=True
-    )
+    download_token = fields.Char(compute="_compute_download_token", precompute=True, readonly=False, store=True)
+    download_link = fields.Char(compute="_compute_links", readonly=True, store=True)
+    update_link = fields.Char(compute="_compute_links", readonly=True, store=True)
     registered = fields.Boolean(readonly=True, help="License registered with Odoo.")
     active_activations = fields.Integer(
         compute="_compute_license_activations", compute_sudo=True, readonly=True
@@ -90,7 +84,6 @@ class License(models.Model):
                 license.active_activations = 0
                 license.registered_activations = 0
 
-    @api.depends("name")
     def _compute_download_token(self):
         char_table = (
             "ABCDEFGHJKLMNPQRSTUVWXYZ23456789abcdefghijklmnopqrstuvwxyz"  # 58 char
@@ -103,11 +96,12 @@ class License(models.Model):
                 ]  # randint includes both ends of the range
             license.download_token = result
 
-    # === API Methods ===#
+
+    # API Methods
 
     @api.depends("name", "product_id", "download_token", "key")
-    def _compute_download_links(self):
-        """Generate download link."""
+    def _compute_links(self):
+        """Generate download and update link."""
         for license in self:
             if license.product_id and license.name != _("New"):
                 edition_short = str(license.product_id.get_value_by_key("EditionShort"))
@@ -277,7 +271,7 @@ class License(models.Model):
             },
         }
 
-    # === Model Actions ===#
+    # Model Actions
 
     def action_activate(self):
         """Create and enable license."""
