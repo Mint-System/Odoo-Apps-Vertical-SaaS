@@ -32,7 +32,9 @@ class License(models.Model):
         required=True,
         default=lambda self: self.env.company,
     )
-    download_token = fields.Char(compute="_compute_download_token", precompute=True, readonly=False, store=True)
+    download_token = fields.Char(
+        compute="_compute_download_token", precompute=True, readonly=False, store=True
+    )
     download_link = fields.Char(compute="_compute_links", readonly=True, store=True)
     update_link = fields.Char(compute="_compute_links", readonly=True, store=True)
     registered = fields.Boolean(readonly=True, help="License registered with Odoo.")
@@ -95,7 +97,6 @@ class License(models.Model):
                     random.randint(0, 57)
                 ]  # randint includes both ends of the range
             license.download_token = result
-
 
     # API Methods
 

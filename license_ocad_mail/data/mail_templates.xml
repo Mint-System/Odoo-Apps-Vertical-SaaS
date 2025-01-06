@@ -7,6 +7,7 @@
         <field name="subject">OCAD License Information</field>
         <field name="email_from">{{ user.email_formatted }}</field>
         <field name="partner_to">{{ object.partner_id.id }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
         <field name="body_html" type="html">
             <div style="margin: 0px; padding: 0px;">
                 <p style="margin: 0px; padding: 0px; font-size: 13px;">
@@ -36,9 +37,10 @@
                     Checksum: <t t-out="license.key" /><br />
                     Runtime: <t t-out="license.runtime" /> months<br />
                     End date: <t t-out="license.date_end.strftime('%d.%m.%Y')" /><br />
-                    Download-Link: <a t-att-href="license.download_link"><t
-                                t-out="license.download_link"
-                            /></a><br /><br />
+                    Download-Link: <a
+                            t-att-href="license.download_link"
+                            t-out="license.download_link"
+                        /><br /><br />
                     </t>
 
                     OCAD can be activated once. A second activation for Single User licenses is possible on request. For more information, see also our FAQ: <a
@@ -69,6 +71,7 @@
         <field name="subject">OCAD Subscription Renewal</field>
         <field name="email_from">{{ user.email_formatted }}</field>
         <field name="partner_to">{{ object.partner_id.id }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
         <field name="body_html" type="html">
             <div style="margin: 0px; padding: 0px;">
                 <p style="margin: 0px; padding: 0px; font-size: 13px;">
@@ -119,6 +122,7 @@
         <field name="subject">OCAD License Unlock</field>
         <field name="email_from">{{ user.email_formatted }}</field>
         <field name="partner_to">{{ object.partner_id.id }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
         <field name="body_html" type="html">
             <div style="margin: 0px; padding: 0px;">
                 <p style="margin: 0px; padding: 0px; font-size: 13px;">
