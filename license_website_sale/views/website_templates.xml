@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- <template
+        inherit_id="website_sale.extra_info"
+        name="Checkout Extra Info"
+        t-name="website_sale.extra_info"
+    >
+        <t t-call="website.layout">
+            <t t-set="no_footer" t-value="1" />
+            <div id="wrap">
+                <div class="container oe_website_sale py-2">
+                    <div class="row">
+                        <div class="col-12">
+                            <t t-call="website_sale.wizard_checkout">
+                                <t t-set="step" t-value="30" />
+                            </t>
+                        </div>
+                        <div class="col-12 col-xl-auto order-xl-2 d-none d-xl-block">
+                            <t t-call="website_sale.cart_summary">
+                                <t t-set="redirect" t-valuef="/shop/extra_info" />
+                            </t>
+                        </div>
+                        <div class="col-12 col-xl order-xl-1 oe_cart">
+                            <section
+                                class="s_website_form o_colored_level"
+                                data-vcss="001"
+                                data-snippet="s_website_form"
+                                data-name="Form"
+                                style="background-image: none;"
+                            >
+                                <div class="container">
+                                    <form
+                                        action="/website/form/"
+                                        method="post"
+                                        enctype="multipart/form-data"
+                                        class="o_mark_required s_website_form_no_recaptcha"
+                                        data-mark="*"
+                                        data-force_action="shop.sale.order"
+                                        data-model_name="sale.order"
+                                        data-success-mode="redirect"
+                                        data-success-page="/shop/payment"
+                                        hide-change-model="true"
+                                    >
+                                        <div
+                                            class="s_website_form_rows row s_col_no_bgcolor"
+                                        >
+                                            <div
+                                                data-visibility-condition=""
+                                                data-visibility-between=""
+                                                class="s_website_form_field mb-3 col-12 s_website_form_required"
+                                                data-type="char"
+                                                data-name="Field"
+                                            >
+                                                <div
+                                                    class="row s_col_no_resize s_col_no_bgcolor"
+                                                >
+                                                    <label
+                                                        class="col-form-label col-sm-auto s_website_form_label"
+                                                        style="width: 200px"
+                                                        for="oeft0m4oaq2b"
+                                                    >
+                                                        <span
+                                                            class="s_website_form_label_content"
+                                                        >License name</span>
+                                                        <span
+                                                            class="s_website_form_mark"
+                                                        >*</span>
+                                                    </label>
+                                                    <div class="col-sm">
+                                                        <input
+                                                            type="text"
+                                                            minlength="3"
+                                                            pattern="[A-z0-9À-ž\s]+"
+                                                            class="form-control s_website_form_input"
+                                                            name="client_order_ref"
+                                                            required="1"
+                                                            value=""
+                                                            placeholder="e.g. company name, club name or personal name"
+                                                            id="oeft0m4oaq2b"
+                                                            data-fill-with="undefined"
+                                                        />
+                                                        <div
+                                                            class="s_website_form_field_description small form-text text-muted"
+                                                        >&amp;nbsp;Please enter at least 3 Latin characters.<br
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                data-visibility-condition=""
+                                                data-visibility-between=""
+                                                class="s_website_form_field mb-3 col-12"
+                                                data-type="boolean"
+                                                data-name="Field"
+                                            >
+                                                <div
+                                                    class="row s_col_no_resize s_col_no_bgcolor"
+                                                >
+                                                    <label
+                                                        class=" col-sm-auto s_website_form_label "
+                                                        style="width: 200px"
+                                                        for="oxaaqf2tcdkh"
+                                                    >
+                                                        <span
+                                                            class="s_website_form_label_content"
+                                                        >License/Subscription exists</span>
+                                                    </label>
+                                                    <div class="col-sm">
+                                                        <div class="form-check">
+                                                            <input
+                                                                type="checkbox"
+                                                                value="Yes"
+                                                                class="s_website_form_input form-check-input"
+                                                                name="license_exists"
+                                                                id="oxaaqf2tcdkh"
+                                                                data-fill-with="undefined"
+                                                            />
+                                                        </div>
+                                                        <div
+                                                            class="s_website_form_field_description small form-text text-muted"
+                                                        >&amp;nbsp;Mark this option if you already have an OCAD license/subscription.<br
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                data-visibility-condition=""
+                                                data-visibility-between=""
+                                                class="s_website_form_field mb-3 col-12"
+                                                data-type="text"
+                                                data-name="Field"
+                                            >
+                                                <div
+                                                    class="row s_col_no_resize s_col_no_bgcolor"
+                                                >
+                                                    <label
+                                                        class="col-form-label col-sm-auto s_website_form_label "
+                                                        style="width: 200px"
+                                                        for="o57stxb8wu97"
+                                                    >
+                                                        <span
+                                                            class="s_website_form_label_content"
+                                                        >Remark</span>
+                                                    </label>
+                                                    <div class="col-sm">
+                                                        <textarea
+                                                            class="form-control s_website_form_input"
+                                                            name="comment"
+                                                            placeholder="e.g. old license number when updating or renew a license"
+                                                            id="o57stxb8wu97"
+                                                            rows="2"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="mb-0 py-2 col-12 s_website_form_submit s_website_form_no_submit_options"
+                                            >
+                                                <div
+                                                    style="width: 200px;"
+                                                    class="s_website_form_label"
+                                                />
+                                                <a
+                                                    role="button"
+                                                    href="/shop/checkout"
+                                                    class="btn btn-secondary float-start"
+                                                >
+                                                    <span class="fa fa-chevron-left" />
+                                                    Previous
+                                                </a>
+                                                <a
+                                                    role="button"
+                                                    class="btn btn-primary float-end s_website_form_send"
+                                                    href="/shop/confirm_order"
+                                                >Next <span
+                                                        class="fa fa-chevron-right"
+                                                    />
+                                                </a>
+                                                <span id="s_website_form_result" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="oe_structure" id="oe_structure_website_sale_extra_info_1" />
+        </t>
+    </template> -->
+
+</odoo>

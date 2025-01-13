@@ -56,10 +56,11 @@ class License(models.Model):
         store=True,
         help="Computed from production information attribute.",
     )
+    date_end = fields.Date(inverse="_inverse_date_end")
 
     def _inverse_date_end(self):
-        super()._inverse_date_end()
-        self._update_end_date()
+        for license in self:
+            license._update_end_date()
 
     @api.depends("product_id")
     def _compute_runtime(self):

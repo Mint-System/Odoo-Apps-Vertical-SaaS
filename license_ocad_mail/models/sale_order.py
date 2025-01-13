@@ -18,7 +18,7 @@ class SaleOrder(models.Model):
             if order.website_id and any(order.order_line.mapped("is_license")):
 
                 # Create licenses
-                order.order_line.update_license()
+                order.order_line.license_exists()
 
                 if not order.license_exists:
 
