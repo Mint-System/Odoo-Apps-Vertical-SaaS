@@ -10,7 +10,7 @@ class SaleOrder(models.Model):
 
     def _send_order_confirmation_mail(self):
         """
-        Activate licenses when bought throught shop before sending confirmation mail.
+        Activate licenses when bought through shop before sending confirmation mail.
         """
         res = super()._send_order_confirmation_mail()
 
