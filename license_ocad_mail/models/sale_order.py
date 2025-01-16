@@ -8,12 +8,15 @@ _logger = logging.getLogger(__name__)
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    def _action_confirm(self):
+    def _send_order_confirmation_mail(self):
+        res = super()._send_order_confirmation_mail()
+        self.action_send_license_information()
+        return res
+
+    def action_send_license_information(self):
         """
         Activate licenses and send license information mails.
         """
-        res = super()._action_confirm()
-
         for order in self:
             if not order.license_exists and any(order.order_line.mapped("is_license")):
 
@@ -29,5 +32,3 @@ class SaleOrder(models.Model):
                     composition_mode="comment",
                     email_layout_xmlid="mail.mail_notification_light",
                 )
-
-        return res

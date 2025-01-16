@@ -11,6 +11,7 @@
     "depends": ["license_ocad", "license_subscription"],
     "data": [
         "data/mail_templates.xml",
+        "views/sale_order.xml",
     ],
     "installable": True,
     "application": False,

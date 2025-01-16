@@ -1,6 +1,7 @@
 Mail license information:
 
 - Open the sale order "S00037" and confirm it
+- Click *Action > Activate and Send License Information*
 - Check if the license informations have been sent
 
 Mail subscription renewal:
