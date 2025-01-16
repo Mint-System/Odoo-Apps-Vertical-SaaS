@@ -1,6 +1,11 @@
+Mail license information:
+
+- Open the sale order "S00037" and confirm it
+- Check if the license informations have been sent
+
 Mail subscription renewal:
 
-- Open the sale order "S00021"
+- Open the sale order "S00037"
 - Click on "Renew" and select "send by e-mail"
 - Open the "send message" dialog
 - Select the mail template "Sale: Subscription Renewal"
@@ -13,12 +18,6 @@ Mail license unlock:
 - Open the "send message" dialog
 - Select the mail template "License: License Unlock"
 - Check if the generated mail is correct
-
-Mail license information:
-
-- Open website and by the "Software License"
-- Open the sale order in the backend
-- Check if license information mail has been sent
 
 Mass mailing:
 

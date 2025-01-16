@@ -18,7 +18,6 @@ class SaleOrder(models.Model):
 
     def _prepare_renew_upsell_order(self, subscription_management, message_body):
         """
-        Link existing licenses to new sale order lines.
         Update prices for existing and parent lines.
         """
         action = super()._prepare_renew_upsell_order(
@@ -27,18 +26,6 @@ class SaleOrder(models.Model):
         new_order = self.env["sale.order"].browse(action["res_id"])
         if new_order:
             new_order.write({"validity_date": self.next_invoice_date})
-            for line in new_order.order_line:
-
-                # Transfer discount
-                line.discount2 = line.parent_line_id.discount2
-
-                # Link license to new line
-                line.parent_line_id.license_ids.write(
-                    {
-                        "sale_line_id": line.id,
-                        "parent_sale_line_id": line.parent_line_id.id,
-                    }
-                )
 
             # When prices are updated the link to parent lines is broken
             # Update the prices for this order and new order
@@ -53,7 +40,11 @@ class SaleOrder(models.Model):
         for license in self.order_line.license_ids.filtered(
             lambda l: l.parent_sale_line_id
         ):
-            license.write({"sale_line_id": license.parent_line_id.id})
+            license.write(
+                {
+                    "sale_line_id": license.parent_line_id.id,
+                }
+            )
         return super()._action_cancel()
 
     def unlink(self):
