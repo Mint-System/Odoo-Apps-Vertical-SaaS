@@ -20,6 +20,9 @@ class SaleOrder(models.Model):
         for order in self:
             if not order.license_exists and any(order.order_line.mapped("is_license")):
 
+                # Update licenses
+                order.order_line.update_license()
+
                 # Activate licenses
                 order.order_line.license_ids.action_activate()
 
