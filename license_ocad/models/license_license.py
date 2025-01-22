@@ -1,5 +1,6 @@
 import logging
 import random
+import urllib
 
 import requests
 
@@ -16,12 +17,6 @@ class License(models.Model):
 
     # Update Fields
 
-    # name = fields.Integer(
-    #     required=True,
-    #     readonly=True,
-    #     states={"draft": [("readonly", False)], "assigned": [("readonly", False)]},
-    #     tracking=True,
-    # )
     client_order_ref = fields.Char(required=True)
 
     # New Fields
@@ -166,7 +161,9 @@ class License(models.Model):
                 )
                 is_team = license.product_id.get_value_by_key("IsTeam")
                 checksum = "".join(substring[0] for substring in license.key.split("-"))
+                version = license.product_id.get_value_by_key("Version")
 
+                # Create entry in the license activation database
                 url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateNewLicense2018.php"
                 params = {
                     "licenseNumber": license.name,
@@ -180,6 +177,15 @@ class License(models.Model):
                     "reseller": "",
                 }
                 auth = (ocad_username, ocad_password)
+
+                # Create entry in the license manager database
+                url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateLicense.php"
+                params = {
+                    "licenseNumber": license.name,
+                    "EditionShort": edition_short,
+                    "Version": version,
+                    "LicenseName": urllib.parse.quote(license.client_order_ref),
+                }
 
                 response = requests.post(url, params=params, auth=auth, timeout=10)
                 message += response.text + "\n"
