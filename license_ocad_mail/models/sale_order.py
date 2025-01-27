@@ -8,11 +8,6 @@ _logger = logging.getLogger(__name__)
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    def _send_order_confirmation_mail(self):
-        res = super()._send_order_confirmation_mail()
-        self.action_send_license_information()
-        return res
-
     def action_send_license_information(self):
         """
         Activate licenses and send license information mails.
