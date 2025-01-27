@@ -321,7 +321,7 @@ class License(models.Model):
         super().action_activate()
 
         message = self._create_license()
-        # message += self._update_license()
+        message += self._update_license()
 
         for license in self:
             license.write(
