@@ -53,6 +53,8 @@ class License(models.Model):
     )
     date_end = fields.Date(inverse="_inverse_date_end")
 
+    # Compute fields
+
     def _inverse_date_end(self):
         for license in self:
             license._update_end_date()
@@ -93,6 +95,21 @@ class License(models.Model):
                     random.randint(0, 57)
                 ]  # randint includes both ends of the range
             license.download_token = result
+
+    # Helper Methods
+
+    def _get_client_notification_action(self, message):
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "title": "OCAD License Service",
+                "message": message,
+                "sticky": False,
+                "type": "success",
+                "next": {"type": "ir.actions.act_window_close"},  # Refresh the form
+            },
+        }
 
     # API Methods
 
@@ -161,9 +178,9 @@ class License(models.Model):
                 )
                 is_team = license.product_id.get_value_by_key("IsTeam")
                 checksum = "".join(substring[0] for substring in license.key.split("-"))
-                version = license.product_id.get_value_by_key("Version")
+                license.product_id.get_value_by_key("Version")
 
-                # Create entry in the license activation database
+                # Create entry in license activation database
                 url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateNewLicense2018.php"
                 params = {
                     "licenseNumber": license.name,
@@ -178,7 +195,29 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
-                # Create entry in the license manager database
+                response = requests.post(url, params=params, auth=auth, timeout=10)
+                message = response.text
+
+                if (
+                    message != "FEHLER: Lizenznummer schon in Datenbank vorhanden!"
+                    and ("FEHLER" in message or "Unauthorized" in message)
+                ):
+                    raise UserError(_("Error while creating license: %s", message))
+
+        return message
+
+    def _update_license(self):
+        message = ""
+        ocad_username = self.company_id.ocad_username
+        ocad_password = self.company_id.ocad_password
+
+        if ocad_username and ocad_password:
+            for license in self:
+
+                edition_short = license.product_id.get_value_by_key("EditionShort")
+                version = license.product_id.get_value_by_key("Version")
+
+                # Create entry in license manager database
                 url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateLicense.php"
                 params = {
                     "licenseNumber": license.name,
@@ -186,9 +225,14 @@ class License(models.Model):
                     "Version": version,
                     "LicenseName": urllib.parse.quote(license.client_order_ref),
                 }
+                _logger.warning(params)
+                auth = (ocad_username, ocad_password)
 
                 response = requests.post(url, params=params, auth=auth, timeout=10)
-                message += response.text + "\n"
+                message = response.text
+
+                if "FEHLER" in message or "Unauthorized" in message:
+                    raise UserError(_("Error while updating license: %s", message))
 
         return message
 
@@ -210,7 +254,10 @@ class License(models.Model):
                 auth = (ocad_username, ocad_password)
 
                 response = requests.post(url, params=params, auth=auth, timeout=10)
-                message += response.text + "\n"
+                message = response.text
+
+                if "FEHLER" in message or "Unauthorized" in message:
+                    raise UserError(_("Error while increasing counter: %s", message))
 
         return message
 
@@ -233,7 +280,10 @@ class License(models.Model):
                 auth = (ocad_username, ocad_password)
 
                 response = requests.post(url, params=params, auth=auth, timeout=10)
-                message += response.text + "\n"
+                message = response.text
+
+                if "FEHLER" in message or "Unauthorized" in message:
+                    raise UserError(_("Error while updating end date: %s", message))
 
         return message
 
@@ -256,28 +306,14 @@ class License(models.Model):
                 auth = (ocad_username, ocad_password)
 
                 response = requests.post(url, params=params, auth=auth, timeout=10)
-                message += response.text + "\n"
+                message = response.text
+
+                if "FEHLER" in message or "Unauthorized" in message:
+                    raise UserError(
+                        _("Error while updating license status: %s", message)
+                    )
 
         return message
-
-    def _get_action_notification(self, message):
-        notification_type = "success"
-        notification_sticky = False
-        if "Error" in message or "FEHLER" in message or "Unauthorized" in message:
-            notification_type = "danger"
-            notification_sticky = True
-
-        return {
-            "type": "ir.actions.client",
-            "tag": "display_notification",
-            "params": {
-                "title": "OCAD License Service",
-                "message": message,
-                "sticky": notification_sticky,
-                "type": notification_type,
-                "next": {"type": "ir.actions.act_window_close"},  # Refresh the form
-            },
-        }
 
     # Model Actions
 
@@ -286,42 +322,46 @@ class License(models.Model):
         super().action_activate()
 
         message = self._create_license()
+        # message += self._update_license()
 
-        if not ("FEHLER" in message or "Unauthorized" in message):
-            for license in self:
-                license.write(
-                    {
-                        "registered": True,
-                        "max_activations": license.product_id.get_value_by_key(
-                            "NumberOfActivations"
-                        ),
-                    }
-                )
+        for license in self:
+            license.write(
+                {
+                    "registered": True,
+                    "max_activations": license.product_id.get_value_by_key(
+                        "NumberOfActivations"
+                    ),
+                }
+            )
 
-        return self._get_action_notification(message)
+        return self._get_client_notification_action(message)
+
+    def action_update(self):
+        """Update license."""
+        message = self._update_license()
+        return self._get_client_notification_action(message)
 
     def action_disable(self):
         super().action_disable()
         message = self._update_license_status(valid=False)
-        return self._get_action_notification(message)
+        return self._get_client_notification_action(message)
 
     def action_enable(self):
         super().action_enable()
         message = self._update_license_status(valid=True)
-        return self._get_action_notification(message)
+        return self._get_client_notification_action(message)
 
     def action_unlock(self):
         message = self._increase_counter()
 
-        if not ("FEHLER" in message or "Unauthorized" in message):
-            for license in self:
-                self.write({"max_activations": license.max_activations + 1})
+        for license in self:
+            self.write({"max_activations": license.max_activations + 1})
 
-        return self._get_action_notification(message)
+        return self._get_client_notification_action(message)
 
     def action_update_end_date(self):
         message = self._update_end_date()
-        return self._get_action_notification(message)
+        return self_increase_counter._get_client_notification_action(message)
 
     def action_view_activations(self):
         return {

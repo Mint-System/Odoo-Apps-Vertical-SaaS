@@ -31,6 +31,21 @@ class LicenseActivation(models.TransientModel):
             domain=domain, fields=fields, offset=offset, limit=limit, order=order
         )
 
+    # Helper Methods
+
+    def _get_client_notification_action(self, message):
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "title": "OCAD License Service",
+                "message": message,
+                "sticky": False,
+                "type": "success",
+                "next": {"type": "ir.actions.act_window_close"},  # Refresh the form
+            },
+        }
+
     # API Methods
 
     def _disable_activation(self):
@@ -50,7 +65,10 @@ class LicenseActivation(models.TransientModel):
             )
 
             response = requests.post(url, params=params, auth=auth, timeout=10)
-            message += response.text + "\n"
+            message += response.text
+
+            if "FEHLER" in message or "Unauthorized" in message:
+                raise UserError(_("Error while disabling activation: %s", message))
 
         return message
 
@@ -117,27 +135,8 @@ class LicenseActivation(models.TransientModel):
         else:
             return False, False
 
-    def _get_action_notification(self, message):
-        notification_type = "success"
-        notification_sticky = False
-        if "FEHLER" in message or "Unauthorized" in message:
-            notification_type = "danger"
-            notification_sticky = True
-
-        return {
-            "type": "ir.actions.client",
-            "tag": "display_notification",
-            "params": {
-                "title": "OCAD License Service",
-                "message": message,
-                "sticky": notification_sticky,
-                "type": notification_type,
-                "next": {"type": "ir.actions.act_window_close"},  # Refresh the form
-            },
-        }
-
     # Model Actions
 
     def action_disable(self):
         message = self._disable_activation()
-        return self._get_action_notification(message)
+        return self._get_client_notification_action(message)

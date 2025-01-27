@@ -69,6 +69,13 @@
                     string="Unlock"
                     class="btn-primary"
                 />
+                <button
+                    name="action_update"
+                    states="active"
+                    type="object"
+                    string="Update"
+                    class="btn-primary"
+                />
             </button>
 
         </field>
