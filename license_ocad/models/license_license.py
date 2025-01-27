@@ -220,12 +220,11 @@ class License(models.Model):
                 # Create entry in license manager database
                 url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateLicense.php"
                 params = {
-                    "licenseNumber": license.name,
+                    "LicenseNumber": license.name,
                     "EditionShort": edition_short,
                     "Version": version,
                     "LicenseName": urllib.parse.quote(license.client_order_ref),
                 }
-                _logger.warning(params)
                 auth = (ocad_username, ocad_password)
 
                 response = requests.post(url, params=params, auth=auth, timeout=10)
