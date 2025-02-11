@@ -92,7 +92,6 @@ def get_ocad2018_checksum(v, lnum, e, lname):
     # print(checksum)
     return checksum
 
-
 # Version = OCAD 2018 Orienteering
 # Name = OL Ishikawa
 # Number = 19277
@@ -178,6 +177,7 @@ print("8EF8-7CFA-3E4B" == checksum)
 
 # Name = FHNW - Schulungslizenz
 # Number = 14479
+# Edition = Academic
 # Checksum Admin = 0E37-AAC6-3A15
 
 checksum = "".join(
@@ -190,3 +190,19 @@ checksum = "".join(
 )
 print(checksum)
 print("0E37-AAC6-3A15" == checksum)
+
+# Name = HSOK
+# Number = 26305
+# Edition = Orienteering
+# Checksum Admin = 3967-6964-E2F5
+
+checksum = "".join(
+    get_ocad2018_checksum(
+        2018,
+        int("26305"),
+        "Orienteering",
+        "HSOK",
+    )
+)
+print(checksum)
+print("3967-6964-E2F5" == checksum)
