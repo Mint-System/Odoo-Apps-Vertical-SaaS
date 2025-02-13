@@ -92,6 +92,7 @@ def get_ocad2018_checksum(v, lnum, e, lname):
     # print(checksum)
     return checksum
 
+
 # Version = OCAD 2018 Orienteering
 # Name = OL Ishikawa
 # Number = 19277
