@@ -15,6 +15,17 @@ from . import ocad
 class License(models.Model):
     _inherit = "license.license"
 
+    # Default methods
+
+    def _get_default_token(self):
+        char_table = (
+            "ABCDEFGHJKLMNPQRSTUVWXYZ23456789abcdefghijklmnopqrstuvwxyz"  # 58 char
+        )
+        token = ""
+        for _ in range(8):
+            char_table[random.randint(0, 57)]
+        return token
+
     # Update Fields
 
     client_order_ref = fields.Char(required=True)
@@ -27,9 +38,7 @@ class License(models.Model):
         required=True,
         default=lambda self: self.env.company,
     )
-    download_token = fields.Char(
-        compute="_compute_download_token", precompute=True, readonly=False, store=True
-    )
+    download_token = fields.Char(default="_get_default_token", readonly=True)
     download_link = fields.Char(compute="_compute_links", readonly=True, store=True)
     update_link = fields.Char(compute="_compute_links", readonly=True, store=True)
     registered = fields.Boolean(readonly=True, help="License registered with Odoo.")
@@ -83,18 +92,6 @@ class License(models.Model):
             else:
                 license.active_activations = 0
                 license.registered_activations = 0
-
-    def _compute_download_token(self):
-        char_table = (
-            "ABCDEFGHJKLMNPQRSTUVWXYZ23456789abcdefghijklmnopqrstuvwxyz"  # 58 char
-        )
-        for license in self:
-            result = ""
-            for _ in range(8):
-                result += char_table[
-                    random.randint(0, 57)
-                ]  # randint includes both ends of the range
-            license.download_token = result
 
     # Helper Methods
 
