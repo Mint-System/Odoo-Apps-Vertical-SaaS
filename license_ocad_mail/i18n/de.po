@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-16 20:37+0000\n"
-"PO-Revision-Date: 2025-01-16 20:37+0000\n"
+"POT-Creation-Date: 2025-02-24 15:32+0000\n"
+"PO-Revision-Date: 2025-02-24 15:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -71,6 +71,7 @@ msgid ""
 "                        <t t-foreach=\"line.license_ids\" t-as=\"license\">\n"
 "                            <li>\n"
 "                                <t t-out=\"license.name\"></t> (<t t-out=\"license.client_order_ref\"></t>) <t t-out=\"license.product_id.display_name\"></t>: <t t-out=\"format_amount(line.price_unit, object.pricelist_id.currency_id)\"></t>\n"
+"                                <t t-if=\"line.discount2\"> (<t t-out=\"line.discount2\"></t>% discount)</t>\n"
 "                                <t t-if=\"line.tax_id.amount\"> + <t t-out=\"line.tax_id.description or line.tax_id.name\"></t></t>\n"
 "                            </li>\n"
 "                        </t>\n"
@@ -89,6 +90,34 @@ msgid ""
 "            </div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p style=\"box-sizing:border-box;margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"                    Hello <t t-out=\"object.partner_id.name\"></t>,<br><br>\n"
+"\n"
+"                    Your existing OCAD subscription will expire on <strong style=\"box-sizing:border-box;font-weight:bolder;\"><t t-out=\"object.validity_date.strftime('%d.%m.%Y') or ''\"></t></strong>:<br><br>\n"
+"\n"
+"                    </p><ul t-foreach=\"object.order_line\" t-as=\"line\" style=\"padding:0 0 0 24px;margin:0px 0 12px 0;box-sizing:border-box;\">\n"
+"                        <t t-foreach=\"line.license_ids\" t-as=\"license\">\n"
+"                            <li>\n"
+"                                <t t-out=\"license.name\"></t> (<t t-out=\"license.client_order_ref\"></t>) <t t-out=\"license.product_id.display_name\"></t>: <t t-out=\"format_amount(line.price_unit, object.pricelist_id.currency_id)\"></t>\n"
+"                                <t t-if=\"line.discount2\"> - <t t-out=\"line.discount2\"></t>% discount</t>\n"
+"                                <t t-if=\"line.tax_id.amount\"> + <t t-out=\"line.tax_id.description or line.tax_id.name\"></t></t>\n"
+"                            </li>\n"
+"                        </t>\n"
+"                    </ul>\n"
+"\n"
+"                    To renew your OCAD subscription this offer <strong style=\"box-sizing:border-box;font-weight:bolder;\"><t t-out=\"object.name\"></t></strong> in the amount of <strong style=\"box-sizing:border-box;font-weight:bolder;\"><t t-out=\"format_amount(object.amount_total, object.pricelist_id.currency_id)\"></t><t t-if=\"object.amount_tax\"> (incl. VAT)</t></strong>\n"
+"                    is ready for payment.<br><br>\n"
+"\n"
+"                    If you would like to change your subscription, please reply to this mail or contact <a href=\"mailto:order@ocad.com\" style=\"text-decoration:none;box-sizing:border-box;color:#008f8c;\">order@ocad.com</a>.<br><br>\n"
+"\n"
+"                    If you have any questions, we are happy to assist you.<br><br>\n"
+"\n"
+"                    Best Regards,<br>\n"
+"                    <t t-out=\"object.team_id.name\"></t>\n"
+"                <p style=\"margin:0px 0 12px 0;box-sizing:border-box;\"></p>\n"
+"            </div>\n"
+"        "
 
 #. module: license_ocad_mail
 #: model:mail.template,body_html:license_ocad_mail.mail_template_license_information
@@ -110,7 +139,7 @@ msgid ""
 "                    <t t-foreach=\"object.order_line.license_ids\" t-as=\"license\">\n"
 "                    License name: <t t-out=\"license.client_order_ref\"></t><br>\n"
 "                    License number: <t t-out=\"license.name\"></t><br>\n"
-"                    Edition: <t t-out=\"license.product_id.get_value_by_key('EditionLong')\"></t><br>\n"
+"                    Edition: <t t-out=\"license.product_id.name\"></t><br>\n"
 "                    Checksum: <t t-out=\"license.key\"></t><br>\n"
 "                    Runtime: <t t-out=\"license.runtime\"></t> months<br>\n"
 "                    End date: <t t-out=\"license.date_end.strftime('%d.%m.%Y')\"></t><br>\n"
@@ -132,9 +161,9 @@ msgid ""
 msgstr ""
 
 #. module: license_ocad_mail
-#: model:ir.actions.server,name:license_ocad_mail.activate_licenses_and_send_information
-msgid "Activate Licenses and Send Information"
-msgstr "Aktivieren und Lizenzinformationen senden"
+#: model:ir.actions.server,name:license_ocad_mail.activate_license_and_send_information
+msgid "Activate License and Send Information"
+msgstr ""
 
 #. module: license_ocad_mail
 #: model:mail.template,name:license_ocad_mail.mail_template_license_unlock
@@ -155,6 +184,11 @@ msgstr "OCAD Freischaltung Lizenz"
 #: model:mail.template,subject:license_ocad_mail.mail_template_extend_subscription
 msgid "OCAD Subscription Renewal"
 msgstr "OCAD Erneuerung Abonnement"
+
+#. module: license_ocad_mail
+#: model:ir.model,name:license_ocad_mail.model_payment_transaction
+msgid "Payment Transaction"
+msgstr "Zahlungstransaktion"
 
 #. module: license_ocad_mail
 #: model:mail.template,name:license_ocad_mail.mail_template_license_information

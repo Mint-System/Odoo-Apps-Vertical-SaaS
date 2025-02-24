@@ -15,17 +15,6 @@ from . import ocad
 class License(models.Model):
     _inherit = "license.license"
 
-    # Default methods
-
-    def _get_default_token(self):
-        char_table = (
-            "ABCDEFGHJKLMNPQRSTUVWXYZ23456789abcdefghijklmnopqrstuvwxyz"  # 58 char
-        )
-        token = ""
-        for _ in range(8):
-            char_table[random.randint(0, 57)]
-        return token
-
     # Update Fields
 
     client_order_ref = fields.Char(required=True)
@@ -38,7 +27,13 @@ class License(models.Model):
         required=True,
         default=lambda self: self.env.company,
     )
-    download_token = fields.Char(default="_get_default_token", readonly=True)
+    download_token = fields.Char(
+        compute="_compute_download_token",
+        precompute=True,
+        store=True,
+        readonly=True,
+        copy=False,
+    )
     download_link = fields.Char(compute="_compute_links", readonly=True, store=True)
     update_link = fields.Char(compute="_compute_links", readonly=True, store=True)
     registered = fields.Boolean(readonly=True, help="License registered with Odoo.")
@@ -63,6 +58,17 @@ class License(models.Model):
     date_end = fields.Date(inverse="_inverse_date_end")
 
     # Compute fields
+
+    def _compute_download_token(self):
+        char_table = (
+            "ABCDEFGHJKLMNPQRSTUVWXYZ23456789abcdefghijklmnopqrstuvwxyz"  # 58 char
+        )
+        for license in self:
+            # _logger.warning(self.download_token)
+            token = ""
+            for _ in range(8):
+                token += char_table[random.randint(0, 57)]
+            license.download_token = token
 
     def _inverse_date_end(self):
         for license in self:

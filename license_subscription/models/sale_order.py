@@ -26,6 +26,7 @@ class SaleOrder(models.Model):
         new_order = self.env["sale.order"].browse(action["res_id"])
         if new_order:
             new_order.write({"validity_date": self.next_invoice_date})
+            # new_order.write({"comment": self.comment})
 
             # When prices are updated the link to parent lines is broken
             # Update the prices for this order and new order
@@ -42,7 +43,7 @@ class SaleOrder(models.Model):
         ):
             license.write(
                 {
-                    "sale_line_id": license.parent_line_id.id,
+                    "sale_line_id": license.parent_sale_line_id.id,
                 }
             )
         return super()._action_cancel()

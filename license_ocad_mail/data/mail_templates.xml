@@ -31,9 +31,7 @@
                     <t t-foreach="object.order_line.license_ids" t-as="license">
                     License name: <t t-out="license.client_order_ref" /><br />
                     License number: <t t-out="license.name" /><br />
-                    Edition: <t
-                            t-out="license.product_id.get_value_by_key('EditionLong')"
-                        /><br />
+                    Edition: <t t-out="license.product_id.name" /><br />
                     Checksum: <t t-out="license.key" /><br />
                     Runtime: <t t-out="license.runtime" /> months<br />
                     End date: <t t-out="license.date_end.strftime('%d.%m.%Y')" /><br />
@@ -89,6 +87,9 @@
                                 />) <t t-out="license.product_id.display_name" />: <t
                                     t-out="format_amount(line.price_unit, object.pricelist_id.currency_id)"
                                 />
+                                <t t-if="line.discount2"> (<t
+                                        t-out="line.discount2"
+                                    />% discount)</t>
                                 <t t-if="line.tax_id.amount"> + <t
                                         t-out="line.tax_id.description or line.tax_id.name"
                                     /></t>
