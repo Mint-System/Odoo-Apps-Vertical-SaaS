@@ -31,7 +31,6 @@ class License(models.Model):
         compute="_compute_download_token",
         precompute=True,
         store=True,
-        readonly=True,
         copy=False,
     )
     download_link = fields.Char(compute="_compute_links", readonly=True, store=True)
