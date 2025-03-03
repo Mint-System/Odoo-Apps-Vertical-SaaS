@@ -194,6 +194,7 @@ class License(models.Model):
                     "subEnd": license.date_end.strftime("%Y-%m-%d"),
                     "isTeam": is_team,
                     "reseller": "",
+                    "renewal": "true" if license.parent_sale_line_id else "false",
                 }
                 auth = (ocad_username, ocad_password)
 

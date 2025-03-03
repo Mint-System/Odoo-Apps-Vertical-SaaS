@@ -29,3 +29,9 @@ Price rule:
 - Change discount policy to not include discount in price
 - Open sale orer "S00021" and ensure there are 2.0 qty
 - Renew the order and ensure that the discount is applied
+
+Fallback:
+- On the sale order click on renew
+- In the draft state open the first sale order line
+- Note and remove the first license
+- Open the license and check if the old so line has been linked

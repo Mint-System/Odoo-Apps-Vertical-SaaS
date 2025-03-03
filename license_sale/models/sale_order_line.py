@@ -11,11 +11,17 @@ class SaleOrderLine(models.Model):
 
     is_license = fields.Boolean(compute="_compute_is_license", store=True)
     license_ids = fields.One2many("license.license", "sale_line_id")
+    license_refs = fields.Char(compute="_compute_license_refs")
 
     @api.depends("product_id")
     def _compute_is_license(self):
         for rec in self:
             rec.is_license = rec.product_id.license_ok
+
+    @api.depends("license_ids")
+    def _compute_license_refs(self):
+        for rec in self:
+            rec.license_refs = ", ".join(rec.license_ids.mapped("client_order_ref"))
 
     def _compute_qty_to_invoice(self):
         """
