@@ -1,6 +1,6 @@
 import logging
 
-from odoo import _, api, fields, models
+from odoo import _, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -9,9 +9,8 @@ class Partner(models.Model):
     _inherit = "res.partner"
 
     license_ids = fields.One2many("license.license", "partner_id")
-    license_count = fields.Integer(compute="_compute_license_count", store=True)
+    license_count = fields.Integer(compute="_compute_license_count")
 
-    @api.depends("license_ids")
     def _compute_license_count(self):
         for partner in self:
             partner.license_count = len(partner.license_ids)

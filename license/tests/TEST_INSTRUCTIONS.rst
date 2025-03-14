@@ -14,3 +14,8 @@ License flow:
 - Ensure only date and runtime fields can be edited
 - Deactive and reactivate the license
 - Cancel the license and return to draft
+
+Merge partner:
+- Open contacts list view and select "Ron Gibson" and "Tom Ruiz"
+- Selection "Action > Merge", confirm and open "Tom Ruiz"
+- Check if two licenses are shown

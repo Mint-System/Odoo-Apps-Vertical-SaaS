@@ -32,4 +32,19 @@
     <field name="partner_id" ref="base.res_partner_address_31" />
   </record>
 
+  <record id="license2" model="license.license">
+    <field name="name">L00003</field>
+    <field name="key">X8E846EB-8823-45D2-8CA0-091B0D6C1014</field>
+    <field name="product_id" ref="license.license_product0" />
+    <field name="type_id" ref="license.type0" />
+    <field name="partner_id" ref="base.res_partner_address_2" />
+  </record>
+
+  <record id="license4" model="license.license">
+    <field name="name">L00004</field>
+    <field name="key">Z8E846EB-8823-45D2-8CA0-091B0D6C1014</field>
+    <field name="product_id" ref="license.license_product0" />
+    <field name="type_id" ref="license.type0" />
+    <field name="partner_id" ref="base.res_partner_address_27" />
+  </record>
 </odoo>
