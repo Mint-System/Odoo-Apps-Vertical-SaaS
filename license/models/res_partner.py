@@ -27,9 +27,7 @@ class Partner(models.Model):
             "res_model": "license.license",
         }
         if self.license_count == 1:
-            action.update(
-                {"views": [(view_form_id, "form")], "res_id": self.license_ids.id}
-            )
+            action.update({"views": [(view_form_id, "form")], "res_id": self.license_ids.id})
         else:
             action["views"] = [(view_tree_id, "tree"), (view_form_id, "form")]
         return action

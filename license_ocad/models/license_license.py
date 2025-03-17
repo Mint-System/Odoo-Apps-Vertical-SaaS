@@ -36,12 +36,8 @@ class License(models.Model):
     download_link = fields.Char(compute="_compute_links", readonly=True, store=True)
     update_link = fields.Char(compute="_compute_links", readonly=True, store=True)
     registered = fields.Boolean(readonly=True, help="License registered with Odoo.")
-    active_activations = fields.Integer(
-        compute="_compute_license_activations", compute_sudo=True, readonly=True
-    )
-    registered_activations = fields.Integer(
-        compute="_compute_license_activations", compute_sudo=True, readonly=True
-    )
+    active_activations = fields.Integer(compute="_compute_license_activations", compute_sudo=True, readonly=True)
+    registered_activations = fields.Integer(compute="_compute_license_activations", compute_sudo=True, readonly=True)
     max_activations = fields.Integer(
         compute="_compute_license_activations",
         compute_sudo=True,
@@ -82,14 +78,10 @@ class License(models.Model):
     def _compute_license_activations(self):
         for license in self:
             if len(self) == 1:
-                activations, license_data = self.env[
-                    "license.activation"
-                ]._get_activations(license)
+                activations, license_data = self.env["license.activation"]._get_activations(license)
                 if license_data:
                     license.active_activations = license_data["active_activations"]
-                    license.registered_activations = license_data[
-                        "registered_activations"
-                    ]
+                    license.registered_activations = license_data["registered_activations"]
                     license.max_activations = license_data["max_activations"]
                 else:
                     license.active_activations = 0
@@ -146,11 +138,7 @@ class License(models.Model):
     @api.depends("name", "product_id", "partner_id", "client_order_ref")
     def _compute_key(self):
         for license in self:
-            if (
-                license.product_id
-                and license.client_order_ref
-                and license.name != _("New")
-            ):
+            if license.product_id and license.client_order_ref and license.name != _("New"):
                 version = license.product_id.get_value_by_key("Version")
                 edition_long = license.product_id.get_value_by_key("EditionLong")
 
@@ -173,11 +161,8 @@ class License(models.Model):
 
         if ocad_username and ocad_password:
             for license in self:
-
                 edition_short = license.product_id.get_value_by_key("EditionShort")
-                number_of_activations = license.product_id.get_value_by_key(
-                    "NumberOfActivations"
-                )
+                number_of_activations = license.product_id.get_value_by_key("NumberOfActivations")
                 is_team = license.product_id.get_value_by_key("IsTeam")
                 checksum = "".join(substring[0] for substring in license.key.split("-"))
                 license.product_id.get_value_by_key("Version")
@@ -201,9 +186,8 @@ class License(models.Model):
                 response = requests.post(url, params=params, auth=auth, timeout=10)
                 message = response.text
 
-                if (
-                    message != "FEHLER: Lizenznummer schon in Datenbank vorhanden!"
-                    and ("FEHLER" in message or "Unauthorized" in message)
+                if message != "FEHLER: Lizenznummer schon in Datenbank vorhanden!" and (
+                    "FEHLER" in message or "Unauthorized" in message
                 ):
                     raise UserError(_("Error while creating license: %s", message))
 
@@ -216,7 +200,6 @@ class License(models.Model):
 
         if ocad_username and ocad_password:
             for license in self:
-
                 edition_short = license.product_id.get_value_by_key("EditionShort")
                 version = license.product_id.get_value_by_key("Version")
 
@@ -245,7 +228,6 @@ class License(models.Model):
 
         if ocad_username and ocad_password:
             for license in self:
-
                 edition_short = license.product_id.get_value_by_key("EditionShort")
 
                 url = "https://www.ocad.com/ocadintern/db_increaseCounter/increaseCounter_2018.php"
@@ -270,7 +252,6 @@ class License(models.Model):
 
         if ocad_username and ocad_password:
             for license in self.filtered(lambda l: l.state == "active" and l.date_end):
-
                 edition_short = license.product_id.get_value_by_key("EditionShort")
 
                 url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateSubscriptionEndDate2018.php"
@@ -296,7 +277,6 @@ class License(models.Model):
 
         if ocad_username and ocad_password:
             for license in self:
-
                 edition_short = license.product_id.get_value_by_key("EditionShort")
 
                 url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateLicenseStatus_2018.php"
@@ -311,9 +291,7 @@ class License(models.Model):
                 message = response.text
 
                 if "FEHLER" in message or "Unauthorized" in message:
-                    raise UserError(
-                        _("Error while updating license status: %s", message)
-                    )
+                    raise UserError(_("Error while updating license status: %s", message))
 
         return message
 
@@ -330,9 +308,7 @@ class License(models.Model):
             license.write(
                 {
                     "registered": True,
-                    "max_activations": license.product_id.get_value_by_key(
-                        "NumberOfActivations"
-                    ),
+                    "max_activations": license.product_id.get_value_by_key("NumberOfActivations"),
                 }
             )
 

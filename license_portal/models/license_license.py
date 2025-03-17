@@ -11,7 +11,7 @@ class License(models.Model):
 
     def _compute_access_url(self):
         for record in self:
-            record.access_url = "/my/licenses/{}".format(record.id)
+            record.access_url = f"/my/licenses/{record.id}"
 
     def action_preview_license(self):
         self.ensure_one()

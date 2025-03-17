@@ -13,9 +13,7 @@ class SaleOrder(models.Model):
         compute="_compute_license_ids",
         string="Licenses associated to this sale",
     )
-    license_count = fields.Integer(
-        string="Licenses", compute="_compute_license_ids", groups="license.group_user"
-    )
+    license_count = fields.Integer(string="Licenses", compute="_compute_license_ids", groups="license.group_user")
 
     @api.depends("order_line.product_id")
     def _compute_license_ids(self):
@@ -40,9 +38,7 @@ class SaleOrder(models.Model):
             "res_model": "license.license",
         }
         if len(self.license_ids) == 1:
-            action.update(
-                {"views": [(view_form_id, "form")], "res_id": self.license_ids.id}
-            )
+            action.update({"views": [(view_form_id, "form")], "res_id": self.license_ids.id})
         else:
             action["views"] = [(view_tree_id, "tree"), (view_form_id, "form")]
         return action

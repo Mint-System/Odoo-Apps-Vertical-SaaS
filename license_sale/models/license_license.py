@@ -21,6 +21,7 @@ class License(models.Model):
         store=True,
         help="Sales order to which the license is linked.",
     )
+    pricelist_id = fields.Many2one("product.pricelist", related="sale_order_id.pricelist_id")
     client_order_ref = fields.Char(
         string="Customer Reference",
         readonly=True,

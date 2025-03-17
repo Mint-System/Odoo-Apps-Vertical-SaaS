@@ -14,7 +14,6 @@ class SaleOrder(models.Model):
         """
         for order in self:
             if not order.license_exists and any(order.order_line.mapped("is_license")):
-
                 # Update licenses
                 order.order_line.update_license()
 
@@ -22,9 +21,7 @@ class SaleOrder(models.Model):
                 order.order_line.license_ids.action_activate()
 
                 # Send mail with license information
-                mail_template = self.env.ref(
-                    "license_ocad_mail.mail_template_license_information"
-                )
+                mail_template = self.env.ref("license_ocad_mail.mail_template_license_information")
                 order.with_context(force_send=True).message_post_with_template(
                     mail_template.id,
                     composition_mode="comment",

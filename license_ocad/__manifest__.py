@@ -4,7 +4,7 @@
         Sync licenses with the OCAD license activation service.
     """,
     "author": "Mint System GmbH",
-    "website": "https://www.mint-system.ch",
+    "website": "https://www.mint-system.ch/",
     "category": "Services",
     "version": "16.0.1.5.1",
     "license": "AGPL-3",

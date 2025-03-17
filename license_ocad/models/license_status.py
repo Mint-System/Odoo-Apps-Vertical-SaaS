@@ -38,9 +38,7 @@ class LicenseStatus(models.TransientModel):
             activation_status_data = self._get_activation_status(license_id)
             self.sudo().create(activation_status_data)
 
-        return super().search_read(
-            domain=domain, fields=fields, offset=offset, limit=limit, order=order
-        )
+        return super().search_read(domain=domain, fields=fields, offset=offset, limit=limit, order=order)
 
     # Model methods
 
@@ -51,7 +49,6 @@ class LicenseStatus(models.TransientModel):
         edition_short = str(license_id.product_id.get_value_by_key("EditionShort"))
 
         if edition_short and license_id.name != _("New"):
-
             url = "https://www.ocad.com/ocadintern/db_increaseCounter/getActivationStatus_2018.php"
             params = {
                 "edition": edition_short,

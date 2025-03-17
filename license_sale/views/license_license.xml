@@ -8,6 +8,7 @@
         <field name="arch" type="xml">
 
             <field name="partner_id" position="after">
+                <field name="pricelist_id" />
                 <field name="sale_line_id" />
                 <field name="client_order_ref" />
             </field>
@@ -61,7 +62,6 @@
         <field name="model">license.license</field>
         <field name="inherit_id" ref="license.license_view_search" />
         <field name="arch" type="xml">
-
             <xpath expr="//field[@name='partner_id']" position="after">
                 <filter
                     string="Sales Order"

@@ -27,9 +27,7 @@ class LicenseActivation(models.TransientModel):
             self.sudo().search([("license_id", "=", license_id.id)]).unlink()
             activations_data, license_data = self._get_activations(license_id)
             self.sudo().create(activations_data)
-        return super().search_read(
-            domain=domain, fields=fields, offset=offset, limit=limit, order=order
-        )
+        return super().search_read(domain=domain, fields=fields, offset=offset, limit=limit, order=order)
 
     # Helper Methods
 
@@ -51,7 +49,6 @@ class LicenseActivation(models.TransientModel):
     def _disable_activation(self):
         message = ""
         for activation in self:
-
             url = "https://www.ocad.com/ocadintern/db_increaseCounter/deactivateActivation_2018.php"
             params = {
                 "productKey": activation.key,
@@ -81,13 +78,7 @@ class LicenseActivation(models.TransientModel):
         ocad_username = license_id.company_id.ocad_username
         ocad_password = license_id.company_id.ocad_password
 
-        if (
-            ocad_username
-            and ocad_password
-            and edition_short
-            and license_id.name != _("New")
-        ):
-
+        if ocad_username and ocad_password and edition_short and license_id.name != _("New"):
             url = "https://www.ocad.com/ocadintern/db_increaseCounter/getActivations_2018.php"
             params = {
                 "edition": edition_short,

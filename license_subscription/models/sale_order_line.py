@@ -23,9 +23,7 @@ class SaleOrderLine(models.Model):
         Add end date from subscription.
         Link licenses to the new sale order line
         """
-        order_lines = super()._get_renew_upsell_values(
-            subscription_management, period_end
-        )
+        order_lines = super()._get_renew_upsell_values(subscription_management, period_end)
 
         # Add discount2 and link licenses to the new sale order line
         res = []

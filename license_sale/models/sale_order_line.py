@@ -36,9 +36,7 @@ class SaleOrderLine(models.Model):
         Public method to update licenses.
         """
         for line in self.filtered(
-            lambda l: not isinstance(l.id, models.NewId)
-            and l.state in ["sale"]
-            and l.is_license
+            lambda l: not isinstance(l.id, models.NewId) and l.state in ["sale"] and l.is_license
         ):
             line._update_license_quantity(qty=line.product_uom_qty)
 
@@ -70,9 +68,7 @@ class SaleOrderLine(models.Model):
             elif not qty and self.product_id.license_policy == "product":
                 qty = 1
             active_license_ids_count = len(
-                self.license_ids.filtered(
-                    lambda l: l.state in ["draft", "assigned", "active"]
-                )
+                self.license_ids.filtered(lambda l: l.state in ["draft", "assigned", "active"])
             )
             count_new_licenses = int(qty) - active_license_ids_count
 

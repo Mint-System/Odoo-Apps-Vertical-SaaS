@@ -2,7 +2,8 @@ from odoo import _, http
 from odoo.exceptions import AccessError, MissingError
 from odoo.http import request
 
-from odoo.addons.portal.controllers.portal import CustomerPortal, pager as portal_pager
+from odoo.addons.portal.controllers.portal import CustomerPortal
+from odoo.addons.portal.controllers.portal import pager as portal_pager
 
 
 class LicensePortal(CustomerPortal):
@@ -11,9 +12,7 @@ class LicensePortal(CustomerPortal):
         if "license_count" in counters:
             model = request.env["license.license"]
             values["license_count"] = (
-                model.search_count([])
-                if model.check_access_rights("read", raise_exception=False)
-                else 0
+                model.search_count([]) if model.check_access_rights("read", raise_exception=False) else 0
             )
         return values
 
@@ -22,9 +21,7 @@ class LicensePortal(CustomerPortal):
             "page_name": "Licenses",
             "license": license,
         }
-        return self._get_page_view_values(
-            license, access_token, values, "my_licenses_history", False, **kwargs
-        )
+        return self._get_page_view_values(license, access_token, values, "my_licenses_history", False, **kwargs)
 
     def _get_filter_domain(self, kw):
         return []
@@ -71,9 +68,7 @@ class LicensePortal(CustomerPortal):
         )
 
         # content according to pager and archive selected
-        licenses = license_obj.search(
-            domain, order=order, limit=self._items_per_page, offset=pager["offset"]
-        )
+        licenses = license_obj.search(domain, order=order, limit=self._items_per_page, offset=pager["offset"])
 
         request.session["my_licenses_history"] = licenses.ids[:100]
         values.update(
@@ -97,9 +92,7 @@ class LicensePortal(CustomerPortal):
     )
     def portal_my_license_detail(self, license_id, access_token=None, **kw):
         try:
-            license_sudo = self._document_check_access(
-                "license.license", license_id, access_token
-            )
+            license_sudo = self._document_check_access("license.license", license_id, access_token)
         except (AccessError, MissingError):
             return request.redirect("/my")
         values = self._license_get_page_view_values(license_sudo, access_token, **kw)

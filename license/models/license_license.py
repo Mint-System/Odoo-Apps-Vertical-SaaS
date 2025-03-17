@@ -65,35 +65,27 @@ class License(models.Model):
     )
     date_start = fields.Date(tracking=True)
     runtime = fields.Float("Runtime Months", default=12)
-    date_end = fields.Date(
-        compute="_compute_date_end", tracking=True, store=True, readonly=False
-    )
+    date_end = fields.Date(compute="_compute_date_end", tracking=True, store=True, readonly=False)
 
     @api.depends("date_start", "runtime")
     def _compute_date_end(self):
         """If runtime changes or date start update date end accordingly."""
         for license in self:
             if license.date_start and not license.date_end:
-                license.date_end = license.date_start + relativedelta(
-                    months=license.runtime
-                )
+                license.date_end = license.date_start + relativedelta(months=license.runtime)
 
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
             if vals.get("name", _("New")) == _("New"):
-                vals["name"] = self.env["ir.sequence"].next_by_code(
-                    "license.license"
-                ) or _("New")
+                vals["name"] = self.env["ir.sequence"].next_by_code("license.license") or _("New")
         return super().create(vals_list)
 
     def copy(self, default=None):
         self.ensure_one()
         default = default or {}
         if not default.get("name"):
-            default["name"] = self.env["ir.sequence"].next_by_code(
-                "license.license"
-            ) or _("New")
+            default["name"] = self.env["ir.sequence"].next_by_code("license.license") or _("New")
         return super().copy(default)
 
     @api.depends("create_date")
@@ -126,9 +118,7 @@ class License(models.Model):
             license.write(
                 {
                     "state": "active",
-                    "date_start": license.date_start
-                    if license.date_start
-                    else fields.Datetime.now(),
+                    "date_start": license.date_start if license.date_start else fields.Datetime.now(),
                 }
             )
 
@@ -147,9 +137,7 @@ class License(models.Model):
             license.write(
                 {
                     "state": "active",
-                    "date_start": license.date_start
-                    if license.date_start
-                    else fields.Datetime.now(),
+                    "date_start": license.date_start if license.date_start else fields.Datetime.now(),
                 }
             )
 
@@ -168,7 +156,5 @@ class License(models.Model):
     def unlink(self):
         for license in self:
             if not license._can_be_deleted():
-                raise UserError(
-                    _("You cannot delete a licnese which is not draft or cancelled.")
-                )
-        return super(License, self).unlink()
+                raise UserError(_("You cannot delete a licnese which is not draft or cancelled."))
+        return super().unlink()
