@@ -38,6 +38,16 @@
             ref="sale_order_line_form_action.sale_order_line_view_form_editable"
         />
         <field name="arch" type="xml">
+            <sheet position="before">
+                <header>
+                    <button
+                        name="button_create_license"
+                        string="Create License"
+                        type="object"
+                        icon="fa-key"
+                    />
+                </header>
+            </sheet>
             <xpath expr="//group/group[2]" position="after">
                 <field name="license_ids" widget="many2many">
                     <tree>

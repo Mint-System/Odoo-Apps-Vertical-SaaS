@@ -7,20 +7,22 @@ One license:
 Increase license:
 - Open confirmed sale order "S00021"
 - Set quantity to 2
+- Click the sale line menu
+- Click "Create Licenses"
 - Check if there are 2 licenses
 
 New so line:
-- Open confirmed sale order "S00021"
 - Add new line with product "Software License"
+- Click the sale line menu
+- Click "Create Licenses"
 - Check if there are 3 licenses
 
 Edit the licenses:
-- Open sale order "S00021"
 - Click on licenses link
 - Change name of the first license
 
 Duplicate order:
-- Open confirmed sale order "S00021"
+- Show confirmed sale order "S00021"
 - Duplicate the order
 - Confirm the new order
 - Check if an error is thrown because due to missing customer ref
@@ -32,3 +34,8 @@ Product switch:
 - Confirm the sale order
 - Replace the product with "Software License (Team)"
 - Open the first license and check if product is the same
+
+Change cusotmer:
+- Open sale order "S00022"
+- Change customer
+- Ensure customer of licenses is updated as well

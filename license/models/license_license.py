@@ -90,7 +90,7 @@ class License(models.Model):
 
     @api.depends("create_date")
     def _compute_key(self):
-        for license in self.filtered(lambda l: l.key == _("New")):
+        for license in self.filtered(lambda r: r.key == _("New")):
             license.key = str(uuid.uuid4()).upper()
 
     # === Model Actions ===#

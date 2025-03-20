@@ -8,6 +8,9 @@ _logger = logging.getLogger(__name__)
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
+    READONLY_FIELD_STATES = {state: [("readonly", True)] for state in {"done", "cancel"}}
+    partner_id = fields.Many2one(comodel_name="res.partner", states=READONLY_FIELD_STATES)
+
     license_ids = fields.Many2many(
         "license.license",
         compute="_compute_license_ids",
@@ -25,6 +28,12 @@ class SaleOrder(models.Model):
                 ]
             )
             order.license_count = len(order.license_ids)
+
+    def action_confirm(self):
+        res = super().action_confirm()
+        for rec in self:
+            rec.order_line.create_license()
+        return res
 
     def action_view_license(self):
         self.ensure_one()

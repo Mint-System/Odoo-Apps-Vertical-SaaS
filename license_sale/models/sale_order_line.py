@@ -23,22 +23,32 @@ class SaleOrderLine(models.Model):
         for rec in self:
             rec.license_refs = ", ".join(rec.license_ids.mapped("client_order_ref"))
 
-    def _compute_qty_to_invoice(self):
+    def create_license(self):
         """
-        Create licenses if qty to invice changes.
-        """
-        super()._compute_qty_to_invoice()
-        for line in self:
-            line.update_license()
-
-    def update_license(self):
-        """
-        Public method to update licenses.
+        Public method to create licenses.
         """
         for line in self.filtered(
-            lambda l: not isinstance(l.id, models.NewId) and l.state in ["sale"] and l.is_license
+            lambda r: not isinstance(r.id, models.NewId) and r.state in ["sale"] and r.is_license
         ):
-            line._update_license_quantity(qty=line.product_uom_qty)
+            qty = line.product_uom_qty
+            if self.product_id.license_ok:
+                if not qty and line.product_id.license_policy == "quantity":
+                    qty = line.product_uom_qty
+                elif not qty and line.product_id.license_policy == "product":
+                    qty = 1
+                active_license_ids_count = len(
+                    line.license_ids.filtered(lambda r: r.state in ["draft", "assigned", "active"])
+                )
+                count_new_licenses = int(qty) - active_license_ids_count
+
+                for _qty in range(count_new_licenses):
+                    values = line._prepare_license_values()
+                    license = line.env["license.license"].sudo().create(values)
+                    license_msg = _("This license has been created from: %s (%s)") % (
+                        line.order_id._get_html_link(),
+                        line.product_id.name,
+                    )
+                    license.message_post(body=license_msg)
 
     def _prepare_license_values(self):
         """
@@ -57,27 +67,6 @@ class SaleOrderLine(models.Model):
             "client_order_ref": self.order_id.client_order_ref.strip(),
         }
 
-    def _update_license_quantity(self, qty=None):
-        """
-        Create a license based on policy.
-        """
+    def button_create_license(self):
         self.ensure_one()
-        if self.product_id.license_ok:
-            if not qty and self.product_id.license_policy == "quantity":
-                qty = self.product_uom_qty
-            elif not qty and self.product_id.license_policy == "product":
-                qty = 1
-            active_license_ids_count = len(
-                self.license_ids.filtered(lambda l: l.state in ["draft", "assigned", "active"])
-            )
-            count_new_licenses = int(qty) - active_license_ids_count
-
-            # _logger.warning([self.name, qty, active_license_ids_count, count_new_licenses])
-            for _qty in range(count_new_licenses):
-                values = self._prepare_license_values()
-                license = self.env["license.license"].sudo().create(values)
-                license_msg = _("This license has been created from: %s (%s)") % (
-                    self.order_id._get_html_link(),
-                    self.product_id.name,
-                )
-                license.message_post(body=license_msg)
+        self.create_license()

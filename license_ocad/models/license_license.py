@@ -251,7 +251,7 @@ class License(models.Model):
         ocad_password = self.company_id.ocad_password
 
         if ocad_username and ocad_password:
-            for license in self.filtered(lambda l: l.state == "active" and l.date_end):
+            for license in self.filtered(lambda r: r.state == "active" and r.date_end):
                 edition_short = license.product_id.get_value_by_key("EditionShort")
 
                 url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateSubscriptionEndDate2018.php"
