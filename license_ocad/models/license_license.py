@@ -7,9 +7,9 @@ import requests
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
-_logger = logging.getLogger(__name__)
-
 from . import ocad
+
+_logger = logging.getLogger(__name__)
 
 
 class License(models.Model):
@@ -28,10 +28,7 @@ class License(models.Model):
         default=lambda self: self.env.company,
     )
     download_token = fields.Char(
-        compute="_compute_download_token",
-        precompute=True,
-        store=True,
-        copy=False,
+        compute="_compute_download_token", precompute=True, store=True, copy=False, readonly=False
     )
     download_link = fields.Char(compute="_compute_links", readonly=True, store=True)
     update_link = fields.Char(compute="_compute_links", readonly=True, store=True)
@@ -339,7 +336,7 @@ class License(models.Model):
 
     def action_update_end_date(self):
         message = self._update_end_date()
-        return self_increase_counter._get_client_notification_action(message)
+        return self._get_client_notification_action(message)
 
     def action_view_activations(self):
         return {
