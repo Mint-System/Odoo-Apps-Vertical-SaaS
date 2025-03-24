@@ -1,4 +1,5 @@
 import logging
+from datetime import timedelta
 
 from odoo import fields, models
 
@@ -16,20 +17,27 @@ class SaleOrder(models.Model):
                 {"date_end": order.next_invoice_date}
             )
 
+    def _prepare_upsell_renew_order_values(self, subscription_management):
+        """
+        If start date of renewal is a past date, ensure that the next invoice date is
+        today plus the running time.
+        """
+        res = super()._prepare_upsell_renew_order_values(subscription_management)
+        today = fields.Date.today()
+        if res["start_date"] < today:
+            res["next_invoice_date"] = today + self.recurrence_id.get_recurrence_timedelta()
+        return res
+
     def _prepare_renew_upsell_order(self, subscription_management, message_body):
         """
-        Update prices for existing and parent lines.
+        Ensure the renewal is valid until 5 days after next invoice date.
+        Update the prices of the renewal order.
         """
         action = super()._prepare_renew_upsell_order(subscription_management, message_body)
         new_order = self.env["sale.order"].browse(action["res_id"])
         if new_order:
-            new_order.write({"validity_date": self.next_invoice_date})
-            # new_order.write({"comment": self.comment})
-
-            # When prices are updated the link to parent lines is broken
-            # Update the prices for this order and new order
-            new_order.action_update_prices()
-
+            new_order.write({"validity_date": self.next_invoice_date + timedelta(days=5)})
+            new_order.action_update_prices()  # When prices are updated the link to parent lines are lost
         return action
 
     def _action_cancel(self):
