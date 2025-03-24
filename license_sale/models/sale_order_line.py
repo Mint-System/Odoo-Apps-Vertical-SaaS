@@ -31,7 +31,7 @@ class SaleOrderLine(models.Model):
             lambda r: not isinstance(r.id, models.NewId) and r.state in ["sale"] and r.is_license
         ):
             qty = line.product_uom_qty
-            if self.product_id.license_ok:
+            if line.product_id.license_ok:
                 if not qty and line.product_id.license_policy == "quantity":
                     qty = line.product_uom_qty
                 elif not qty and line.product_id.license_policy == "product":
