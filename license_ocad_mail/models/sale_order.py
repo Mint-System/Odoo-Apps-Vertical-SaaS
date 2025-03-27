@@ -10,10 +10,13 @@ class SaleOrder(models.Model):
 
     def action_send_license_information(self):
         """
-        Activate licenses and send license information mails.
+        Activate licenses and send license information mails if:
+        - There is no order comment
+        - The "license exists" option is not checked
+        - Any order line is a license
         """
         for order in self:
-            if not order.license_exists and any(order.order_line.mapped("is_license")):
+            if not order.license_exists and any(order.order_line.mapped("is_license")) and not order.comment:
                 # Create licenses
                 order.order_line.create_license()
 
