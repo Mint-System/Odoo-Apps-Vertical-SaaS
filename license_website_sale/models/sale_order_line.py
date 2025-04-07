@@ -13,7 +13,7 @@ class SaleOrderLine(models.Model):
         Create license only if "license exists" is not checked.
         """
         for line in self:
-            if not line.order_id.license_exists:
+            if not line.order_id.license_exists and not line.order_id.comment:
                 return super().create_license()
             else:
                 return
