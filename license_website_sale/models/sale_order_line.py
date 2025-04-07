@@ -10,7 +10,8 @@ class SaleOrderLine(models.Model):
 
     def create_license(self):
         """
-        Create license only if "license exists" is not checked.
+        Create license only if "license exists" is not checked and
+        no comment has been added to the sale order.
         """
         for line in self:
             if not line.order_id.license_exists and not line.order_id.comment:
