@@ -13,7 +13,7 @@
         "website_sale",
         "website_sale_pricelist_fixed_discount",
     ],
-    "data": ["views/sale_order.xml", "views/website_templates.xml"],
+    "data": ["views/sale_order.xml"],
     "installable": True,
     "application": False,
     "auto_install": False,

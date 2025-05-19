@@ -76,7 +76,7 @@
                     Hello <t t-out="object.partner_id.name" />,<br /><br />
 
                     Your existing OCAD subscription will expire on <strong><t
-                            t-out="object.validity_date.strftime('%d.%m.%Y') or ''"
+                            t-out="object.next_invoice_date.strftime('%d.%m.%Y') or ''"
                         /></strong>:<br /><br />
 
                     <ul t-foreach="object.order_line" t-as="line">

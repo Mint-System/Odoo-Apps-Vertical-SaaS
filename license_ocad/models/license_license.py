@@ -28,7 +28,7 @@ class License(models.Model):
         default=lambda self: self.env.company,
     )
     download_token = fields.Char(
-        compute="_compute_download_token", precompute=True, store=True, copy=False, readonly=False
+        compute="_compute_download_token", precompute=True, store=True, copy=False, readonly=False, tracking=True
     )
     download_link = fields.Char(compute="_compute_links", readonly=True, store=True)
     update_link = fields.Char(compute="_compute_links", readonly=True, store=True)

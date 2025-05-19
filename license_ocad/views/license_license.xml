@@ -33,6 +33,11 @@
                     <field name="max_activations" nolabel="1" class="oe_inline" />
                 </div>
                 <field
+                    name="download_token"
+                    readonly="1"
+                    attrs="{'invisible': [('state', '!=', 'active')]}"
+                />
+                <field
                     name="download_link"
                     widget="url"
                     attrs="{'invisible': [('state', '!=', 'active')]}"
