@@ -12,6 +12,11 @@ class SaleOrderLine(models.Model):
     is_license = fields.Boolean(compute="_compute_is_license", store=True)
     license_ids = fields.One2many("license.license", "sale_line_id")
     license_refs = fields.Char(compute="_compute_license_refs")
+    license_count = fields.Integer(compute="_compute_license_count")
+
+    def _compute_license_count(self):
+        for line in self:
+            line.license_count = len(line.license_ids)
 
     @api.depends("product_id")
     def _compute_is_license(self):
@@ -23,9 +28,28 @@ class SaleOrderLine(models.Model):
         for rec in self:
             rec.license_refs = ", ".join(rec.license_ids.mapped("client_order_ref"))
 
-    def create_license(self):
+    def _create_license(self):
         """
-        Public method to create licenses.
+        Create single license and bump ordered qty.
+        """
+        self.ensure_one()
+        if not isinstance(self.id, models.NewId) and self.state in ["sale"] and self.is_license:
+            value = self._prepare_license_values()
+            license = self.env["license.license"].sudo().create(value)
+            license_msg = _("This license has been created from: %s (%s)") % (
+                self.order_id._get_html_link(),
+                self.product_id.name,
+            )
+            license.message_post(body=license_msg)
+
+            # Adjust so line qty
+            if self.product_uom_qty < self.license_count:
+                diff = self.license_count - self.product_uom_qty
+                self.write({"product_uom_qty": self.product_uom_qty + diff})
+
+    def create_licenses(self):
+        """
+        Create multiple licenses based on license policy.
         """
         for line in self.filtered(
             lambda r: not isinstance(r.id, models.NewId) and r.state in ["sale"] and r.is_license
@@ -68,5 +92,4 @@ class SaleOrderLine(models.Model):
         }
 
     def button_create_license(self):
-        self.ensure_one()
-        self.create_license()
+        self._create_license()

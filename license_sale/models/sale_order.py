@@ -32,7 +32,7 @@ class SaleOrder(models.Model):
     def action_confirm(self):
         res = super().action_confirm()
         for rec in self:
-            rec.order_line.create_license()
+            rec.order_line.create_licenses()
         return res
 
     def action_view_license(self):

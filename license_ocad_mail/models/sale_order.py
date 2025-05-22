@@ -18,7 +18,7 @@ class SaleOrder(models.Model):
         for order in self:
             if not order.license_exists and any(order.order_line.mapped("is_license")) and not order.comment:
                 # Create licenses
-                order.order_line.create_license()
+                order.order_line.create_licenses()
 
                 # Activate licenses
                 order.order_line.license_ids.action_activate()
