@@ -1,6 +1,6 @@
 Start and end date:
 
-- Open sale order "S00021" and confirm it
+- Open sale order for "Edwin Hansen" and confirm it
 - Create and post an invoice
 - Note the next invoice date of the sale order
 - Open the licenses and check if end date is matching
@@ -11,7 +11,7 @@ Start and end date:
 
 Renewal:
 
-- Note the next invoice date for S00021
+- Note the next invoice date
 - Then click on renewal
 - Check if validity date matches
 - Delete the renewal offer

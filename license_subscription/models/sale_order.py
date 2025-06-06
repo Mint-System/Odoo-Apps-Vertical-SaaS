@@ -17,6 +17,16 @@ class SaleOrder(models.Model):
                 {"date_end": order.next_invoice_date}
             )
 
+    def action_confirm(self):
+        """
+        When confirmation happens after start date, set next invoice date from today plus runtime.
+        """
+        res = super().action_confirm()
+        today = fields.Date.today()
+        if today > self.start_date:
+            self.next_invoice_date = today + self.recurrence_id.get_recurrence_timedelta()
+        return res
+
     def _prepare_upsell_renew_order_values(self, subscription_management):
         """
         If start date of renewal is a past date, ensure that the next invoice date is
