@@ -12,6 +12,16 @@ from . import ocad
 _logger = logging.getLogger(__name__)
 
 
+def _get_download_token():
+    char_table = (
+        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789abcdefghijklmnopqrstuvwxyz"  # 58 char
+    )
+    token = ""
+    for _ in range(8):
+        token += char_table[random.randint(0, 57)]
+    return token
+
+
 class License(models.Model):
     _inherit = "license.license"
 
@@ -27,9 +37,7 @@ class License(models.Model):
         required=True,
         default=lambda self: self.env.company,
     )
-    download_token = fields.Char(
-        compute="_compute_download_token", precompute=True, store=True, copy=False, readonly=False, tracking=True
-    )
+    download_token = fields.Char(readonly=False, tracking=True)
     download_link = fields.Char(compute="_compute_links", readonly=True, store=True)
     update_link = fields.Char(compute="_compute_links", readonly=True, store=True)
     registered = fields.Boolean(readonly=True, help="License registered with Odoo.")
@@ -50,17 +58,6 @@ class License(models.Model):
     date_end = fields.Date(inverse="_inverse_date_end")
 
     # Compute fields
-
-    def _compute_download_token(self):
-        char_table = (
-            "ABCDEFGHJKLMNPQRSTUVWXYZ23456789abcdefghijklmnopqrstuvwxyz"  # 58 char
-        )
-        for license in self:
-            # _logger.warning(self.download_token)
-            token = ""
-            for _ in range(8):
-                token += char_table[random.randint(0, 57)]
-            license.download_token = token
 
     def _inverse_date_end(self):
         for license in self:
@@ -86,6 +83,15 @@ class License(models.Model):
             else:
                 license.active_activations = 0
                 license.registered_activations = 0
+
+    # Model methods
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for val in vals_list:
+            if not val.get("download_token"):
+                val["download_token"] = _get_download_token()
+        return super().create(vals_list)
 
     # Helper Methods
 
@@ -188,6 +194,8 @@ class License(models.Model):
                 ):
                     raise UserError(_("Error while creating license: %s", message))
 
+                license.message_post(body=_("Request to %s successful.", "db_newlicense/UpdateNewLicense2018.php"))
+
         return message
 
     def _update_license(self):
@@ -216,6 +224,8 @@ class License(models.Model):
                 if "FEHLER" in message or "Unauthorized" in message:
                     raise UserError(_("Error while updating license: %s", message))
 
+                license.message_post(body=_("Request to %s successful.", "db_newlicense/UpdateLicense.php"))
+
         return message
 
     def _increase_counter(self):
@@ -239,6 +249,8 @@ class License(models.Model):
 
                 if "FEHLER" in message or "Unauthorized" in message:
                     raise UserError(_("Error while increasing counter: %s", message))
+
+                license.message_post(body=_("Request to %s successful.", "db_increaseCounter/increaseCounter_2018.php"))
 
         return message
 
@@ -265,6 +277,10 @@ class License(models.Model):
                 if "FEHLER" in message or "Unauthorized" in message:
                     raise UserError(_("Error while updating end date: %s", message))
 
+                license.message_post(
+                    body=_("Request to %s successful.", "db_newlicense/UpdateSubscriptionEndDate2018.php")
+                )
+
         return message
 
     def _update_license_status(self, valid=True):
@@ -290,6 +306,8 @@ class License(models.Model):
                 if "FEHLER" in message or "Unauthorized" in message:
                     raise UserError(_("Error while updating license status: %s", message))
 
+                license.message_post(body=_("Request to %s successful.", "db_newlicense/UpdateLicenseStatus_2018.php"))
+
         return message
 
     # Model Actions
@@ -298,8 +316,8 @@ class License(models.Model):
         """Create and enable license."""
         super().action_activate()
 
-        message = self._create_license()
-        message += self._update_license()
+        message = self._create_license()  # Create entry in license database
+        message += self._update_license()  # Create entry in activation database
 
         for license in self:
             license.write(
