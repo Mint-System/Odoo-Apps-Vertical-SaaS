@@ -11,12 +11,12 @@ Start and end date:
 
 Renewal:
 
-- Note the next invoice date
+- Note the next invoice date of the so
 - Then click on renewal
-- Check if validity date matches
+- Check if validity date is next invoice date + 5 days
 - Delete the renewal offer
 - Change the start and next invoice date to today - 1 week
-- Create a new reneal and confirm.
+- Create a new renewal and confirm.
 - Ensure that the next invoice date is today + 1 year
 
 Renew and cancel:

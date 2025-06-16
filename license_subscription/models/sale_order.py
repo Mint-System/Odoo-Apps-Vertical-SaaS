@@ -30,12 +30,13 @@ class SaleOrder(models.Model):
     def _prepare_upsell_renew_order_values(self, subscription_management):
         """
         If start date of renewal is a past date, ensure that the next invoice date is
-        today plus the running time.
+        today.
         """
         res = super()._prepare_upsell_renew_order_values(subscription_management)
         today = fields.Date.today()
         if res["start_date"] < today:
-            res["next_invoice_date"] = today + self.recurrence_id.get_recurrence_timedelta()
+            res["last_invoice_date"] = today
+            res["next_invoice_date"] = today
         return res
 
     def _prepare_renew_upsell_order(self, subscription_management, message_body):

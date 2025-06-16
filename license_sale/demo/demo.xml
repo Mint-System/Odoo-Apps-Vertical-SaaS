@@ -3,6 +3,7 @@
     <record id="license.license_product0" model="product.product">
         <field name="license_ok" eval="True" />
         <field name="list_price">80</field>
+        <field name="invoice_policy">order</field>
         <field name="license_policy">quantity</field>
         <field name="license_type_id" ref="license.type0" />
     </record>
@@ -20,6 +21,7 @@
     <record id="license.license_product1" model="product.product">
         <field name="license_ok" eval="True" />
         <field name="list_price">200</field>
+        <field name="invoice_policy">order</field>
         <field name="license_policy">quantity</field>
         <field name="license_type_id" ref="license.type1" />
     </record>
