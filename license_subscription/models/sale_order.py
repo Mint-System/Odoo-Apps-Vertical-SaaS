@@ -19,12 +19,12 @@ class SaleOrder(models.Model):
 
     def action_confirm(self):
         """
-        When confirmation happens after start date, set next invoice date from today plus runtime.
+        When confirmation happens after start date, set next invoice date to today.
         """
         res = super().action_confirm()
         today = fields.Date.today()
         if today > self.start_date:
-            self.next_invoice_date = today + self.recurrence_id.get_recurrence_timedelta()
+            self.next_invoice_date = today
         return res
 
     def _prepare_upsell_renew_order_values(self, subscription_management):

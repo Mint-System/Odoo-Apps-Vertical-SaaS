@@ -14,6 +14,7 @@
         "sale_subscription",
         "sale_order_line_pricelist_fixed_discount",
     ],
+    "data": ["views/sale_subscription_views.xml"],
     "installable": True,
     "application": False,
     "auto_install": False,

@@ -5,7 +5,7 @@ Start and end date:
 - Note the next invoice date of the sale order
 - Open the licenses and check if end date is matching
 - Return to sale order
-- Change the next invoice date
+- Change the next invoice date to minus 1 day
 - Check if the licenses have been updated accordingly
 - Check if the license start date is the date of today
 
@@ -18,6 +18,20 @@ Renewal:
 - Change the start and next invoice date to today - 1 week
 - Create a new renewal and confirm.
 - Ensure that the next invoice date is today + 1 year
+
+Renew past validity date
+
+- Create a new sale order for "Deco Addict"
+- Add product "Software License" and recurrence yearly
+- Confirm the order
+- Change next invoice date and start date to today - 1 year
+- Create and post the invoice
+- Ensure next invoice date is today
+- Click renewal and change validity date to today -1 week
+- Confirm the renewal
+- Ensure the next invoice date is today
+- Create and post the invoice
+- Ensure the next invoice date is today + year
 
 Renew and cancel:
 
