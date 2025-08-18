@@ -12,7 +12,7 @@ from . import ocad
 _logger = logging.getLogger(__name__)
 
 
-def _get_download_token():
+def _generate_download_token():
     char_table = (
         "ABCDEFGHJKLMNPQRSTUVWXYZ23456789abcdefghijklmnopqrstuvwxyz"  # 58 char
     )
@@ -90,7 +90,9 @@ class License(models.Model):
     def create(self, vals_list):
         for val in vals_list:
             if not val.get("download_token"):
-                val["download_token"] = _get_download_token()
+                download_token = _generate_download_token()
+                _logger.warning(f"Generate download token: {download_token}")
+                val["download_token"] = download_token
         return super().create(vals_list)
 
     # Helper Methods
@@ -114,7 +116,7 @@ class License(models.Model):
     def _compute_links(self):
         """Generate download and update link."""
         for license in self:
-            if license.product_id and license.name != _("New"):
+            if license.name and license.product_id and license.download_token and license.key:
                 edition_short = str(license.product_id.get_value_by_key("EditionShort"))
                 version = str(license.product_id.get_value_by_key("Version"))
                 license.download_link = (
