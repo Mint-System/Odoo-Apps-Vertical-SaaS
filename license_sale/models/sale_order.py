@@ -12,13 +12,13 @@ class SaleOrder(models.Model):
     partner_id = fields.Many2one(comodel_name="res.partner", states=READONLY_FIELD_STATES)
 
     license_ids = fields.Many2many(
-        "license.license",
-        compute="_compute_license_ids",
-        string="Licenses associated to this sale",
+        "license.license", compute="_compute_license_ids", string="Licenses associated to this sale", store=True
     )
-    license_count = fields.Integer(string="Licenses", compute="_compute_license_ids", groups="license.group_user")
+    license_count = fields.Integer(
+        string="Licenses", compute="_compute_license_ids", groups="license.group_user", store=True
+    )
 
-    @api.depends("order_line.product_id")
+    @api.depends("order_line.product_id", "order_line.license_ids")
     def _compute_license_ids(self):
         for order in self:
             order.license_ids = self.env["license.license"].search(
@@ -31,8 +31,7 @@ class SaleOrder(models.Model):
 
     def action_confirm(self):
         res = super().action_confirm()
-        for rec in self:
-            rec.order_line.create_licenses()
+        self.order_line.create_licenses()
         return res
 
     def action_view_license(self):

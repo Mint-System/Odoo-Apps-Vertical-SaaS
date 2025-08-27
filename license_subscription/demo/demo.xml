@@ -22,7 +22,7 @@
         />
     </record>
 
-    <record id="license_sale.sale_order_50" model="sale.order">
+    <record id="license_sale.sale_order_software_1" model="sale.order">
         <field name="recurrence_id" ref="sale_temporal.recurrence_yearly" />
         <!-- <field
             name="end_date"
@@ -30,7 +30,7 @@
         /> -->
     </record>
 
-    <record id="license_sale.sale_order_51" model="sale.order">
+    <record id="license_sale.sale_order_software_2" model="sale.order">
         <field name="recurrence_id" ref="sale_temporal.recurrence_3_year" />
         <!-- <field
             name="end_date"

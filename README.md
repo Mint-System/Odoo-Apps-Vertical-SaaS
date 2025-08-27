@@ -1,21 +1,13 @@
-# Odoo Apps: SaaS
+# Odoo Apps: Vertical Saas
 
-Collection of SaaS related modules.
+Odoo modules extending the `vertical` module.
 
 ## Usage
 
-Clone module into Odoo addon directory.
+Clone this repo into the Odoo addons directory.
 
 ```bash
-git clone git@github.com:mint-system/odoo-apps-vertical-saas.git ./addons/vertical_saas
-```
-
-## Test
-
-Run tests locally with Docker Compose.
-
-```
-./task all
+git clone git@github.com:Mint-System/Odoo-Apps-vertical_saas.git ./addons/vertical_saas
 ```
 
 ## Available modules

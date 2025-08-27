@@ -13,9 +13,9 @@ class SaleOrder(models.Model):
 
     def _inverse_next_invoice_date(self):
         for order in self:
-            order.order_line.filtered(lambda line: line.is_license).license_ids.write(
-                {"date_end": order.next_invoice_date}
-            )
+            order.order_line.filtered(lambda line: line.is_license).license_ids.filtered(
+                lambda license: license.date_end != order.next_invoice_date
+            ).write({"date_end": order.next_invoice_date})
 
     def action_confirm(self):
         """

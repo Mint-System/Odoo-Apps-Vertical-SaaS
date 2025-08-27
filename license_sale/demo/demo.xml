@@ -58,7 +58,7 @@
 
     <record id="license.license1" model="license.license">
         <field name="client_order_ref">Gemini Furniture</field>
-        <field name="sale_line_id" ref="license_sale.sale_order_software_2" />
+        <field name="sale_line_id" ref="license_sale.sale_order_line_software_2" />
     </record>
 
 </odoo>

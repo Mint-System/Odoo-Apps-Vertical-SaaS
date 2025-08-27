@@ -9,12 +9,8 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     def create_licenses(self):
-        """
-        Create license only if "license exists" is not checked and
-        no comment has been added to the sale order.
-        """
-        for line in self:
-            if not line.order_id.license_exists and not line.order_id.comment:
-                return super().create_licenses()
-            else:
-                return
+        # Only proceed if none of the orders have license_exists or comment
+        orders = self.order_id
+        if any(order.license_exists or bool(order.comment) for order in orders):
+            return False
+        return super().create_licenses()
