@@ -34,7 +34,9 @@
                     Edition: <t t-out="license.product_id.name" /><br />
                     Checksum: <t t-out="license.key" /><br />
                     Runtime: <t t-out="license.runtime" /> months<br />
-                    End date: <t t-out="license.date_end.strftime('%d.%m.%Y')" /><br />
+                    End date: <t
+                            t-out="(license.date_end + relativedelta(months=license.runtime)).strftime('%d.%m.%Y')"
+                        /><br />
                     Download-Link: <a
                             t-att-href="license.download_link"
                             t-out="license.download_link"
