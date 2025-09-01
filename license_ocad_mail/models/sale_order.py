@@ -19,7 +19,12 @@ class SaleOrder(models.Model):
         res = super().action_confirm()
 
         for order in self:
-            if not order.license_exists and any(order.order_line.mapped("is_license")) and not order.comment:
+            if (
+                order.website_id
+                and not order.license_exists
+                and any(order.order_line.mapped("is_license"))
+                and not order.comment
+            ):
                 # Activate licenses
                 order.order_line.license_ids.action_activate()
 

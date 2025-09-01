@@ -64,7 +64,7 @@ class License(models.Model):
         default="draft",
     )
     date_start = fields.Date(tracking=True)
-    runtime = fields.Float("Runtime Months", default=12)
+    runtime = fields.Integer("Runtime Months", default=12)
     date_end = fields.Date(compute="_compute_date_end", tracking=True, store=True, readonly=False)
 
     @api.depends("date_start", "runtime")
