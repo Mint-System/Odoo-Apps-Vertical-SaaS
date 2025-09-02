@@ -12,7 +12,7 @@ from . import ocad
 _logger = logging.getLogger(__name__)
 
 
-def _generate_download_token():
+def _get_download_token():
     char_table = (
         "ABCDEFGHJKLMNPQRSTUVWXYZ23456789abcdefghijklmnopqrstuvwxyz"  # 58 char
     )
@@ -20,6 +20,9 @@ def _generate_download_token():
     for _ in range(8):
         token += char_table[random.randint(0, 57)]
     return token
+
+
+REQUESTS_HEADERS = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:134.0) Gecko/20100101 Firefox/134.0"}
 
 
 class License(models.Model):
@@ -90,9 +93,7 @@ class License(models.Model):
     def create(self, vals_list):
         for val in vals_list:
             if not val.get("download_token"):
-                download_token = _generate_download_token()
-                _logger.warning(f"Generate download token: {download_token}")
-                val["download_token"] = download_token
+                val["download_token"] = _get_download_token()
         return super().create(vals_list)
 
     # Helper Methods
@@ -116,29 +117,31 @@ class License(models.Model):
     def _compute_links(self):
         """Generate download and update link."""
         for license in self:
-            if license.name and license.product_id and license.download_token and license.key:
+            if license.product_id and license.name != _("New"):
                 edition_short = str(license.product_id.get_value_by_key("EditionShort"))
                 version = str(license.product_id.get_value_by_key("Version"))
-                license.download_link = (
-                    "https://www.ocad.com/OCAD2018/OCAD_2018_Setup.php?e="
-                    + edition_short
-                    + "&l="
-                    + license.name
-                    + "&v="
-                    + version
-                    + "&d="
-                    + license.download_token
-                )
-                license.update_link = (
-                    "https://www.ocad.com/OCAD2018/OCAD_2018_Update.php?e="
-                    + edition_short
-                    + "&l="
-                    + license.name
-                    + "&v="
-                    + version
-                    + "&c="
-                    + license.key
-                )
+
+                if edition_short != "None" and version != "None" and license.download_token:
+                    license.download_link = (
+                        "https://www.ocad.com/OCAD2018/OCAD_2018_Setup.php?e="
+                        + edition_short
+                        + "&l="
+                        + license.name
+                        + "&v="
+                        + version
+                        + "&d="
+                        + license.download_token
+                    )
+                    license.update_link = (
+                        "https://www.ocad.com/OCAD2018/OCAD_2018_Update.php?e="
+                        + edition_short
+                        + "&l="
+                        + license.name
+                        + "&v="
+                        + version
+                        + "&c="
+                        + license.key
+                    )
 
     @api.depends("name", "product_id", "partner_id", "client_order_ref")
     def _compute_key(self):
@@ -148,7 +151,7 @@ class License(models.Model):
                 edition_long = license.product_id.get_value_by_key("EditionLong")
 
                 if not version or not edition_long:
-                    raise UserError(_("Missing product information fields for %s", license.product_id.name))
+                    raise UserError(_("Missing product information fields"))
 
                 license.key = "".join(
                     ocad.get_ocad2018_checksum(
@@ -188,7 +191,7 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
-                response = requests.post(url, params=params, auth=auth, timeout=10)
+                response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
 
                 if message != "FEHLER: Lizenznummer schon in Datenbank vorhanden!" and (
@@ -220,7 +223,7 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
-                response = requests.post(url, params=params, auth=auth, timeout=10)
+                response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
 
                 if "FEHLER" in message or "Unauthorized" in message:
@@ -246,7 +249,7 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
-                response = requests.post(url, params=params, auth=auth, timeout=10)
+                response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
 
                 if "FEHLER" in message or "Unauthorized" in message:
@@ -273,7 +276,7 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
-                response = requests.post(url, params=params, auth=auth, timeout=10)
+                response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
 
                 if "FEHLER" in message or "Unauthorized" in message:
@@ -302,7 +305,7 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
-                response = requests.post(url, params=params, auth=auth, timeout=10)
+                response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
 
                 if "FEHLER" in message or "Unauthorized" in message:

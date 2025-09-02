@@ -43,6 +43,7 @@
         <field name="client_order_ref">OCAD AG</field>
         <field name="type_id" ref="license.type0" />
         <field name="partner_id" ref="base.res_partner_address_31" />
+        <field name="registered" eval="True" />
     </record>
 
     <record id="license.license0" model="license.license">

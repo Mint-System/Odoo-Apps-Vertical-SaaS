@@ -8,6 +8,8 @@ from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
+REQUESTS_HEADERS = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:134.0) Gecko/20100101 Firefox/134.0"}
+
 
 class LicenseActivation(models.TransientModel):
     _name = "license.activation"
@@ -90,7 +92,7 @@ class LicenseActivation(models.TransientModel):
                 ocad_password,
             )
 
-            response = requests.get(url, params=params, auth=auth, timeout=10)
+            response = requests.get(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
 
             # Reponse is a semicolon separated string that has to be processed
             columns = 13
