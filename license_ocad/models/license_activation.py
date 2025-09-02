@@ -115,12 +115,20 @@ class LicenseActivation(models.TransientModel):
                     }
                 )
 
-            # Last 3 cells contain license activation data
-            license_data = {
-                "active_activations": cells[-4] or 0,
-                "registered_activations": cells[-3] or 0,
-                "max_activations": cells[-2] or 0,
-            }
+            # License activation data from fourth last cell
+            if len(cells) > 3:
+                license_data = {
+                    "active_activations": cells[-4] or 0,
+                    "registered_activations": cells[-3] or 0,
+                    "max_activations": cells[-2] or 0,
+                }
+            else:
+                # Not enough data — default to 0
+                license_data = {
+                    "active_activations": 0,
+                    "registered_activations": 0,
+                    "max_activations": 0,
+                }
 
             return activations, license_data
         else:
