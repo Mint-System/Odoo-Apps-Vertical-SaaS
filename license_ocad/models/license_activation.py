@@ -117,9 +117,9 @@ class LicenseActivation(models.TransientModel):
 
             # Last 3 cells contain license activation data
             license_data = {
-                "active_activations": cells[-4],
-                "registered_activations": cells[-3],
-                "max_activations": cells[-2],
+                "active_activations": cells[-4] or 0,
+                "registered_activations": cells[-3] or 0,
+                "max_activations": cells[-2] or 0,
             }
 
             return activations, license_data
