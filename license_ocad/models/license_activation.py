@@ -64,7 +64,7 @@ class LicenseActivation(models.TransientModel):
                 activation.license_id.company_id.ocad_password,
             )
 
-            response = requests.post(url, params=params, auth=auth, timeout=10)
+            response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
             message += response.text
 
             if "FEHLER" in message or "Unauthorized" in message:
