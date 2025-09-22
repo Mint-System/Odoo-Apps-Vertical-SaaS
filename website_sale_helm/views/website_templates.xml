@@ -1,37 +1,26 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="extra_info" model="ir.ui.view">
         <field name="name">Checkout Extra Helm Info</field>
         <field name="type">qweb</field>
         <field name="key">website_sale.extra_info</field>
-        <field name="website_id" ref="website.default_website" />
+        <field name="website_id" ref="website.default_website"/>
         <field name="arch" type="xml">
-            <t
-                name="Checkout Extra Helm Info"
-                active="False"
-                t-name="website_sale.extra_info"
-            >
+            <t name="Checkout Extra Helm Info" active="False" t-name="website_sale.extra_info">
                 <t t-call="website_sale.checkout_layout">
-                    <t t-set="show_navigation_button" t-value="False" />
-                    <t t-set="redirect" t-valuef="/shop/extra_info" />
+                    <t t-set="show_navigation_button" t-value="False"/>
+                    <t t-set="redirect" t-value="'/shop/extra_info'"/>
                     <t t-set="oe_structure">
                         <!-- This is the drag-and-drop area for website building blocs at the end of each
-                     checkout page. This is append at the of the page in `checkout_layout`. The
-                     templates created in the database to store blocs are hooked using XPath on the
-                     `oe_struture` element ID. Therefore, we can't use dynamic IDs (like with
-                     t-att-id) and each template needs to define a div element. -->
-                        <div
-                            class="oe_structure"
-                            id="oe_structure_website_sale_extra_info_1"
-                        />
+                             checkout page. This is appended at the end of the page in `checkout_layout`.
+                             Templates created in the database to store blocs are hooked using XPath on the
+                             `oe_structure` element ID. Therefore, we can't use dynamic IDs (like with
+                             t-att-id) and each template needs to define a div element. -->
+                        <div class="oe_structure" id="oe_structure_website_sale_extra_info_1"/>
                     </t>
 
                     <h3 class="mb-4">Technical Info</h3>
-                    <section
-                        class="s_website_form"
-                        data-vcss="001"
-                        data-snippet="s_website_form"
-                    >
+                    <section class="s_website_form" data-vcss="001" data-snippet="s_website_form">
                         <div class="container">
                             <form
                                 action="/website/form/"
@@ -46,225 +35,142 @@
                                 hide-change-model="true"
                             >
                                 <div class="s_website_form_rows s_col_no_bgcolor row">
-                                    <div
-                                        class="s_website_form_field col-12 py-2 mb-0"
-                                        data-type="char"
-                                        data-name="Field"
-                                    >
-                                        <div
-                                            class="s_col_no_resize s_col_no_bgcolor row"
-                                        >
-                                            <label
-                                                class="s_website_form_label col-form-label col-sm-auto"
-                                                style="width: 200px"
-                                                for="sale1"
-                                            >
-                                                <span
-                                                    class="s_website_form_label_content"
-                                                >Project Name</span>
+
+                                    <!-- Cluster Field -->
+                                    <div class="s_website_form_field mb-3 col-12"
+                                         data-type="many2one"
+                                         data-name="Field"
+                                         data-translated-name="Field">
+                                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                                            <label class="col-form-label col-sm-auto s_website_form_label"
+                                                   style="width: 200px"
+                                                   for="ok63bmzhjk6s">
+                                                <span class="s_website_form_label_content">Cluster</span>
                                             </label>
                                             <div class="col-sm">
-                                                <input
-                                                    id="helm1"
-                                                    type="text"
-                                                    class="s_website_form_input form-control"
-                                                    name="project_name"
-                                                    minlength="5"
-                                                    pattern="[A-z0-9A-z\-]+"
-                                                    required="1"
-                                                    placeholder="my-service"
-                                                />
-                                            </div>
-                                            <div
-                                                class="s_website_form_field_description small form-text text-muted"
-                                            >This name will be part of the access url: my-service.cluster.example.com
-                                                <br />
-                                                <br />
+                                                <select class="form-select s_website_form_input"
+                                                        name="cluster_id"
+                                                        id="ok63bmzhjk6s"
+                                                        required="True">
+                                                    <option value="" selected="True" disabled="True">-- Please select --</option>
+                                                    <option id="ok63bmzhjk6s0" value="1">APPUiO</option>
+                                                    <option id="ok63bmzhjk6s1" value="2">Infomaniak</option>
+                                                    <option id="ok63bmzhjk6s2" value="2">Exoscale</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
-                                    <div
-                                        class="s_website_form_field col-12 py-2 mb-0"
-                                        data-type="char"
-                                        data-name="Field"
-                                    >
-                                        <div
-                                            class="s_col_no_resize s_col_no_bgcolor row"
-                                        >
-                                            <label
-                                                class="s_website_form_label col-form-label col-sm-auto"
-                                                style="width: 200px"
-                                                for="sale1"
-                                            >
-                                                <span
-                                                    class="s_website_form_label_content"
-                                                >Domain</span>
-                                            </label>
-                                            <div class="col-sm">
-                                                <input
-                                                    id="helm2"
-                                                    type="text"
-                                                    class="s_website_form_input form-control"
-                                                    name="domain"
-                                                    pattern="[A-z0-9A-z\.\-]+"
-                                                    placeholder=""
-                                                />
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="s_website_form_field_description small form-text text-muted"
-                                        >Optionally set up a custom domain e.g. odoo.example.com.<br
-                                        />
+                                    <div class="s_website_form_field_description small form-text text-muted">
+                                        The service will be deployed to the selected cluster.<br/>
                                         Learn more about the <u>
-                                            <a
-                                                target="_blank"
-                                                href="/custom-domains"
-                                            >Custom Domain.</a>
-                                        </u>
-                                            <br />
-                                            <br />
-                                        </div>
+                                            <a target="_blank" href="/kubernetes-clusters">Kubernetes Clusters.</a>
+                                        </u><br/><br/>
                                     </div>
-                                    <div
-                                        class="s_website_form_field mb-3 col-12"
-                                        data-type="many2one"
-                                        data-name="Field"
-                                        data-translated-name="Field"
-                                    >
-                                        <div
-                                            class="row s_col_no_resize s_col_no_bgcolor"
-                                        >
-                                            <label
-                                                class="col-form-label col-sm-auto s_website_form_label"
-                                                style="width: 200px"
-                                                for="olitcpoyvm1"
-                                            >
-                                                <span
-                                                    class="s_website_form_label_content"
-                                                >Consulting Partner</span>
-                                            </label>
-                                            <div class="col-sm">
-                                                <select
-                                                    class="form-select s_website_form_input"
-                                                    name="consulting_partner_id"
-                                                    id="olitcpoyvm1"
-                                                    required="True"
-                                                >
-                                                    <option
-                                                        value=""
-                                                        selected="True"
-                                                        disabled="True"
-                                                    >-- Please select --</option>
-                                                    <option
-                                                        id="olitcpoyvm10"
-                                                        value="0"
-                                                    >Mint System GmbH</option>
-                                                    <option
-                                                        id="olitcpoyvm11"
-                                                        value="0"
-                                                    >r4ts GmbH</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="s_website_form_field_description small form-text text-muted"
-                                    >The consulting partner will assist in setting up the service.<br
-                                    />
-                                    Learn more about the <u>
-                                        <a
-                                            target="_blank"
-                                            href="/consulting-partners"
-                                        >Consulting Partners.</a>
-                                    </u>
-                                            <br />
-                                            <br />
-                                        </div>
-                                    <div
-                                        class="s_website_form_field mb-3 col-12"
-                                        data-type="many2one"
-                                        data-name="Field"
-                                        data-translated-name="Field"
-                                    >
-                                        <div
-                                            class="row s_col_no_resize s_col_no_bgcolor"
-                                        >
-                                            <label
-                                                class="col-form-label col-sm-auto s_website_form_label"
-                                                style="width: 200px"
-                                                for="ok63bmzhjk6s"
-                                            >
-                                                <span
-                                                    class="s_website_form_label_content"
-                                                >Cluster</span>
-                                            </label>
-                                            <div class="col-sm">
-                                                <select
-                                                    class="form-select s_website_form_input"
-                                                    name="cluster_id"
-                                                    id="ok63bmzhjk6s"
-                                                    required="True"
-                                                >
-                                                    <option
-                                                        value=""
-                                                        selected="True"
-                                                        disabled="True"
-                                                    >-- Please select --</option>
-                                                    <option
-                                                        id="ok63bmzhjk6s0"
-                                                        value="1"
-                                                    >APPUiO</option>
-                                                    <option
-                                                        id="ok63bmzhjk6s1"
-                                                        value="2"
-                                                    >Infomaniak</option>
-                                                    <option
-                                                        id="ok63bmzhjk6s2"
-                                                        value="2"
-                                                    >Exoscale</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="s_website_form_field_description small form-text text-muted"
-                                    >The service will be deployed to the selected cluster.<br
-                                    />
-                                    Learn more about the <u>
-                                        <a
-                                            target="_blank"
-                                            href="/kubernetes-clusters"
-                                        >Kuberentes Clusters.</a>
-                                    </u>
-                                            <br />
-                                        </div>
-                                    <div
-                                        class="s_website_form_submit s_website_form_no_submit_option d-flex flex-column flex-lg-row align-items-lg-center pt-4"
-                                    >
-                                        <a
-                                            role="button"
-                                            name="website_sale_main_button"
-                                            class="s_website_form_send btn btn-primary order-lg-3 w-100 w-lg-auto ms-lg-auto"
-                                            href="/shop/confirm_order"
-                                        >
-                                    Continue checkout
-                                    <i class="fa fa-angle-right ms-2 fw-light" />
-                                </a>
 
-                                        <div
-                                            class="position-relative d-flex d-lg-none w-100 justify-content-center align-items-center my-2 opacity-75"
-                                        >
-                                            <hr class="w-100" />
+                                    <!-- Consulting Partner Field -->
+                                    <div class="s_website_form_field mb-3 col-12"
+                                         data-type="many2one"
+                                         data-name="Field"
+                                         data-translated-name="Field">
+                                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                                            <label class="col-form-label col-sm-auto s_website_form_label"
+                                                   style="width: 200px"
+                                                   for="olitcpoyvm1">
+                                                <span class="s_website_form_label_content">Consulting Partner</span>
+                                            </label>
+                                            <div class="col-sm">
+                                                <select class="form-select s_website_form_input"
+                                                        name="consulting_partner_id"
+                                                        id="olitcpoyvm1"
+                                                        required="True">
+                                                    <option value="" selected="True" disabled="True">-- Please select --</option>
+                                                    <option id="olitcpoyvm10" value="0">Mint System GmbH</option>
+                                                    <option id="olitcpoyvm11" value="0">r4ts GmbH</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="s_website_form_field_description small form-text text-muted">
+                                        The consulting partner will assist in setting up the service.<br/>
+                                        Learn more about the <u>
+                                            <a target="_blank" href="/consulting-partners">Consulting Partners.</a>
+                                        </u><br/><br/>
+                                    </div>
+
+                                    <!-- Project Name Field -->
+                                    <div class="s_website_form_field col-12 py-2 mb-0"
+                                         data-type="char"
+                                         data-name="Field">
+                                        <div class="s_col_no_resize s_col_no_bgcolor row">
+                                            <label class="s_website_form_label col-form-label col-sm-auto"
+                                                   style="width: 200px"
+                                                   for="helm1">
+                                                <span class="s_website_form_label_content">Project Name</span>
+                                            </label>
+                                            <div class="col-sm">
+                                                <input id="helm1"
+                                                       type="text"
+                                                       class="s_website_form_input form-control"
+                                                       name="project_name"
+                                                       minlength="5"
+                                                       pattern="[A-z0-9A-z\-]+"
+                                                       required="1"
+                                                       placeholder="my-service"/>
+                                            </div>
+                                            <div class="s_website_form_field_description small form-text text-muted">
+                                                This name will be part of the access url: my-service.cluster.example.com<br/><br/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Domain Field -->
+                                    <div class="s_website_form_field col-12 py-2 mb-0"
+                                         data-type="char"
+                                         data-name="Field">
+                                        <div class="s_col_no_resize s_col_no_bgcolor row">
+                                            <label class="s_website_form_label col-form-label col-sm-auto"
+                                                   style="width: 200px"
+                                                   for="helm2">
+                                                <span class="s_website_form_label_content">Domain</span>
+                                            </label>
+                                            <div class="col-sm">
+                                                <input id="helm2"
+                                                       type="text"
+                                                       class="s_website_form_input form-control"
+                                                       name="domain"
+                                                       pattern="[A-z0-9A-z\.\-]+"
+                                                       placeholder=""/>
+                                            </div>
+                                        </div>
+                                        <div class="s_website_form_field_description small form-text text-muted">
+                                            Optionally set up a custom domain e.g. odoo.example.com.<br/>
+                                            Learn more about the <u>
+                                                <a target="_blank" href="/custom-domains">Custom Domain.</a>
+                                            </u><br/><br/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Submit Buttons -->
+                                    <div class="s_website_form_submit s_website_form_no_submit_option d-flex flex-column flex-lg-row align-items-lg-center pt-4">
+                                        <a role="button"
+                                           name="website_sale_main_button"
+                                           class="s_website_form_send btn btn-primary order-lg-3 w-100 w-lg-auto ms-lg-auto"
+                                           href="/shop/confirm_order">
+                                            Continue checkout
+                                            <i class="fa fa-angle-right ms-2 fw-light"/>
+                                        </a>
+                                        <div class="position-relative d-flex d-lg-none w-100 justify-content-center align-items-center my-2 opacity-75">
+                                            <hr class="w-100"/>
                                             <span class="px-3">or</span>
-                                            <hr class="w-100" />
+                                            <hr class="w-100"/>
                                         </div>
-
                                         <a href="/shop/checkout" class="text-center">
-                                    <i class="fa fa-angle-left me-2 fw-light" />
-                                    Return to shipping
-                                </a>
-                                        <span id="s_website_form_result" />
+                                            <i class="fa fa-angle-left me-2 fw-light"/>
+                                            Return to shipping
+                                        </a>
+                                        <span id="s_website_form_result"/>
                                     </div>
+
                                 </div>
                             </form>
                         </div>
