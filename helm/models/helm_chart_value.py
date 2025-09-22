@@ -9,8 +9,8 @@ class HelmChartValue(models.Model):
     _name = "helm.chart.value"
     _description = "Helm Chart Value"
 
-    chart_id = fields.Many2one("helm.chart")
-    release_chart_id = fields.Many2one("helm.chart")
+    chart_id = fields.Many2one("helm.chart", help="Chart for dynamic values.")
+    release_chart_id = fields.Many2one("helm.chart", help="Chart for predefined values.")
     release_id = fields.Many2one("helm.release")
     apply = fields.Char(help="Expression that tells if value should be applied.", required=True, default="True")
     path = fields.Char(help="Path to the nested key of the values.yaml.", required=True)
