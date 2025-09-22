@@ -17,6 +17,7 @@ git clone git@github.com:Mint-System/Odoo-Apps-vertical_saas.git ./addons/vertic
 | [license](license) |         Manage software licensens. |
 | [license_ocad_mail](license_ocad_mail) |         Mail templates for OCAD. |
 | [license_ocad](license_ocad) |         Sync licenses with the OCAD license activation service. |
+| [license_partner_commission](license_partner_commission) |         Integrate license sale with partner comissions. |
 | [license_portal](license_portal) |         Portal view for licenses. |
 | [license_sale](license_sale) |         Sell software licenses. |
 | [license_subscription](license_subscription) |         Update license based on subscription changes. |

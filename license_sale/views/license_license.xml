@@ -70,6 +70,12 @@
                     name="sale_order_filter"
                     icon="fa-dollar"
                 />
+                <filter
+                    string="Country"
+                    context="{'group_by': 'country_id'}"
+                    name="group_by_country"
+                    icon="fa-dollar"
+                />
             </xpath>
 
             <field name="name" position="attributes">

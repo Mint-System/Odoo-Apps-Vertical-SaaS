@@ -28,6 +28,7 @@ class License(models.Model):
         states={"draft": [("readonly", False)], "assigned": [("readonly", False)]},
     )
     partner_id = fields.Many2one(compute="_compute_partner_id", store=True, copy=True)
+    country_id = fields.Many2one("res.country", compute="_compute_partner_id", store=True, copy=True)
     product_id = fields.Many2one(
         compute="_compute_product_id",
         store=True,
@@ -35,11 +36,12 @@ class License(models.Model):
         domain=[("license_ok", "=", True)],
     )
 
-    @api.depends("sale_order_id", "sale_order_id.partner_id")
+    @api.depends("sale_order_id", "sale_order_id.partner_id", "sale_order_id.partner_id.country_id")
     def _compute_partner_id(self):
         for rec in self:
             if rec.sale_order_id:
                 rec.partner_id = rec.sale_order_id.partner_id
+                rec.country_id = rec.sale_order_id.partner_id.country_id
 
     @api.depends("sale_line_id", "sale_line_id.product_id")
     def _compute_product_id(self):
