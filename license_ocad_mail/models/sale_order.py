@@ -20,7 +20,7 @@ class SaleOrder(models.Model):
 
         for order in self:
             if (
-                order.website_id
+                (order.website_id or order.origin_order_id)
                 and not order.license_exists
                 and any(order.order_line.mapped("is_license"))
                 and not order.comment
