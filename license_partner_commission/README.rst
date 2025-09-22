@@ -2,13 +2,14 @@
     :target: http://www.gnu.org/licenses/gpl-3.0-standalone.html
     :alt: License: GPL-3
 
-====================
-License Website Sale
-====================
 
-Purchase licenses in the Odoo shop.
+=========================
+License Partner Comission
+=========================
 
-For a detailed documentation have a look at https://www.odoo-wiki.org/license-website-sale.html
+Integrate license sale with partner comissions.
+
+For a detailed documentation have a look at https://www.odoo-wiki.org/license-partner-commission.html
 
 Configuration
 ~~~~~~~~~~~~~
@@ -16,9 +17,9 @@ Configuration
 * No additional configurations needed
 
 Maintainer
-==========
+~~~~~~~~~~
 
-.. image:: https://raw.githubusercontent.com/Mint-System/Wiki/master/assets/mint-system-logo.png
+.. image:: https://raw.githubusercontent.com/Mint-System/Wiki/main/attachments/mint-system-logo.png
   :target: https://www.mint-system.ch
 
 This module is maintained by Mint System GmbH.
