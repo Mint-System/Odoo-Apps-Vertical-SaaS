@@ -24,7 +24,7 @@
                         <field name="repo_id" />
                     </group>
                     <notebook>
-                        <page string="General Information" name="general_info">
+                        <page string="Values" name="values">
                             <group string="Dynamic values">
                                 <field
                                     name="value_ids"
@@ -62,6 +62,29 @@
                                         </list>
                                     </field>
                                 </group>
+                            </group>
+                        </page>
+                        <page string="Secrets" name="secrets">
+                            <group>
+                                <field
+                                    name="secret_ids"
+                                    nolabel="1"
+                                    context="{'default_chart_id': id}"
+                                >
+                                    <list
+                                        context="{'default_secret_id': id}"
+                                        editable="bottom"
+                                    >
+                                        <field name="name" />
+                                        <field name="data_ids" />
+                                        <button
+                                            name="action_show_details"
+                                            title="Show Details"
+                                            type="object"
+                                            icon="fa-list"
+                                        />
+                                    </list>
+                                </field>
                             </group>
                         </page>
                         <page string="Products" name="products">

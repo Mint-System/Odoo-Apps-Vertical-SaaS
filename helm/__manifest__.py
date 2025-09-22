@@ -20,6 +20,7 @@
         "security/security.xml",
         "security/ir.model.access.csv",
         "wizards/helm_chart_install.xml",
+        "views/helm_chart_secret_views.xml",
     ],
     "installable": True,
     "application": False,

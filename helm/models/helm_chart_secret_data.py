@@ -2,7 +2,7 @@
 
 import logging
 
-from odoo import _, api, fields, models
+from odoo import fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -13,4 +13,4 @@ class HelmChartSecretData(models.Model):
 
     key = fields.Char()
     value = fields.Char()
-    secret_id = fields.Char("helm.chart.secret")
+    secret_id = fields.Many2one("helm.chart.secret")

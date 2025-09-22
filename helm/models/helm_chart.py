@@ -25,6 +25,10 @@ class HelmChart(models.Model):
         string="Predefined values",
         help="These values will be copied to the release.",
     )
+    secret_ids = fields.One2many(
+        "helm.chart.secret",
+        "chart_id",
+    )
     product_ids = fields.One2many("product.product", "chart_id")
     state = fields.Selection(related="repo_id.state")
 
