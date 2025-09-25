@@ -38,11 +38,8 @@ class HelmRelease(models.Model):
     )
     ingress_url = fields.Char(compute="_compute_ingress_url")
 
-    def _get_eval_context(self):
-        """
-        This eval context can be accessed by the value python expressions.
-        """
-        return {"self": self, "release": self}
+    def _eval_with_context(self, expression, context):
+        return safe_eval(expression, context)
 
     @api.depends("chart_id", "chart_id.value_ids", "state")
     def _compute_values(self):
@@ -53,9 +50,10 @@ class HelmRelease(models.Model):
             if release.state == "draft" and release.chart_id.state == "added":
                 dict_values = {}
                 for value in release.chart_id.value_ids:
-                    if safe_eval(value.apply, release._get_eval_context()):
+                    apply = release._eval_with_context(value.apply, {"self": self, "release": self})
+                    if apply:
                         try:
-                            new_value = safe_eval(value.value, release._get_eval_context())
+                            new_value = release._eval_with_context(value.value, {"self": self, "release": self})
 
                             # Apply to release field
                             if value.field_id:

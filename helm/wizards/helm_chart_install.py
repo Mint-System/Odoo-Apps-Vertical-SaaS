@@ -10,7 +10,7 @@ class HelmChartInstall(models.TransientModel):
     context_id = fields.Many2one("kubectl.context", required=True)
     create_namespace = fields.Boolean()
     namespace = fields.Char()
-    namespace_id = fields.Many2one("kubectl.namespace", required=True)
+    namespace_id = fields.Many2one("kubectl.namespace")
     partner_id = fields.Many2one("res.partner", string="Customer", required=True)
 
     def action_confirm(self):

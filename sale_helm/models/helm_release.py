@@ -10,10 +10,11 @@ class HelmRelease(models.Model):
 
     sale_line_ids = fields.One2many("sale.order.line", "release_id")
 
-    def _get_eval_context(self):
+    def _eval_with_context(self, expression, context):
         """
-        This eval context can be accessed by the value python expressions.
+        Add order_id to context.
         """
-        res = super()._get_eval_context()
-        res["order_id"] = self.sale_line_ids[0].order_id if self.sale_line_ids else False
-        return res
+        if "order_id" in expression and "order_id" not in context:
+            return False
+        context["order_id"] = self.sale_line_ids[0].order_id if self.sale_line_ids else False
+        return super()._eval_with_context(expression, context)

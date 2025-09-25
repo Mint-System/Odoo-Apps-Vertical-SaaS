@@ -2,6 +2,7 @@
 <odoo>
     <record id="repo_kubernetes_build" model="helm.repo">
         <field name="name">kubernetes-build</field>
+        <field name="state">added</field>
         <field name="url">https://kubernetes.build</field>
     </record>
 

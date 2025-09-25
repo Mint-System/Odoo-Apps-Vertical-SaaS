@@ -9,8 +9,13 @@
                         <field name="name" />
                         <field name="chart_id" readonly="1" />
                         <field name="context_id" />
-                        <field name="create_namespace" />
-                        <field name="namespace_id" />
+                        <field name="create_namespace" invisible="namespace_id" />
+                        <field
+                            name="namespace"
+                            invisible="create_namespace == False or namespace_id"
+                            required="True"
+                        />
+                        <field name="namespace_id" invisible="create_namespace" />
                         <field name="partner_id" />
                     </group>
                 </sheet>
