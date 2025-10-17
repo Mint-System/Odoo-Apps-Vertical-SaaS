@@ -40,3 +40,4 @@ Uninstall charts
 
 - Open "Helm > Releases > odoo" and click "Uninstall"
 - Open "ingress-nginx" release and click "Uninstall"
+- Open "cloudnative-pg" release and click "Uninstall"
