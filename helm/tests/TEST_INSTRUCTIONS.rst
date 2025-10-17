@@ -9,14 +9,23 @@ Check repo:
 - Ensure the repo has been added
 - Repeate the same for "ingress-nginx" and "cnpg"
 
-Install ingress-nginx and cnpg chart
+Install ingress-nginx chart
 
 - Open "Helm > Charts > ingress-nginx" and click "Release"
 - Enter name "ingress-nginx" and select "loc" as context
+- Create namespace "ingress-nginx"
 - Select customer "Mint System"
 - Confirm and install release
 - Refresh page and check if it was installed
-- Repeat the same for cnpg
+
+Install cloudnative-pg chart
+
+- Open "Helm > Charts > cloudnative-pg" and click "Release"
+- Enter name "cloudnative-pg" and select "loc" as context
+- Create namespace "cnpg-system"
+- Select customer "Mint System"
+- Confirm and install release
+- Refresh page and check if it was installed
 
 Install odoo chart
 
