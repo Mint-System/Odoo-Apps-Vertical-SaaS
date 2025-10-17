@@ -19,7 +19,7 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="apply" />
+                            <field name="filter_cluster_ids" widget="many2many_tags" />
                             <field name="path" />
                             <field name="value" />
                             <field

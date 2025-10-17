@@ -17,7 +17,7 @@ class KubectlContext(models.Model):
 
     name = fields.Char(required=True)
     cluster_id = fields.Many2one("kubectl.cluster", required=True)
-    config = fields.Text(help="Export and pase config with `kubectl config view --minify --raw`.")
+    config = fields.Text(help="Export and parse config with `kubectl config view --minify --raw`.")
     is_current = fields.Boolean(compute="_compute_is_current")
     command = fields.Char(help="Run a command that starts with `kubectl` or `helm`.")
     output = fields.Text(help="Output of the command.")
@@ -90,14 +90,14 @@ class KubectlContext(models.Model):
                 with self.get_config_path() as config_path:
                     command = command[0] + ["--kubeconfig", config_path] + command[1:]
 
-            # Apply context explicitlty
-            if command[0] == "kubectl":
-                command.extend([f"--context={self.name}"])
-            if command[0] == "helm":
-                command.extend(["--kube-context", self.name])
-                if values:
-                    with self.get_values_path(values) as values_path:
-                        command.extend(["--values", values_path])
+            # Set context
+            # if command[0] == "kubectl":
+            #     command.extend([f"--context={self.name}"])
+            # if command[0] == "helm":
+            #     command.extend(["--kube-context", self.name])
+            if command[0] == "helm" and values:
+                with self.get_values_path(values) as values_path:
+                    command.extend(["--values", values_path])
 
             _logger.warning("Run command: %s", command)
             return subprocess.run(

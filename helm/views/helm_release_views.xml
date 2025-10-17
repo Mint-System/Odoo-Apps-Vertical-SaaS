@@ -81,6 +81,13 @@
                                         class="terminal-screen"
                                     />
                                 </group>
+                                <group string="Last Output">
+                                    <field
+                                        name="output"
+                                        nolabel="1"
+                                        class="terminal-screen"
+                                    />
+                                </group>
                             </group>
                         </page>
                     </notebook>

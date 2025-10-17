@@ -12,7 +12,7 @@ class HelmChartValue(models.Model):
     chart_id = fields.Many2one("helm.chart", help="Chart for dynamic values.")
     release_chart_id = fields.Many2one("helm.chart", help="Chart for predefined values.")
     release_id = fields.Many2one("helm.release")
-    apply = fields.Char(help="Expression that tells if value should be applied.", required=True, default="True")
+    filter_cluster_ids = fields.Many2many("kubectl.cluster", help="Apply value to these clusters only.")
     path = fields.Char(help="Path to the nested key of the values.yaml.", required=True)
     value = fields.Char(help="Python code to define the value.")
     option_id = fields.Many2one(

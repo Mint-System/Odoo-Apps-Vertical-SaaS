@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <record id="ingress_nginx" model="helm.repo">
+        <field name="name">ingress-nginx</field>
+        <field name="url">https://kubernetes.github.io/ingress-nginx</field>
+    </record>
+
+    <record id="chart_ingress_nginx" model="helm.chart">
+        <field name="name">ingress-nginx</field>
+        <field name="repo_id" ref="helm.ingress_nginx" />
+    </record>
+
+    <record id="cnpg" model="helm.repo">
+        <field name="name">cnpg</field>
+        <field name="url">https://cloudnative-pg.github.io/charts</field>
+    </record>
+
+    <record id="chart_cloudnative_pg" model="helm.chart">
+        <field name="name">cloudnative-pg</field>
+        <field name="repo_id" ref="helm.cnpg" />
+    </record>
+
     <record id="repo_kubernetes_build" model="helm.repo">
         <field name="name">kubernetes-build</field>
         <field name="state">added</field>
@@ -32,7 +52,7 @@
 
     <record id="chart_odoo_value_image_option1" model="helm.chart.value.option">
         <field name="value_id" ref="chart_odoo_value_image" />
-        <field name="value">mintsystem/odoo:18.0.20250909</field>
+        <field name="value">mintsystem/odoo:18.0.20251008</field>
     </record>
 
     <record id="chart_odoo_value_image" model="helm.chart.value">
