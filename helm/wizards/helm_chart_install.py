@@ -18,21 +18,16 @@ class HelmChartInstall(models.TransientModel):
         Create a kubectl.release record and open it.
         """
         for wizard in self:
-            release_value_ids = wizard.chart_id.release_value_ids.copy()
-            release_id = self.env["helm.release"].create(
+            release_id = self.chart_id.create_release(
                 {
                     "name": wizard.name,
-                    "chart_id": wizard.chart_id.id,
                     "context_id": wizard.context_id.id,
                     "create_namespace": wizard.create_namespace,
                     "namespace": wizard.namespace,
                     "namespace_id": wizard.namespace_id.id,
                     "partner_id": wizard.partner_id.id,
-                    "value_ids": release_value_ids.ids,
                 }
             )
-            release_value_ids.write({"chart_id": False, "release_id": release_id.id})
-
             return {
                 "name": "Release",
                 "type": "ir.actions.act_window",

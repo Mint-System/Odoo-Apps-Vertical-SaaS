@@ -2,6 +2,7 @@
 <odoo>
     <record id="ingress_nginx" model="helm.repo">
         <field name="name">ingress-nginx</field>
+        <field name="state">added</field>
         <field name="url">https://kubernetes.github.io/ingress-nginx</field>
     </record>
 
@@ -12,6 +13,7 @@
 
     <record id="cnpg" model="helm.repo">
         <field name="name">cnpg</field>
+        <field name="state">added</field>
         <field name="url">https://cloudnative-pg.github.io/charts</field>
     </record>
 

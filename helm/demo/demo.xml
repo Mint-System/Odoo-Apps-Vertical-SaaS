@@ -12,7 +12,7 @@
         <field name="chart_id" ref="helm.chart_odoo" />
         <field
             name="filter_cluster_ids"
-            eval="[(4, ref('kubectl.kubectl_cluster_exo_demo'))]"
+            eval="[(4, ref('kubectl.kubectl_cluster_axo_demo'))]"
         />
         <field name="path">ingress.className</field>
         <field name="value">'haproxy'</field>
@@ -22,7 +22,7 @@
         <field name="chart_id" ref="helm.chart_odoo" />
         <field
             name="filter_cluster_ids"
-            eval="[(4, ref('kubectl.kubectl_cluster_exo_demo'))]"
+            eval="[(4, ref('kubectl.kubectl_cluster_axo_demo'))]"
         />
         <field name="path">vshnPostgres.enabled</field>
         <field name="value">True</field>
@@ -32,20 +32,20 @@
         <field name="chart_id" ref="helm.chart_odoo" />
         <field
             name="filter_cluster_ids"
-            eval="[(4, ref('kubectl.kubectl_cluster_exo_demo'))]"
+            eval="[(4, ref('kubectl.kubectl_cluster_axo_demo'))]"
         />
         <field name="path">cnpg.enabled</field>
         <field name="value">False</field>
     </record>
 
-    <record id="odoo_release_demo" model="helm.release">
+    <!--     <record id="odoo_release_demo" model="helm.release">
         <field name="name">odoo</field>
         <field name="chart_id" ref="helm.chart_odoo" />
         <field name="context_id" ref="kubectl.kubectl_context_kind_demo" />
         <field name="partner_id" ref="helm.res_partner_mint_system_demo" />
         <field name="create_namespace" eval="True" />
         <field name="namespace">odoo</field>
-    </record>
+    </record> -->
 
     <record id="odoo_chart_secret_demo" model="helm.chart.secret">
         <field name="name">odoo-creds</field>

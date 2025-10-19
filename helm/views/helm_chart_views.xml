@@ -21,7 +21,9 @@
                         </h1>
                     </div>
                     <group>
-                        <field name="repo_id" />
+                        <group>
+                            <field name="repo_id" />
+                        </group>
                     </group>
                     <notebook>
                         <page string="Values" name="values">
@@ -39,6 +41,10 @@
                                     </list>
                                 </field>
                             </group>
+                            <p class="oe_grey oe_edit_only">
+                        <strong
+                            >Note:</strong> These values will be computed and applied to the release values.
+                    </p>
                             <group>
                                 <group string="Chart values.yaml">
                                     <field
@@ -47,7 +53,7 @@
                                         class="terminal-screen"
                                     />
                                 </group>
-                                <group string="Predefined values">
+                                <group string="Updateable values">
                                     <field
                                         name="release_value_ids"
                                         nolabel="1"
@@ -61,6 +67,11 @@
                                             />
                                         </list>
                                     </field>
+                                    <br />
+                                    <p class="oe_grey oe_edit_only">
+                        <strong
+                                    >Note:</strong> These values will be copied to the release and can be updated.
+                    </p>
                                 </group>
                             </group>
                         </page>
@@ -86,6 +97,10 @@
                                     </list>
                                 </field>
                             </group>
+                            <p class="oe_grey oe_edit_only">
+                        <strong
+                            >Note:</strong> Secrets defined here are copied to a release.
+                    </p>
                         </page>
                         <page string="Products" name="products">
                             <field name="product_ids">

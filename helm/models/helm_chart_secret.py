@@ -12,9 +12,15 @@ class HelmChartSecret(models.Model):
     _description = "Helm Chart Secret"
 
     name = fields.Char()
-    chart_id = fields.Many2one("helm.chart")
-    release_id = fields.Many2one("helm.release")
+    chart_id = fields.Many2one("helm.chart", ondelete="cascade")
+    release_id = fields.Many2one("helm.release", ondelete="cascade")
     data_ids = fields.One2many("helm.chart.secret.data", "secret_id")
+
+    def copy(self, default=None):
+        new_secret = super().copy(default=default)
+        for data in self.data_ids:
+            data.copy({"secret_id": new_secret.id})
+        return new_secret
 
     def action_show_details(self):
         self.ensure_one()

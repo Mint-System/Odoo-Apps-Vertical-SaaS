@@ -10,10 +10,10 @@ class KubectlCluster(models.Model):
     _description = "Kubectl Cluster"
     _resource = "cluster"
 
-    name = fields.Char(required=True)
     display_name = fields.Char(compute="_compute_display_name")
+    name = fields.Char(required=True)
+    alias = fields.Char(required=True)
     server = fields.Char(required=True)
-    code = fields.Char(required=True)
     domain = fields.Char(required=True)
     provider_id = fields.Many2one("res.partner", domain="[('is_provider','=', True)]", required=True)
     context_ids = fields.One2many("kubectl.context", "cluster_id")

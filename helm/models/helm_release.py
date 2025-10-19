@@ -39,6 +39,10 @@ class HelmRelease(models.Model):
         compute="_compute_values", store=True, help="Values computed from the chart and the release values."
     )
     ingress_url = fields.Char(compute="_compute_ingress_url")
+    secret_ids = fields.One2many(
+        "helm.chart.secret",
+        "release_id",
+    )
 
     def _eval_value(self, expression):
         return safe_eval(expression, {"self": self, "release": self})
@@ -91,14 +95,22 @@ class HelmRelease(models.Model):
             raise ValidationError(_(f"The chart '{self.chart_id.name}' has not been added."))
 
         try:
+            # Setup install command
             command = ["helm", "install", self.name, f"{self.chart_id.repo_id.name}/{self.chart_id.name}"]
+
+            # Add create namespace option
             if self.create_namespace:
                 command += ["--create-namespace", "--namespace", self.namespace]
+
+            # Run command
             result = self.context_id.run(command, self.values)
+
+            # Create namespace object
             if self.create_namespace and not self.namespace_id:
                 self.namespace_id = self.env["kubectl.namespace"].create(
                     {"name": self.namespace, "cluster_id": self.cluster_id.id}
                 )
+
             self.write({"state": "installed"})
             self.output = result.stdout
             return display_notification(_("Chart Installed"), result.stdout, "success")

@@ -17,13 +17,14 @@ class HelmChart(models.Model):
         "helm.chart.value",
         "chart_id",
         string="Dynamic values",
-        help="These values will be computed and applied to the release.",
+        help="These values will be computed and applied to the release values.",
     )
     release_value_ids = fields.One2many(
         "helm.chart.value",
         "release_chart_id",
+        domain=[("release_id", "=", False)],
         string="Predefined values",
-        help="These values will be copied to the release.",
+        help="These values will be copied to the release and can be updated.",
     )
     secret_ids = fields.One2many(
         "helm.chart.secret",
@@ -51,23 +52,26 @@ class HelmChart(models.Model):
             else:
                 chart.values = ""
 
-    def create_release(self, namespace_id, partner_id):
+    def create_release(self, values):
         """
         Create release from chart. Select the first context of the cluster.
+        Copy the updateabel values and secrets.
         """
         self.ensure_one()
+
+        # Set defaults
+        values["chart_id"] = self.id
+
+        # Copy values
         release_value_ids = self.release_value_ids.copy()
-        release_id = self.env["helm.release"].create(
-            {
-                "name": self.name,
-                "chart_id": self.id,
-                "context_id": namespace_id.cluster_id.context_ids[0].id,
-                "namespace_id": namespace_id.id,
-                "partner_id": partner_id.id,
-                "value_ids": release_value_ids.ids,
-            }
-        )
+        secret_ids = self.secret_ids.copy()
+
+        # Create release record
+        release_id = self.env["helm.release"].create(values)
+
+        # Update copied values
         release_value_ids.write({"chart_id": False, "release_id": release_id.id})
+        secret_ids.write({"chart_id": False, "release_id": release_id.id})
 
         return release_id
 

@@ -1,13 +1,8 @@
 Prepare Kubernetes:
 
-- Start local kindd cluster "kind-kind"
+- Start local kind cluster "kind-kind"
+- Add the "kubernetes-build", "ingress-nginx" and "cnpg" repos
 - Setup hostnames cloud.local, odoo.cloud.local, restic.local and restic.cloud.local
-
-Check repo:
-
-- Open "Helm > Repos" and click on "kubernetes-build"
-- Ensure the repo has been added
-- Repeate the same for "ingress-nginx" and "cnpg"
 
 Install ingress-nginx chart
 
@@ -21,7 +16,7 @@ Install ingress-nginx chart
 Install cloudnative-pg chart
 
 - Open "Helm > Charts > cloudnative-pg" and click "Release"
-- Enter name "cloudnative-pg" and select "loc" as context
+- Enter name "cloudnative-pg" and select "kind-kind" as context
 - Create namespace "cnpg-system"
 - Select customer "Mint System"
 - Confirm and install release
@@ -30,7 +25,7 @@ Install cloudnative-pg chart
 Install odoo chart
 
 - Open "Helm > Charts > odoo" and click "Release"
-- Enter name "odoo" and select "loc" as context
+- Enter name "odoo" and select "kind-kind" as context
 - Create namespace "odoo"
 - Select customer "Mint System"
 - Confirm and install release

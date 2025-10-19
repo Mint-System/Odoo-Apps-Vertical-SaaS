@@ -28,6 +28,11 @@
                             />
                             <field name="field_id" />
                         </group>
+                        <group>
+                            <field name="chart_id" readonly="True" />
+                            <field name="release_chart_id" readonly="True" />
+                            <field name="release_id" readonly="True" />
+                        </group>
                     </group>
                 </sheet>
             </form>

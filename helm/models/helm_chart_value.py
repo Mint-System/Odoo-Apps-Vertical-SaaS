@@ -9,9 +9,10 @@ class HelmChartValue(models.Model):
     _name = "helm.chart.value"
     _description = "Helm Chart Value"
 
-    chart_id = fields.Many2one("helm.chart", help="Chart for dynamic values.")
+    chart_id = fields.Many2one("helm.chart", ondelete="cascade", help="Chart for dynamic values.")
     release_chart_id = fields.Many2one("helm.chart", help="Chart for predefined values.")
-    release_id = fields.Many2one("helm.release")
+    release_id = fields.Many2one("helm.release", ondelete="cascade", help="Value is copied and linked to this release.")
+
     filter_cluster_ids = fields.Many2many("kubectl.cluster", help="Apply value to these clusters only.")
     path = fields.Char(help="Path to the nested key of the values.yaml.", required=True)
     value = fields.Char(help="Python code to define the value.")

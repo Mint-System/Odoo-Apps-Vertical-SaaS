@@ -23,15 +23,12 @@ class KubectlContext(models.Model):
     output = fields.Text(help="Output of the command.")
 
     def _compute_is_current(self):
-        result = subprocess.run(
-            ["kubectl", "config", "current-context"],
-            check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-        )
         for rec in self:
-            rec.is_current = True if rec.name == result.stdout.strip() else False
+            try:
+                result = rec.run(["kubectl", "config", "current-context"])
+                rec.is_current = rec.name == result.stdout.strip()
+            except:
+                rec.is_current = False
 
     def action_run(self):
         """
@@ -88,17 +85,10 @@ class KubectlContext(models.Model):
             # If config is given apply kubeconfig
             if self.config:
                 with self.get_config_path() as config_path:
-                    command = command[0] + ["--kubeconfig", config_path] + command[1:]
-
-            # Set context
-            # if command[0] == "kubectl":
-            #     command.extend([f"--context={self.name}"])
-            # if command[0] == "helm":
-            #     command.extend(["--kube-context", self.name])
+                    command = [command[0], "--kubeconfig", config_path] + command[1:]
             if command[0] == "helm" and values:
                 with self.get_values_path(values) as values_path:
                     command.extend(["--values", values_path])
-
             _logger.warning("Run command: %s", command)
             return subprocess.run(
                 command,

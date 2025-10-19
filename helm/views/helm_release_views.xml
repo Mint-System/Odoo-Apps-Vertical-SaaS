@@ -54,7 +54,7 @@
                                     />
                                     <field
                                         name="namespace_id"
-                                        invisible="namespace_id == False"
+                                        readonly="create_namespace == True or state == 'installed'"
                                     />
                                     <field name="partner_id" />
                                     <field name="ingress_url" widget="url" />
@@ -88,6 +88,29 @@
                                         class="terminal-screen"
                                     />
                                 </group>
+                            </group>
+                        </page>
+                        <page string="Secrets" name="secrets">
+                            <group>
+                                <field
+                                    name="secret_ids"
+                                    nolabel="1"
+                                    context="{'default_chart_id': id}"
+                                >
+                                    <list
+                                        context="{'default_secret_id': id}"
+                                        editable="bottom"
+                                    >
+                                        <field name="name" />
+                                        <field name="data_ids" />
+                                        <button
+                                            name="action_show_details"
+                                            title="Show Details"
+                                            type="object"
+                                            icon="fa-list"
+                                        />
+                                    </list>
+                                </field>
                             </group>
                         </page>
                     </notebook>
