@@ -137,6 +137,7 @@ class KubectlContext(models.Model):
         self.ensure_one()
         try:
             result = self.run(["kubectl", "cluster-info"])
+            self.output = result.stdout
             return {
                 "type": "ir.actions.client",
                 "tag": "display_notification",
@@ -147,6 +148,7 @@ class KubectlContext(models.Model):
                 },
             }
         except subprocess.CalledProcessError as e:
+            self.output = e.stderr
             return {
                 "type": "ir.actions.client",
                 "tag": "display_notification",
