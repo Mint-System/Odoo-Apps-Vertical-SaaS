@@ -11,20 +11,18 @@ class SaleOrder(models.Model):
     def action_confirm(self):
         """
         Activate licenses and send license information mail if:
-        - Order is from website
+        - Confirmation is done by public user or portal user
         - There is no order comment
         - The "license exists" option is not checked
         - Any order line is a license
         """
         res = super().action_confirm()
-
         for order in self:
-            if (
-                (order.website_id or order.origin_order_id)
-                and not order.license_exists
-                and any(order.order_line.mapped("is_license"))
-                and not order.comment
-            ):
+            is_customer = (self.env.user == self.env.ref("base.public_user")) or self.env.user.share
+            no_check_required = (
+                not order.license_exists and any(order.order_line.mapped("is_license")) and not order.comment
+            )
+            if is_customer and no_check_required:
                 # Activate licenses
                 order.order_line.license_ids.action_activate()
 

@@ -130,7 +130,7 @@ class License(models.Model):
     def action_disable(self):
         """Set end date if not already set."""
         for license in self:
-            license.write({"state": "disabled", "date_end": fields.Datetime.now()})
+            license.write({"state": "disabled"})
 
     def action_enable(self):
         for license in self:

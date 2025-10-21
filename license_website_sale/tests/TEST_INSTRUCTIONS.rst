@@ -1,9 +1,11 @@
+Setup webshop:
+
+- Install sale_subscription_disable_tokenization
+- Enable and publish the "Demo" payment provider
+- Enable "additional step in checkout"
+
 Product purchase:
 
-- Enable the "Demo" payment provider
-- Enable "additional step in checkout"
-- Configure the form and set reference to required
-- Add the comment field to the form
 - Open the webshop site
 - Add the product "Software License" to the cart
 - Go through the checkout process and finish the purchase
