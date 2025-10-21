@@ -12,6 +12,6 @@ class HelmChartSecretData(models.Model):
     _description = "Helm Chart Secret Data"
 
     key = fields.Char(required=True)
-    value = fields.Char(required=True)
+    value = fields.Char(required=True, help="Enter python code to define the value.")
 
     secret_id = fields.Many2one("helm.chart.secret", required=True, ondelete="cascade")

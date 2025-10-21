@@ -15,7 +15,7 @@ class HelmChartValue(models.Model):
 
     filter_cluster_ids = fields.Many2many("kubectl.cluster", help="Apply value to these clusters only.")
     path = fields.Char(help="Path to the nested key of the values.yaml.", required=True)
-    value = fields.Char(help="Python code to define the value.")
+    value = fields.Char(help="Enter python code to define the value.")
     option_id = fields.Many2one(
         "helm.chart.value.option", domain="[('value_id', '=', id)]", help="Select value from options."
     )

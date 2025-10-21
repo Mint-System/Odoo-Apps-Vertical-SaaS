@@ -38,22 +38,13 @@
         <field name="value">False</field>
     </record>
 
-    <!--     <record id="odoo_release_demo" model="helm.release">
-        <field name="name">odoo</field>
-        <field name="chart_id" ref="helm.chart_odoo" />
-        <field name="context_id" ref="kubectl.kubectl_context_kind_demo" />
-        <field name="partner_id" ref="helm.res_partner_mint_system_demo" />
-        <field name="create_namespace" eval="True" />
-        <field name="namespace">odoo</field>
-    </record> -->
-
     <record id="odoo_chart_secret_demo" model="helm.chart.secret">
         <field name="name">odoo-creds</field>
         <field name="chart_id" ref="helm.chart_odoo" />
     </record>
     <record id="odoo_chart_secret_data_demo" model="helm.chart.secret.data">
         <field name="key">GITHUB_USERNAME</field>
-        <field name="value">bot-mintsys</field>
+        <field name="value">'bot-mintsys'</field>
         <field name="secret_id" ref="odoo_chart_secret_demo" />
     </record>
 </odoo>
