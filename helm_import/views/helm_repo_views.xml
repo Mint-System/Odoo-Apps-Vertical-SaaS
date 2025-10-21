@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="helm_repo_form_view" model="ir.ui.view">
+        <field name="name">helm_import.helm_repo_form_view</field>
+        <field name="model">helm.repo</field>
+        <field name="inherit_id" ref="kubectl.helm_repo_form_view" />
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button
+                    string="Import Charts"
+                    name="action_import_charts"
+                    type="object"
+                />
+            </header>
+        </field>
+    </record>
+</odoo>
