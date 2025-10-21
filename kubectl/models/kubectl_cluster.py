@@ -22,4 +22,4 @@ class KubectlCluster(models.Model):
 
     def _compute_display_name(self):
         for rec in self:
-            rec.display_name = f"{rec.name} ({rec.provider_id.name})"
+            rec.display_name = f"{rec.alias} ({rec.domain})"

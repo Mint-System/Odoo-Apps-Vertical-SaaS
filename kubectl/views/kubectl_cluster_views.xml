@@ -39,8 +39,9 @@
         <field name="model">kubectl.cluster</field>
         <field name="arch" type="xml">
             <list>
-                <field name="name" />
+                <field name="display_name" />
                 <field name="server" />
+                <field name="provider_id" />
             </list>
         </field>
     </record>
