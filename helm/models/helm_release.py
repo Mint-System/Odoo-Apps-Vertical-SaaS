@@ -17,6 +17,13 @@ class HelmRelease(models.Model):
     _description = "Helm Release"
 
     name = fields.Char(help="Name of the release.", required=True)
+    state = fields.Selection(
+        selection=[("draft", "Draft"), ("installed", "Installed")],
+        default="draft",
+    )
+    output = fields.Text()
+    ingress_url = fields.Char(compute="_compute_ingress_url")
+
     chart_id = fields.Many2one("helm.chart", help="Chart that shall be installed.", required=True)
     context_id = fields.Many2one("kubectl.context", help="Context used for installation.", required=True)
     cluster_id = fields.Many2one(related="context_id.cluster_id")
@@ -24,11 +31,7 @@ class HelmRelease(models.Model):
     namespace = fields.Char(help="Namespace with this input will be created.")
     namespace_id = fields.Many2one("kubectl.namespace", string="Linked Namespace", help="Target namespace in cluster.")
     partner_id = fields.Many2one("res.partner", string="Customer")
-    state = fields.Selection(
-        selection=[("draft", "Draft"), ("installed", "Installed")],
-        default="draft",
-    )
-    output = fields.Text()
+
     value_ids = fields.One2many(
         "helm.chart.value",
         "release_id",
@@ -38,7 +41,6 @@ class HelmRelease(models.Model):
     values = fields.Text(
         compute="_compute_values", store=True, help="Values computed from the chart and the release values."
     )
-    ingress_url = fields.Char(compute="_compute_ingress_url")
     secret_ids = fields.One2many(
         "helm.chart.secret",
         "release_id",

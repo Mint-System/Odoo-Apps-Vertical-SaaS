@@ -11,7 +11,11 @@ class HelmChart(models.Model):
     _description = "Helm Chart"
 
     name = fields.Char(required=True)
+    state = fields.Selection(related="repo_id.state")
+
     repo_id = fields.Many2one("helm.repo", required=True)
+    product_ids = fields.One2many("product.product", "chart_id")
+
     values = fields.Text(compute="_compute_values", string="Chart values.yaml")
     value_ids = fields.One2many(
         "helm.chart.value",
@@ -30,25 +34,26 @@ class HelmChart(models.Model):
         "helm.chart.secret",
         "chart_id",
     )
-    product_ids = fields.One2many("product.product", "chart_id")
-    state = fields.Selection(related="repo_id.state")
 
     def _compute_values(self):
         for chart in self:
             if chart.state == "added":
-                result = subprocess.run(
-                    [
-                        "helm",
-                        "show",
-                        "values",
-                        f"{chart.repo_id.name}/{chart.name}",
-                    ],
-                    check=True,
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.PIPE,
-                    text=True,
-                )
-                chart.values = result.stdout
+                try:
+                    result = subprocess.run(
+                        [
+                            "helm",
+                            "show",
+                            "values",
+                            f"{chart.repo_id.name}/{chart.name}",
+                        ],
+                        check=True,
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.PIPE,
+                        text=True,
+                    )
+                    chart.values = result.stdout
+                except subprocess.CalledProcessError as e:
+                    chart.values = e.stderr
             else:
                 chart.values = ""
 

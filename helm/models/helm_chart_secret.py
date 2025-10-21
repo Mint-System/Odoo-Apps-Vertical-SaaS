@@ -12,6 +12,7 @@ class HelmChartSecret(models.Model):
     _description = "Helm Chart Secret"
 
     name = fields.Char()
+
     chart_id = fields.Many2one("helm.chart", ondelete="cascade")
     release_id = fields.Many2one("helm.release", ondelete="cascade")
     data_ids = fields.One2many("helm.chart.secret.data", "secret_id")

@@ -16,11 +16,12 @@ class KubectlContext(models.Model):
     _resource = "context"
 
     name = fields.Char(required=True)
-    cluster_id = fields.Many2one("kubectl.cluster", required=True)
     config = fields.Text(help="Export and parse config with `kubectl config view --minify --raw`.")
-    is_current = fields.Boolean(compute="_compute_is_current")
     command = fields.Char(help="Run a command that starts with `kubectl` or `helm`.")
     output = fields.Text(help="Output of the command.")
+    is_current = fields.Boolean(compute="_compute_is_current")
+
+    cluster_id = fields.Many2one("kubectl.cluster", required=True)
 
     def _compute_is_current(self):
         for rec in self:
@@ -110,6 +111,7 @@ class KubectlContext(models.Model):
         self.ensure_one()
         try:
             result = self.run(["kubectl", "config", "use-context", self.name])
+            self.output = result.stdout
             return {
                 "type": "ir.actions.client",
                 "tag": "display_notification",
@@ -120,6 +122,7 @@ class KubectlContext(models.Model):
                 },
             }
         except subprocess.CalledProcessError as e:
+            self.output = e.stderr
             return {
                 "type": "ir.actions.client",
                 "tag": "display_notification",

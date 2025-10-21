@@ -12,8 +12,10 @@ class KubectlNamespace(models.Model):
     _resource = "namespace"
 
     display_name = fields.Char(compute="_compute_display_name")
+
     uid = fields.Char()
     name = fields.Char(required=True)
+
     cluster_id = fields.Many2one("kubectl.cluster", required=True)
 
     _sql_constraints = [
