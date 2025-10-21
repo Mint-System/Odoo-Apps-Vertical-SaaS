@@ -31,8 +31,9 @@ class HelmChartValue(models.Model):
 class HelmChartValueOption(models.Model):
     _name = "helm.chart.value.option"
     _description = "Helm Chart Value Option"
+    _rec_name = "value"
 
-    value_id = fields.Many2one("helm.chart.value", required=True)
+    value_id = fields.Many2one("helm.chart.value", string="Chart Value", required=True)
     value = fields.Char(required=True)
 
     _sql_constraints = [

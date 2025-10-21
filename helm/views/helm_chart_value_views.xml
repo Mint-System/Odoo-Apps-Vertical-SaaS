@@ -11,8 +11,8 @@
         </field>
     </record>
 
-    <record id="helm_chart_value_from_view" model="ir.ui.view">
-        <field name="name">helm.helm_chart_value_from_view</field>
+    <record id="helm_chart_value_form_view" model="ir.ui.view">
+        <field name="name">helm.helm_chart_value_form_view</field>
         <field name="model">helm.chart.value</field>
         <field name="arch" type="xml">
             <form>
@@ -32,6 +32,25 @@
                             <field name="chart_id" readonly="True" />
                             <field name="release_chart_id" readonly="True" />
                             <field name="release_id" readonly="True" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="helm_chart_value_option_form_view" model="ir.ui.view">
+        <field name="name">helm.helm_chart_value_option_form_view</field>
+        <field name="model">helm.chart.value.option</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="value" />
+                        </group>
+                        <group>
+                            <field name="value_id" readonly="True" />
                         </group>
                     </group>
                 </sheet>
