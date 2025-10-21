@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="kubectl_context_form_view" model="ir.ui.view">
+        <field name="name">kubectl_import.kubectl_context_form_view</field>
+        <field name="model">kubectl.context</field>
+        <field name="inherit_id" ref="kubectl.kubectl_context_form_view" />
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button
+                    string="Import Namespaces"
+                    name="action_import_namespaces"
+                    type="object"
+                />
+            </header>
+        </field>
+    </record>
+</odoo>

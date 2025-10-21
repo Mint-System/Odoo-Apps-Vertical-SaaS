@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="kubectl_namespace_form_view" model="ir.ui.view">
+        <field name="name">kubectl_import.kubectl_namespace_form_view</field>
+        <field name="model">kubectl.namespace</field>
+        <field name="inherit_id" ref="kubectl.kubectl_namespace_form_view" />
+        <field name="arch" type="xml">
+            <field name="cluster_id" position="after">
+                <field name="uid" />
+            </field>
+        </field>
+    </record>
+</odoo>

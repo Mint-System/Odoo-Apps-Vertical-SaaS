@@ -12,7 +12,7 @@
                         </h1>
                     </div>
                     <group>
-                        <field name="uid" />
+                        <field name="cluster_id" readonly="True" />
                     </group>
                     <notebook />
                 </sheet>
@@ -25,14 +25,6 @@
         <field name="model">kubectl.namespace</field>
         <field name="arch" type="xml">
             <list>
-                <header>
-                    <button
-                        name="action_get_namespaces"
-                        string="Get Namespaces"
-                        type="object"
-                        class="oe_highlight"
-                    />
-                </header>
                 <field name="name" />
                 <field name="cluster_id" />
             </list>
