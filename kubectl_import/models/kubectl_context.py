@@ -2,9 +2,23 @@ import logging
 
 from odoo import _, models
 
-from .ir_actions_client import display_notification
-
 _logger = logging.getLogger(__name__)
+
+
+def display_notification(title, message, type):
+    return {
+        "type": "ir.actions.client",
+        "tag": "display_notification",
+        "params": {
+            "title": title,
+            "type": type,
+            "message": message,
+            "next": {
+                "type": "ir.actions.client",
+                "tag": "reload",
+            },
+        },
+    }
 
 
 class KubectlContext(models.Model):
