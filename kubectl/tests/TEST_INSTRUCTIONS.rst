@@ -15,9 +15,3 @@ Test with config:
 - Paste into config tab of "loc" context
 - Delete the localhost kubeconfig
 - Click "Test Connection"
-
-Get namespaces:
-
-- Open "kubectl > Namespaces".
-- Mark the first entry
-- Run action "Get Namespaces"

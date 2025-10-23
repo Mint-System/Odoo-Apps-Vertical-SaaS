@@ -19,7 +19,6 @@
                         </h1>
                     </div>
                     <notebook>
-                        <field name="is_current" insible="1" />
                         <page string="Command" name="command">
                             <group>
                                 <group>
@@ -61,13 +60,6 @@
             <list>
                 <field name="name" />
                 <field name="cluster_id" />
-                <field name="is_current" />
-                <button
-                    name="action_use_context"
-                    string="Use Context"
-                    type="object"
-                    invisible="is_current"
-                />
             </list>
         </field>
     </record>

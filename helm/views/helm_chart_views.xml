@@ -27,7 +27,7 @@
                     </group>
                     <notebook>
                         <page string="Values" name="values">
-                            <group string="Dynamic values">
+                            <group string="Linked values">
                                 <field
                                     name="value_ids"
                                     nolabel="1"

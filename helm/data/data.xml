@@ -47,6 +47,12 @@
         <field name="chart_id" ref="helm.chart_odoo" />
     </record>
 
+    <record id="chart_odoo_value_staging_enable" model="helm.chart.value">
+        <field name="path">staging.enabled</field>
+        <field name="value">True</field>
+        <field name="chart_id" eval="chart_odoo" />
+    </record>
+
     <record id="chart_odoo_value_image" model="helm.chart.value">
         <field name="path">image</field>
         <field name="release_chart_id" eval="chart_odoo" />

@@ -19,17 +19,8 @@ class KubectlContext(models.Model):
     config = fields.Text(help="Export and parse config with `kubectl config view --minify --raw`.")
     command = fields.Char(help="Run a command that starts with `kubectl` or `helm`.")
     output = fields.Text(help="Output of the command.")
-    is_current = fields.Boolean(compute="_compute_is_current")
 
     cluster_id = fields.Many2one("kubectl.cluster", required=True)
-
-    def _compute_is_current(self):
-        for rec in self:
-            try:
-                result = rec.run(["kubectl", "config", "current-context"])
-                rec.is_current = rec.name == result.stdout.strip()
-            except:
-                rec.is_current = False
 
     def action_run(self):
         """
@@ -103,35 +94,6 @@ class KubectlContext(models.Model):
                 os.unlink(config_path)
             if values_path and os.path.exists(values_path):
                 os.unlink(values_path)
-
-    def action_use_context(self):
-        """
-        Change kube context.
-        """
-        self.ensure_one()
-        try:
-            result = self.run(["kubectl", "config", "use-context", self.name])
-            self.output = result.stdout
-            return {
-                "type": "ir.actions.client",
-                "tag": "display_notification",
-                "params": {
-                    "title": _("Use Context Success"),
-                    "type": "success",
-                    "message": result.stdout,
-                },
-            }
-        except subprocess.CalledProcessError as e:
-            self.output = e.stderr
-            return {
-                "type": "ir.actions.client",
-                "tag": "display_notification",
-                "params": {
-                    "title": _("Use Context Failed"),
-                    "type": "danger",
-                    "message": e.stderr,
-                },
-            }
 
     def action_test_connection(self):
         """
