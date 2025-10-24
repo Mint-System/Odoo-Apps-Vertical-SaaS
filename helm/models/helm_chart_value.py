@@ -19,9 +19,6 @@ class HelmChartValue(models.Model):
     option_id = fields.Many2one(
         "helm.chart.value.option", domain="[('value_id', '=', id)]", help="Select value from options."
     )
-    field_id = fields.Many2one(
-        "ir.model.fields", domain=[("model", "=", "helm.release")], help="Optionally write value to this release field."
-    )
 
     def _compute_display_name(self):
         for rec in self:

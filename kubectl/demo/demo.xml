@@ -14,7 +14,7 @@
         <field name="name">kind-kind</field>
         <field name="alias">loc</field>
         <field name="server">https://127.0.0.1:35249</field>
-        <field name="domain">cloud.local</field>
+        <field name="domain">knd.local</field>
         <field name="provider_id" ref="kubectl.res_partner_localhost_demo" />
     </record>
 

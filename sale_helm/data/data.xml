@@ -3,10 +3,7 @@
     <record id="chart_odoo_value_ingress_host" model="helm.chart.value">
         <field name="chart_id" ref="helm.chart_odoo" />
         <field name="path">ingress.host</field>
-        <field
-            name="value"
-        >order_id.project_name + '.' + release.cluster_id.domain</field>
-        <field name="field_id" ref="helm.field_helm_release__namespace" />
+        <field name="value">release.namespace + '.' + release.cluster_id.domain</field>
     </record>
 
     <record id="chart_odoo_value_ingress_custom_domain" model="helm.chart.value">

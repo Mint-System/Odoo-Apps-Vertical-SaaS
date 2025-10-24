@@ -81,7 +81,7 @@ class KubectlContext(models.Model):
             if command[0] == "helm" and values:
                 with self.get_values_path(values) as values_path:
                     command.extend(["--values", values_path])
-            _logger.warning("Run command: %s", command)
+            _logger.warning("Run command: %s", " ".join(command))
             return subprocess.run(
                 command,
                 check=True,

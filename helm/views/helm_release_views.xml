@@ -49,12 +49,12 @@
                                     />
                                     <field
                                         name="namespace"
-                                        invisible="create_namespace == False or namespace_id"
+                                        readonly="create_namespace == False or namespace_id"
                                         required="True"
                                     />
                                     <field
                                         name="namespace_id"
-                                        readonly="create_namespace == True or state == 'installed'"
+                                        readonly="state == 'installed'"
                                     />
                                     <field name="partner_id" />
                                     <field name="ingress_url" widget="url" />

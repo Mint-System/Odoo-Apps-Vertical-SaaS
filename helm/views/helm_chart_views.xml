@@ -37,7 +37,6 @@
                                         <field name="filter_cluster_ids" />
                                         <field name="path" />
                                         <field name="value" />
-                                        <field name="field_id" />
                                     </list>
                                 </field>
                             </group>

@@ -29,7 +29,12 @@ class HelmRelease(models.Model):
     cluster_id = fields.Many2one(related="context_id.cluster_id")
     create_namespace = fields.Boolean()
     namespace = fields.Char(help="Namespace with this input will be created.")
-    namespace_id = fields.Many2one("kubectl.namespace", string="Linked Namespace", help="Target namespace in cluster.")
+    namespace_id = fields.Many2one(
+        "kubectl.namespace",
+        inverse="_inverse_namespace_id",
+        string="Linked Namespace",
+        help="Target namespace in cluster.",
+    )
     partner_id = fields.Many2one("res.partner", string="Customer")
 
     value_ids = fields.One2many(
@@ -46,6 +51,11 @@ class HelmRelease(models.Model):
         "release_id",
     )
 
+    def _inverse_namespace_id(self):
+        for rec in self:
+            if not rec.namespace and rec.namespace_id:
+                rec.namespace = namespace_id.name
+
     def _eval_value(self, expression):
         return safe_eval(expression, {"self": self, "release": self})
 
@@ -55,7 +65,7 @@ class HelmRelease(models.Model):
         Evaluate custom values of the chart.
         """
         for release in self:
-            if release.state == "draft" and release.chart_id.state == "added":
+            if release.chart_id.state == "added":
                 dict_values = {}
                 for value in release.chart_id.value_ids.filtered(
                     lambda v: not v.filter_cluster_ids or release.cluster_id in v.filter_cluster_ids
@@ -63,17 +73,20 @@ class HelmRelease(models.Model):
                     try:
                         new_value = release._eval_value(value.value)
 
-                        # Apply to release field
-                        if value.field_id:
-                            release[value.field_id.name] = new_value
-
-                        # Apply to path
+                        # Apply value to path and convert to dict
+                        # Turns 'ingress.host: value' into '{"ingress": {"host": value}}"''
                         if value.path:
-                            dict_values[value.path] = new_value
-
+                            keys = value.path.split(".")
+                            current = dict_values
+                            for key in keys[:-1]:
+                                if key not in current:
+                                    current[key] = {}
+                                elif not isinstance(current[key], dict):
+                                    current[key] = {"_value": current[key]}
+                                current = current[key]
+                            current[keys[-1]] = new_value  # This should be inside the if value.path block
                     except Exception as e:
                         _logger.error(f"Invalid expression {value.value}: {str(e)}")
-                        # raise ValidationError(f"Invalid expression {value.value}: {str(e)}")
                 try:
                     release.values = yaml.safe_dump(dict_values, sort_keys=False)
                 except yaml.YAMLError as e:
@@ -126,15 +139,13 @@ class HelmRelease(models.Model):
         """
         self.ensure_one()
         try:
-            result = self.context_id.run(
-                [
-                    "helm",
-                    "upgrade",
-                    self.name,
-                    f"{self.chart_id.repo_id.name}/{self.chart_id.name}",
-                ]
-            )
-            self.write({"state": "draft"})
+            command = [
+                "helm",
+                "upgrade",
+                self.name,
+                f"{self.chart_id.repo_id.name}/{self.chart_id.name}",
+            ]
+            result = self.context_id.run(command, self.values)
             self.output = result.stdout
             return display_notification(_("Chart Upgraded"), result.stdout, "success")
         except subprocess.CalledProcessError as e:

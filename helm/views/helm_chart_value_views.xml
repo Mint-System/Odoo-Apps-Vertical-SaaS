@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <list>
                 <field name="path" />
-                <field name="field_id" />
+                <field name="value" />
             </list>
         </field>
     </record>
@@ -26,7 +26,6 @@
                                 name="option_id"
                                 context="{'default_value_id': id}"
                             />
-                            <field name="field_id" />
                         </group>
                         <group>
                             <field name="chart_id" readonly="True" />
