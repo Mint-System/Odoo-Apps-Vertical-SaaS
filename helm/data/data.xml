@@ -47,6 +47,12 @@
         <field name="chart_id" ref="helm.chart_odoo" />
     </record>
 
+    <record id="chart_odoo_value_ingress_host" model="helm.chart.value">
+        <field name="chart_id" ref="helm.chart_odoo" />
+        <field name="path">ingress.host</field>
+        <field name="value">release.namespace + '.' + release.cluster_id.domain</field>
+    </record>
+
     <record id="chart_odoo_value_staging_enable" model="helm.chart.value">
         <field name="path">staging.enabled</field>
         <field name="value">True</field>

@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record id="chart_odoo_value_ingress_host" model="helm.chart.value">
-        <field name="chart_id" ref="helm.chart_odoo" />
-        <field name="path">ingress.host</field>
-        <field name="value">release.namespace + '.' + release.cluster_id.domain</field>
-    </record>
-
     <record id="chart_odoo_value_ingress_custom_domain" model="helm.chart.value">
         <field name="chart_id" ref="helm.chart_odoo" />
         <field name="path">ingress.customDomain</field>
