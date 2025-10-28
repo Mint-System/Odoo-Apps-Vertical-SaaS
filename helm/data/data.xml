@@ -59,6 +59,26 @@
         <field name="chart_id" eval="chart_odoo" />
     </record>
 
+    <record id="chart_odoo_value_init_login" model="helm.chart.value">
+        <field name="path">init.login</field>
+        <field name="value">release.partner_id.email</field>
+        <field name="chart_id" eval="chart_odoo" />
+    </record>
+
+    <record id="chart_odoo_value_init_password" model="helm.chart.value">
+        <field name="path">init.password</field>
+        <field
+            name="value"
+        >import random,string;print(''.join(random.choice(string.ascii_letters+string.digits)for _ in range(8)))</field>
+        <field name="chart_id" eval="chart_odoo" />
+    </record>
+
+    <record id="chart_odoo_value_init_lang" model="helm.chart.value">
+        <field name="path">init.lang</field>
+        <field name="value">release.partner_id.lang</field>
+        <field name="chart_id" eval="chart_odoo" />
+    </record>
+
     <record id="chart_odoo_value_image" model="helm.chart.value">
         <field name="path">image</field>
         <field name="release_chart_id" eval="chart_odoo" />
