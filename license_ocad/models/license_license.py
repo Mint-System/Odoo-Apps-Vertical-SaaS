@@ -191,6 +191,7 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
+                license.message_post(body=_("Send request to %s.", "db_newlicense/UpdateNewLicense2018.php"))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
 
@@ -198,8 +199,6 @@ class License(models.Model):
                     "FEHLER" in message or "Unauthorized" in message
                 ):
                     raise UserError(_("Error while creating license: %s", message))
-
-                license.message_post(body=_("Request to %s successful.", "db_newlicense/UpdateNewLicense2018.php"))
 
         return message
 
@@ -223,13 +222,12 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
+                license.message_post(body=_("Send request to %s.", "db_newlicense/UpdateLicense.php"))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
 
                 if "FEHLER" in message or "Unauthorized" in message:
                     raise UserError(_("Error while updating license: %s", message))
-
-                license.message_post(body=_("Request to %s successful.", "db_newlicense/UpdateLicense.php"))
 
         return message
 
@@ -249,13 +247,12 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
+                license.message_post(body=_("Send request to %s.", "db_newlicense/increaseCounter_2018.php"))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
 
                 if "FEHLER" in message or "Unauthorized" in message:
                     raise UserError(_("Error while increasing counter: %s", message))
-
-                license.message_post(body=_("Request to %s successful.", "db_increaseCounter/increaseCounter_2018.php"))
 
         return message
 
@@ -276,15 +273,12 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
+                license.message_post(body=_("Send request to %s.", "db_newlicense/UpdateSubscriptionEndDate2018.php"))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
 
                 if "FEHLER" in message or "Unauthorized" in message:
                     raise UserError(_("Error while updating end date: %s", message))
-
-                license.message_post(
-                    body=_("Request to %s successful.", "db_newlicense/UpdateSubscriptionEndDate2018.php")
-                )
 
         return message
 
@@ -305,13 +299,12 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
+                license.message_post(body=_("Send request to %s.", "db_newlicense/UpdateLicenseStatus_2018.php"))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
 
                 if "FEHLER" in message or "Unauthorized" in message:
                     raise UserError(_("Error while updating license status: %s", message))
-
-                license.message_post(body=_("Request to %s successful.", "db_newlicense/UpdateLicenseStatus_2018.php"))
 
         return message
 
