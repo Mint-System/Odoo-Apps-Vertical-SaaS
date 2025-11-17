@@ -1,3 +1,0 @@
-- Open kind-kind context
-- Click import namespaces
-- Check if all namespaces have been imported

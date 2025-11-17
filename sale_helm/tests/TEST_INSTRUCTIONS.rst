@@ -1,5 +1,0 @@
-- Open the sale order for Restic
-- Check the Kubernetes tab
-- Confirm the sale order
-- Open the release
-- Ensure the values have been transferred to the relase
