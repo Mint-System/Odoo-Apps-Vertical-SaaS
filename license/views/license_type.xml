@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="license_type_view_form" model="ir.ui.view">
+        <field name="name">license.license_type_view_form</field>
+        <field name="model">license.type</field>
+        <field name="arch" type="xml">
+            <form string="License Type">
+                <sheet>
+                    <div class="oe_title">
+                        <div class="oe_edit_only">
+                            <label for="name" />
+                        </div>
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="license_type_view_tree" model="ir.ui.view">
+        <field name="name">license.license_type_view_tree</field>
+        <field name="model">license.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+            </list>
+        </field>
+    </record>
+
+    <record id="license_type_open_view_tree" model="ir.actions.act_window">
+        <field name="name">License Type</field>
+        <field name="res_model">license.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem
+        name="Configurations"
+        id="license.menu_configuration"
+        parent="license.menu_root"
+    />
+    <menuitem
+        name="License Type"
+        id="license.menu_license_type"
+        parent="license.menu_configuration"
+        action="license.license_type_open_view_tree"
+    />
+</odoo>

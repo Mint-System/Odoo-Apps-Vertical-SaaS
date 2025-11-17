@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="license_view_form" model="ir.ui.view">
+        <field name="name">license.license_view_form</field>
+        <field name="model">license.license</field>
+        <field name="arch" type="xml">
+            <form string="License">
+                <header>
+                    <button
+                        name="action_assign"
+                        invisible="state != 'draft'"
+                        type="object"
+                        string="Assign"
+                        class="btn-primary"
+                    />
+                    <button
+                        name="action_activate"
+                        invisible="state != 'assigned'"
+                        type="object"
+                        string="Activate"
+                        class="btn-primary"
+                    />
+                    <button
+                        name="action_reset"
+                        invisible="state != 'active'"
+                        type="object"
+                        string="Reset"
+                    />
+                    <button
+                        name="action_disable"
+                        invisible="state != 'active'"
+                        type="object"
+                        string="Disable"
+                    />
+                    <button
+                        name="action_enable"
+                        invisible="state != 'disabled'"
+                        type="object"
+                        string="Enable"
+                        class="btn-primary"
+                    />
+                    <button
+                        name="action_cancel"
+                        invisible="state not in ('active', 'disabled')"
+                        type="object"
+                        string="Cancel"
+                    />
+                    <button
+                        name="action_draft"
+                        invisible="state not in ('assigned', 'cancelled')"
+                        type="object"
+                        string="Set to Draft"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,assigned,active,disabled"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box" invisible="not id" />
+                    <div class="oe_title">
+                        <div class="oe_edit_only">
+                            <label for="name" />
+                        </div>
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="key" />
+                    </group>
+                    <group>
+                        <group>
+                            <field name="product_id" />
+                            <field name="type_id" />
+                        </group>
+                        <group>
+                            <field name="partner_id" />
+                            <field name="date_start" />
+                            <field name="runtime" />
+                            <field name="date_end" />
+                        </group>
+                    </group>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <record id="license_view_tree" model="ir.ui.view">
+        <field name="name">license.license_view_tree</field>
+        <field name="model">license.license</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="key" />
+                <field name="date_end" />
+                <field name="product_id" />
+                <field name="partner_id" />
+                <field
+                    name="state"
+                    decoration-success="state in ['assigned', 'active']"
+                    decoration-info="state == 'draft'"
+                    decoration-danger="state in ['disabled']"
+                    decoration-muted="state == 'closed'"
+                    widget="badge"
+                />
+            </list>
+        </field>
+    </record>
+
+    <record id="license_view_tree_editable" model="ir.ui.view">
+        <field name="name">license.license_view_tree_editable</field>
+        <field name="model">license.license</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name" />
+                <field name="key" />
+                <field name="date_end" />
+                <field name="product_id" />
+                <field name="partner_id" />
+                <field
+                    name="state"
+                    decoration-success="state in ['assigned', 'active']"
+                    decoration-info="state == 'draft'"
+                    decoration-danger="state in ['disabled']"
+                    decoration-muted="state == 'closed'"
+                    widget="badge"
+                />
+                <button
+                    type="object"
+                    name="get_formview_action"
+                    string="Open"
+                    icon="fa-edit"
+                />
+            </list>
+        </field>
+    </record>
+
+    <record id="license_view_search" model="ir.ui.view">
+        <field name="name">license.license_view_search</field>
+        <field name="model">license.license</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="partner_id" />
+            </search>
+        </field>
+    </record>
+
+    <record id="license_open_view_tree" model="ir.actions.act_window">
+        <field name="name">Licenses</field>
+        <field name="res_model">license.license</field>
+        <field name="view_mode">list,form,kanban</field>
+    </record>
+
+    <menuitem
+        name="License"
+        id="license.menu_root"
+        web_icon="license,static/description/icon.png"
+    />
+
+    <menuitem name="Licenses" id="license.menu_licenses" parent="license.menu_root" />
+    <menuitem
+        name="Licenses"
+        id="license.menu_license"
+        parent="license.menu_licenses"
+        action="license.license_open_view_tree"
+    />
+</odoo>
