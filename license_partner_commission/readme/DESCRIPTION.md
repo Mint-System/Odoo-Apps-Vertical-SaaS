@@ -1,0 +1,1 @@
+Integrate license sale with partner comissions.
