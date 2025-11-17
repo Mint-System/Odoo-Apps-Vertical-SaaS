@@ -61,6 +61,7 @@ class LicenseStatus(models.TransientModel):
                 license_id.company_id.ocad_password,
             )
 
+            _logger.info("Send get request to %s", url, exc_info=True)
             response = requests.get(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
 
             # Reponse is a semicolon separated string that has to be processed

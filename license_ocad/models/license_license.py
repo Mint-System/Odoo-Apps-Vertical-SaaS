@@ -191,7 +191,8 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
-                license.message_post(body=_("Send request to %s.", "db_newlicense/UpdateNewLicense2018.php"))
+                _logger.info("Send post request to %s", url, exc_info=True)
+                license.message_post(body=_("Send request to %s.", url))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
 
@@ -222,7 +223,8 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
-                license.message_post(body=_("Send request to %s.", "db_newlicense/UpdateLicense.php"))
+                _logger.info("Send post request to %s", url, exc_info=True)
+                license.message_post(body=_("Send request to %s.", url))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
 
@@ -247,7 +249,8 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
-                license.message_post(body=_("Send request to %s.", "db_newlicense/increaseCounter_2018.php"))
+                _logger.info("Send post request to %s", url, exc_info=True)
+                license.message_post(body=_("Send request to %s.", url))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
 
@@ -273,7 +276,8 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
-                license.message_post(body=_("Send request to %s.", "db_newlicense/UpdateSubscriptionEndDate2018.php"))
+                _logger.info("Send post request to %s", url, exc_info=True)
+                license.message_post(body=_("Send request to %s.", url))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
 
@@ -299,7 +303,8 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
-                license.message_post(body=_("Send request to %s.", "db_newlicense/UpdateLicenseStatus_2018.php"))
+                _logger.info("Send post request to %s", url, exc_info=True)
+                license.message_post(body=_("Send request to %s.", url))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
 
