@@ -19,7 +19,6 @@ class License(models.Model):
         default=lambda self: _("New"),
         required=True,
         readonly=True,
-        states={"draft": [("readonly", False)], "assigned": [("readonly", False)]},
         tracking=True,
     )
     key = fields.Char(
@@ -28,12 +27,11 @@ class License(models.Model):
         tracking=True,
         required=True,
         store=True,
-        states={"draft": [("readonly", False)]},
+        readonly=True,
     )
     type_id = fields.Many2one(
         "license.type",
         readonly=True,
-        states={"draft": [("readonly", False)], "assigned": [("readonly", False)]},
     )
     partner_id = fields.Many2one(
         "res.partner",
@@ -41,14 +39,12 @@ class License(models.Model):
         required=True,
         tracking=True,
         readonly=True,
-        states={"draft": [("readonly", False)], "assigned": [("readonly", False)]},
     )
     product_id = fields.Many2one(
         "product.product",
         required=True,
         tracking=True,
         readonly=True,
-        states={"draft": [("readonly", False)], "assigned": [("readonly", False)]},
     )
     state = fields.Selection(
         selection=[

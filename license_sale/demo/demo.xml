@@ -1,0 +1,66 @@
+<odoo>
+    <record id="license_pricelist0" model="product.pricelist">
+        <field name="name">License Pricelist</field>
+    </record>
+
+    <record id="license.license_product0" model="product.product">
+        <field name="license_ok" eval="True" />
+        <field name="list_price">80</field>
+        <field name="invoice_policy">order</field>
+        <field name="license_policy">quantity</field>
+        <field name="license_type_id" ref="license.type0" />
+    </record>
+
+    <record id="license_product0_pricelist" model="product.pricelist.item">
+        <field name="base">list_price</field>
+        <field name="applied_on">1_product</field>
+        <field name="pricelist_id" ref="license_pricelist0" />
+        <field name="product_tmpl_id" ref="license.license_product0_product_template" />
+        <field name="fixed_price">80</field>
+        <field name="price_discount">10</field>
+        <field name="min_quantity">2</field>
+    </record>
+
+    <record id="license.license_product1" model="product.product">
+        <field name="license_ok" eval="True" />
+        <field name="list_price">200</field>
+        <field name="invoice_policy">order</field>
+        <field name="license_policy">quantity</field>
+        <field name="license_type_id" ref="license.type1" />
+    </record>
+
+    <record id="sale_order_software_1" model="sale.order">
+        <field name="partner_id" ref="base.res_partner_address_5" />
+        <field name="client_order_ref">Gemini Furniture</field>
+        <field name="user_id" ref="base.user_admin" />
+        <field name="pricelist_id" ref="license_pricelist0" />
+    </record>
+
+    <record id="sale_order_line_software_1" model="sale.order.line">
+        <field name="order_id" ref="sale_order_software_1" />
+        <field name="product_id" ref="license.license_product0" />
+        <field name="product_uom_qty">1</field>
+    </record>
+
+    <record id="sale_order_software_2" model="sale.order">
+        <field name="partner_id" ref="base.res_partner_address_31" />
+        <field name="client_order_ref">Gemini Furniture</field>
+        <field name="user_id" ref="base.user_admin" />
+        <field name="pricelist_id" ref="license_pricelist0" />
+    </record>
+
+    <record id="sale_order_line_software_2" model="sale.order.line">
+        <field name="order_id" ref="sale_order_software_2" />
+        <field name="product_id" ref="license.license_product0" />
+        <field name="product_uom_qty">2</field>
+    </record>
+
+    <record id="license.license0" model="license.license">
+        <field name="client_order_ref">None</field>
+    </record>
+
+    <record id="license.license1" model="license.license">
+        <field name="client_order_ref">Gemini Furniture</field>
+        <field name="sale_line_id" ref="license_sale.sale_order_line_software_2" />
+    </record>
+</odoo>

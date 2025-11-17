@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="license_view_form" model="ir.ui.view">
+        <field name="name">license_sale.license_view_form</field>
+        <field name="model">license.license</field>
+        <field name="inherit_id" ref="license.license_view_form" />
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="pricelist_id" />
+                <field name="sale_line_id" />
+                <field name="client_order_ref" readonly="state in ['assigned', 'active', 'disabled', 'closed']"/>
+            </field>
+
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <field name="sale_order_id" invisible="1" />
+                <button
+                    class="oe_stat_button"
+                    type="object"
+                    name="action_view_so"
+                    icon="fa-dollar"
+                    invisible="not sale_order_id"
+                    string="Sales Order"
+                    groups="sales_team.group_sale_salesman_all_leads"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="license_view_tree" model="ir.ui.view">
+        <field name="name">license_sale.license_view_tree</field>
+        <field name="model">license.license</field>
+        <field name="inherit_id" ref="license.license_view_tree" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="client_order_ref" />
+                <field name="sale_line_id" optional="show" />
+            </field>
+        </field>
+    </record>
+
+    <record id="license_view_tree_editable" model="ir.ui.view">
+        <field name="name">license_sale.license_view_tree_editable</field>
+        <field name="model">license.license</field>
+        <field name="inherit_id" ref="license.license_view_tree_editable" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="client_order_ref" />
+                <field name="sale_line_id" optional="show" />
+            </field>
+        </field>
+    </record>
+
+    <record id="license_view_search" model="ir.ui.view">
+        <field name="name">license_sale.license_view_search</field>
+        <field name="model">license.license</field>
+        <field name="inherit_id" ref="license.license_view_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <filter
+                    string="Sales Order"
+                    domain="[('sale_order_id', '!=', False)]"
+                    context="{'group_by': 'sale_order_id'}"
+                    name="sale_order_filter"
+                    icon="fa-dollar"
+                />
+                <filter
+                    string="Country"
+                    context="{'group_by': 'country_id'}"
+                    name="group_by_country"
+                    icon="fa-dollar"
+                />
+            </xpath>
+
+            <field name="name" position="attributes">
+                <attribute
+                    name="filter_domain"
+                >['|', ('name','ilike',self), ('client_order_ref','ilike',self)]</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>
