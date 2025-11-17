@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="status_view_tree" model="ir.ui.view">
+        <field name="name">license_ocad.status_view_tree</field>
+        <field name="model">license.status</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="license_id" optional="hide" />
+                <field name="name" />
+                <field name="license_number" />
+                <field name="license_status" />
+                <field name="build" />
+                <field name="uuid" />
+                <field name="ip" />
+                <field name="country" />
+                <field name="timestamp" />
+                <field name="performance" />
+                <field name="product_key" />
+                <field name="windows_version" />
+                <field name="computer_name" />
+                <field name="parameter_change" />
+            </list>
+        </field>
+    </record>
+
+    <record id="status_search" model="ir.ui.view">
+        <field name="name">license_ocad.status_search</field>
+        <field name="model">license.status</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" filter_domain="[('name', 'ilike', self)]" />
+                <field
+                    name="license_number"
+                    filter_domain="[('license_number', 'ilike', self)]"
+                />
+                <field
+                    name="product_key"
+                    filter_domain="[('product_key', 'ilike', self)]"
+                />
+            </search>
+        </field>
+    </record>
+</odoo>

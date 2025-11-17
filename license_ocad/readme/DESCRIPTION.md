@@ -1,0 +1,1 @@
+Sync licenses with the OCAD license activation service.
