@@ -1,0 +1,1 @@
+Mail templates for OCAD.

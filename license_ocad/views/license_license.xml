@@ -7,11 +7,7 @@
         <field name="arch" type="xml">
             <field name="type_id" position="after">
                 <field name="registered" />
-                <label
-                    for="active_activations"
-                    string=""
-                    invisible="registered"
-                />
+                <label for="active_activations" string="" invisible="registered" />
                 <div
                     class="text-muted"
                     invisible="registered"
