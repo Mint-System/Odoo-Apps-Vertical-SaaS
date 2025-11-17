@@ -64,19 +64,31 @@
                             <label for="name" />
                         </div>
                         <h1>
-                            <field name="name" readonly="state in ['assigned', 'active', 'disabled', 'cancelled']"/>
+                            <field
+                                name="name"
+                                readonly="state in ['assigned', 'active', 'disabled', 'cancelled']"
+                            />
                         </h1>
                     </div>
                     <group>
-                        <field name="key" readonly="state != 'draft'"/>
+                        <field name="key" readonly="state != 'draft'" />
                     </group>
                     <group>
                         <group>
-                            <field name="product_id" readonly="state in ['assigned', 'active', 'disabled', 'cancelled']"/>
-                            <field name="type_id" readonly="state in ['assigned', 'active', 'disabled', 'cancelled']"/>
+                            <field
+                                name="product_id"
+                                readonly="state in ['assigned', 'active', 'disabled', 'cancelled']"
+                            />
+                            <field
+                                name="type_id"
+                                readonly="state in ['assigned', 'active', 'disabled', 'cancelled']"
+                            />
                         </group>
                         <group>
-                            <field name="partner_id" readonly="state in ['assigned', 'active', 'disabled', 'cancelled']"/>
+                            <field
+                                name="partner_id"
+                                readonly="state in ['assigned', 'active', 'disabled', 'cancelled']"
+                            />
                             <field name="date_start" />
                             <field name="runtime" />
                             <field name="date_end" />

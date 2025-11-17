@@ -17,7 +17,7 @@
         <field name="pricelist_id" ref="license_pricelist0" />
         <field name="product_tmpl_id" ref="license.license_product0_product_template" />
         <field name="fixed_price">80</field>
-        <field name="price_discount">10</field>
+        <field name="percent_price">10</field>
         <field name="min_quantity">2</field>
     </record>
 

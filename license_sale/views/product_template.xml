@@ -35,17 +35,11 @@
             </div>
 
             <field name="invoice_policy" position="before">
-                <field
-                    name="license_policy"
-                    invisible="not license_ok"
-                />
+                <field name="license_policy" invisible="not license_ok" />
             </field>
 
             <field name="categ_id" position="before">
-                <field
-                    name="license_type_id"
-                    invisible="not license_ok"
-                />
+                <field name="license_type_id" invisible="not license_ok" />
             </field>
         </field>
     </record>

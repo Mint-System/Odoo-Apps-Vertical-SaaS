@@ -1,0 +1,31 @@
+<odoo>
+    <record id="license_product_pricing_0" model="sale.subscription.pricing">
+        <field name="plan_id" ref="sale_subscription.subscription_plan_month" />
+        <field name="pricelist_id" ref="license_sale.license_pricelist0" />
+        <field name="price" eval="80" />
+        <field name="currency_id" ref="base.USD" />
+    </record>
+
+    <record id="license_product_pricing_1" model="sale.subscription.pricing">
+        <field name="plan_id" ref="sale_subscription.subscription_plan_year" />
+        <field name="pricelist_id" ref="license_sale.license_pricelist0" />
+        <field name="price" eval="240" />
+        <field name="currency_id" ref="base.USD" />
+    </record>
+
+    <record id="license.license_product0" model="product.product">
+        <field name="recurring_invoice" eval="True" />
+        <field
+            name="product_subscription_pricing_ids"
+            eval="[(6,0,[ref('license_product_pricing_0'), ref('license_product_pricing_1')])]"
+        />
+    </record>
+
+    <record id="license_sale.sale_order_software_1" model="sale.order">
+        <field name="plan_id" ref="sale_subscription.subscription_plan_month" />
+    </record>
+
+    <record id="license_sale.sale_order_software_2" model="sale.order">
+        <field name="plan_id" ref="sale_subscription.subscription_plan_year" />
+    </record>
+</odoo>
