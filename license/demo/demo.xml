@@ -1,10 +1,12 @@
 <odoo>
     <record id="license_product0" model="product.product">
         <field name="name">Software License</field>
+        <field name="type">service</field>
     </record>
 
     <record id="license_product1" model="product.product">
         <field name="name">Software License (Team)</field>
+        <field name="type">service</field>
     </record>
 
     <record id="type0" model="license.type">

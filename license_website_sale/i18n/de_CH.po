@@ -1,0 +1,31 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* license_website_sale
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-09-20 07:59+0000\n"
+"PO-Revision-Date: 2024-09-20 07:59+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: license_website_sale
+#: model:ir.model.fields,help:license_website_sale.field_sale_order__license_exists
+msgid "Mark this option if you already own a OCAD license/subscription."
+msgstr "Markieren Sie diese Option wenn Sie bereits eine OCAD Lizenz/Abonnement besitzen."
+
+#. module: license_website_sale
+#: model:ir.model.fields,field_description:license_website_sale.field_sale_order__license_exists
+msgid "License Exists"
+msgstr "Lizenz Existiert"
+
+#. module: license_website_sale
+#: model:ir.model,name:license_website_sale.model_sale_order
+msgid "Sales Order"
+msgstr ""

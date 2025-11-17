@@ -1,0 +1,1 @@
+Purchase licenses in the Odoo shop.
