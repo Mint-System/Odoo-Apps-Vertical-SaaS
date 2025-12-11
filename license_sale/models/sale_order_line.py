@@ -1,5 +1,7 @@
 import logging
 
+from markupsafe import Markup
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
@@ -36,7 +38,7 @@ class SaleOrderLine(models.Model):
         if not isinstance(self.id, models.NewId) and self.state in ["sale"] and self.is_license:
             value = self._prepare_license_values()
             license = self.env["license.license"].sudo().create(value)
-            license_msg = _("This license has been created from: %s (%s)") % (
+            license_msg = Markup(_("This license has been created from: %s (%s)")) % (
                 self.order_id._get_html_link(),
                 self.product_id.name,
             )
@@ -68,7 +70,7 @@ class SaleOrderLine(models.Model):
                 for _qty in range(count_new_licenses):
                     values = line._prepare_license_values()
                     license = line.env["license.license"].sudo().create(values)
-                    license_msg = _("This license has been created from: %s (%s)") % (
+                    license_msg = Markup(_("This license has been created from: %s (%s)")) % (
                         line.order_id._get_html_link(),
                         line.product_id.name,
                     )
