@@ -149,7 +149,9 @@ class License(models.Model):
                 edition_long = license.product_id.get_value_by_key("EditionLong")
 
                 if not version or not edition_long:
-                    raise UserError(_("Missing product information fields. Ensure 'Version' and 'EditionLong' are set."))
+                    raise UserError(
+                        _("Missing product information fields. Ensure 'Version' and 'EditionLong' are set.")
+                    )
 
                 license.key = "".join(
                     ocad.get_ocad2018_checksum(
