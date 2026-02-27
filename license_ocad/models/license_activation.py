@@ -22,18 +22,6 @@ class LicenseActivation(models.TransientModel):
     status = fields.Integer(readonly=True)
     license_id = fields.Many2one("license.license")
 
-    @api.model
-    def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
-        """Reset license activations list when list is shown."""
-        license_id = self.env["license.license"].browse(self._context["license_id"])
-        if license_id:
-            self.sudo().search([("license_id", "=", license_id.id)]).unlink()
-            activations_data, license_data = self._get_activations(license_id)
-            self.sudo().create(activations_data)
-        return super().search_read(domain=domain, fields=fields, offset=offset, limit=limit, order=order)
-
-    # Helper Methods
-
     def _get_client_notification_action(self, message):
         return {
             "type": "ir.actions.client",
@@ -64,7 +52,7 @@ class LicenseActivation(models.TransientModel):
                 activation.license_id.company_id.ocad_password,
             )
 
-            _logger.info("Send post request to %s", url, exc_info=True)
+            _logger.info("Send post request to %s", url)
             response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
             message += response.text
 
@@ -93,7 +81,7 @@ class LicenseActivation(models.TransientModel):
                 ocad_password,
             )
 
-            _logger.info("Send get request to %s", url, exc_info=True)
+            _logger.info("Send get request to %s", url)
             response = requests.get(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
 
             # Reponse is a semicolon separated string that has to be processed

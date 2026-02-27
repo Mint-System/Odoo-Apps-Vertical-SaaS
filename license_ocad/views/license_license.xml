@@ -7,17 +7,10 @@
         <field name="arch" type="xml">
             <field name="type_id" position="after">
                 <field name="registered" />
-                <label for="active_activations" string="" invisible="registered" />
-                <div
-                    class="text-muted"
-                    invisible="registered"
-                >Active | Registered | Max</div>
-                <label
-                    for="active_activations"
-                    string="Activations"
-                    invisible="registered"
-                />
-                <div class="o_row" invisible="registered">
+                <label for="active_activations" string="" />
+                <div class="text-muted">Active | Registered | Max</div>
+                <label for="active_activations" string="Activations" />
+                <div class="o_row">
                     <field name="active_activations" nolabel="1" class="oe_inline" />
                     <field
                         name="registered_activations"

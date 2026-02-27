@@ -30,18 +30,6 @@ class LicenseStatus(models.TransientModel):
     computer_name = fields.Char(readonly=True)
     parameter_change = fields.Char(readonly=True)
 
-    @api.model
-    def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
-        """Reset license activations list when list is shown."""
-
-        license_id = self.env["license.license"].browse(self._context["license_id"])
-        if license_id:
-            self.sudo().search([("license_id", "=", license_id.id)]).unlink()
-            activation_status_data = self._get_activation_status(license_id)
-            self.sudo().create(activation_status_data)
-
-        return super().search_read(domain=domain, fields=fields, offset=offset, limit=limit, order=order)
-
     # Model methods
 
     @api.model
@@ -61,7 +49,7 @@ class LicenseStatus(models.TransientModel):
                 license_id.company_id.ocad_password,
             )
 
-            _logger.info("Send get request to %s", url, exc_info=True)
+            _logger.info("Send get request to %s", url)
             response = requests.get(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
 
             # Reponse is a semicolon separated string that has to be processed

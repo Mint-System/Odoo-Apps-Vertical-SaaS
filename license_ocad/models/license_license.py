@@ -191,7 +191,7 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
-                _logger.info("Send post request to %s", url, exc_info=True)
+                _logger.info("Send post request to %s", url)
                 license.message_post(body=_("Send request to %s.", url))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
@@ -223,7 +223,7 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
-                _logger.info("Send post request to %s", url, exc_info=True)
+                _logger.info("Send post request to %s", url)
                 license.message_post(body=_("Send request to %s.", url))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
@@ -249,7 +249,7 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
-                _logger.info("Send post request to %s", url, exc_info=True)
+                _logger.info("Send post request to %s", url)
                 license.message_post(body=_("Send request to %s.", url))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
@@ -276,7 +276,7 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
-                _logger.info("Send post request to %s", url, exc_info=True)
+                _logger.info("Send post request to %s", url)
                 license.message_post(body=_("Send request to %s.", url))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
@@ -303,7 +303,7 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
-                _logger.info("Send post request to %s", url, exc_info=True)
+                _logger.info("Send post request to %s", url)
                 license.message_post(body=_("Send request to %s.", url))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
@@ -360,23 +360,31 @@ class License(models.Model):
         return self._get_client_notification_action(message)
 
     def action_view_activations(self):
+        license_id = self.id
+        self.env["license.activation"].sudo().search([("license_id", "=", license_id)]).unlink()
+        activations_data, license_data = self.env["license.activation"]._get_activations(self)
+        self.env["license.activation"].sudo().create(activations_data)
         return {
             "type": "ir.actions.act_window",
             "res_model": "license.activation",
             "name": _("License Activations"),
             "view_mode": "list",
             "views": [[False, "list"]],
-            "context": {"license_id": self.id},
-            "domain": [("license_id", "=", self.id)],
+            "context": {"license_id": license_id},
+            "domain": [("license_id", "=", license_id)],
         }
 
     def action_view_status(self):
+        license_id = self.id
+        self.env["license.status"].sudo().search([("license_id", "=", license_id)]).unlink()
+        activation_status_data = self.env["license.status"]._get_activation_status(self)
+        self.env["license.status"].sudo().create(activation_status_data)
         return {
             "type": "ir.actions.act_window",
             "res_model": "license.status",
             "name": _("License Status"),
             "view_mode": "list",
             "views": [[False, "list"]],
-            "context": {"license_id": self.id},
-            "domain": [("license_id", "=", self.id)],
+            "context": {"license_id": license_id},
+            "domain": [("license_id", "=", license_id)],
         }
