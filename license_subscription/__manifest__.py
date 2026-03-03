@@ -10,9 +10,7 @@
     "license": "OPL-1",
     "depends": [
         "license_sale",
-        "sale_triple_discount",
         "sale_subscription",
-        "sale_order_line_pricelist_fixed_discount",
     ],
     "data": ["views/sale_subscription_views.xml"],
     "installable": True,
