@@ -11,7 +11,6 @@
     "depends": [
         "license_sale",
         "website_sale",
-        "website_sale_pricelist_fixed_discount",
     ],
     "data": ["views/sale_order.xml", "views/website_templates.xml"],
     "installable": True,

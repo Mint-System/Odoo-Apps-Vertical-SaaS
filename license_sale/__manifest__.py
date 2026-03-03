@@ -12,7 +12,6 @@
         "license",
         "sale_order_comment",
         "sale_order_line_form_action",
-        "sale_order_line_pricelist_fixed_discount",
         "sale_management",
     ],
     "data": [

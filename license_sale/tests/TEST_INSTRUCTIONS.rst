@@ -1,13 +1,13 @@
 One license:
 
 - Install the sale management app
-- Open sale order "S00021"
+- Open sale order of "Edwin Hansen"
 - Confirm the sale order
 - Check if 1 license entry has been created
 
 Increase license:
 
-- Open confirmed sale order "S00021"
+- Open confirmed sale order of "Edwin Hansen"
 - Set quantity to 2
 - Click the sale line menu
 - Click "Create Licenses"
@@ -27,7 +27,7 @@ Edit the licenses:
 
 Duplicate order:
 
-- Show confirmed sale order "S00021"
+- Show confirmed sale order of "Edwin Hansen"
 - Duplicate the order
 - Confirm the new order
 - Check if an error is thrown because due to missing customer ref
@@ -36,13 +36,13 @@ Duplicate order:
 
 Product switch:
 
-- Open sale order "S00022"
+- Open sale order of "Addison Olson"
 - Confirm the sale order
 - Replace the product with "Software License (Team)"
 - Open the first license and check if product is the same
 
 Change customer:
 
-- Open sale order "S00022"
+- Open sale order of "Addison Olson"
 - Change customer
 - Ensure customer of licenses is updated as well
