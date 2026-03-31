@@ -8,10 +8,7 @@
     "category": "Services",
     "version": "18.0.1.0.0",
     "license": "OPL-1",
-    "depends": [
-        "license_sale",
-        "sale_subscription",
-    ],
+    "depends": ["license_sale", "sale_subscription"],
     "data": ["views/sale_subscription_views.xml"],
     "installable": True,
     "application": False,

@@ -13,6 +13,7 @@
         "sale_order_comment",
         "sale_order_line_form_action",
         "sale_management",
+        "sale_order_line_pricelist_fixed_discount",
     ],
     "data": [
         "views/product_template.xml",

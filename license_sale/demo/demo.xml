@@ -29,6 +29,16 @@
         <field name="license_type_id" ref="license.type1" />
     </record>
 
+    <record id="license_product1_pricelist" model="product.pricelist.item">
+        <field name="base">list_price</field>
+        <field name="applied_on">1_product</field>
+        <field name="pricelist_id" ref="license_pricelist0" />
+        <field name="product_tmpl_id" ref="license.license_product1_product_template" />
+        <field name="fixed_price">160</field>
+        <field name="percent_price">10</field>
+        <field name="min_quantity">2</field>
+    </record>
+
     <record id="sale_order_software_1" model="sale.order">
         <field name="partner_id" ref="base.res_partner_address_5" />
         <field name="client_order_ref">Gemini Furniture</field>

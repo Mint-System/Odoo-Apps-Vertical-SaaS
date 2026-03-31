@@ -37,7 +37,6 @@ Renew and cancel:
 
 - Create a new sale order for "Deco Addict"
 - Add product "Software License" and recurrence yearly
-- Set Disc. 2 and 3 with 10% and 7%
 - Set customer reference "OCAD" and confirm the order
 - Click on Renew
 - Check if license is linked with the new order
