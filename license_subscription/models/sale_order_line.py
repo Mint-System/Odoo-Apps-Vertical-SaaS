@@ -26,7 +26,6 @@ class SaleOrderLine(models.Model):
         for order_line in order_lines:
             parent_line_id = self.browse(order_line[2]["parent_line_id"])
             order_line[2]["license_ids"] = parent_line_id.license_ids
-            order_line[2]["discount"] = parent_line_id.discount
             parent_line_id.license_ids.parent_sale_line_id = parent_line_id
             res.append(order_line)
         return res
@@ -51,5 +50,5 @@ class SaleOrderLine(models.Model):
             if discount:
                 line.discount = discount
 
-            elif parent_sale_line_id and line.product_uom_qty == 1.0 and len(self) >= 2:
+            elif parent_sale_line_id:  # and line.product_uom_qty == 1.0 and len(self) >= 2:
                 line.discount = parent_sale_line_id.discount
