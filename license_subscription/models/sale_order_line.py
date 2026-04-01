@@ -40,6 +40,8 @@ class SaleOrderLine(models.Model):
         super()._compute_discount()
 
         for line in self:
+            parent_sale_line_id = line.license_ids[0].parent_sale_line_id if line.license_ids else False
+
             # Read filter date from context
             date = self._context.get("date") or line.order_id.commitment_date or line.order_id.date_order
 
@@ -49,5 +51,5 @@ class SaleOrderLine(models.Model):
             if discount:
                 line.discount = discount
 
-            elif line.license_ids and line.license_ids[0].parent_sale_line_id:
-                line.discount = line.license_ids[0].parent_sale_line_id.discount
+            elif parent_sale_line_id and line.product_uom_qty == 1.0 and len(self) >= 2:
+                line.discount = parent_sale_line_id.discount
