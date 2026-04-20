@@ -23,7 +23,7 @@ class SaleOrder(models.Model):
         """
         res = super().action_confirm()
         today = fields.Date.today()
-        if today > self.start_date:
+        if self.start_date and (today > self.start_date):
             self.next_invoice_date = today
         return res
 
