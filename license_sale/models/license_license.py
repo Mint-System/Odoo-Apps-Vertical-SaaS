@@ -22,17 +22,11 @@ class License(models.Model):
         help="Sales order to which the license is linked.",
     )
     pricelist_id = fields.Many2one("product.pricelist", related="sale_order_id.pricelist_id")
-    client_order_ref = fields.Char(
-        string="Customer Reference",
-        readonly=True,
-    )
+    client_order_ref = fields.Char(string="Customer Reference")
     partner_id = fields.Many2one(compute="_compute_partner_id", store=True, copy=True)
     country_id = fields.Many2one("res.country", compute="_compute_partner_id", store=True, copy=True)
     product_id = fields.Many2one(
-        compute="_compute_product_id",
-        store=True,
-        copy=True,
-        domain=[("license_ok", "=", True)],
+        compute="_compute_product_id", store=True, copy=True, domain=[("license_ok", "=", True)], readonly=False
     )
 
     @api.depends("sale_order_id", "sale_order_id.partner_id", "sale_order_id.partner_id.country_id")
