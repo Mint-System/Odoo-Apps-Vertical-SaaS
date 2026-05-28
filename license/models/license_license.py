@@ -13,12 +13,10 @@ class License(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _name = "license.license"
     _description = "License"
-    # _order = "name desc"
 
     name = fields.Char(
         default=lambda self: _("New"),
         required=True,
-        readonly=True,
         tracking=True,
     )
     key = fields.Char(
@@ -27,24 +25,20 @@ class License(models.Model):
         tracking=True,
         required=True,
         store=True,
-        readonly=True,
     )
     type_id = fields.Many2one(
         "license.type",
-        readonly=True,
     )
     partner_id = fields.Many2one(
         "res.partner",
         string="Customer",
         required=True,
         tracking=True,
-        readonly=True,
     )
     product_id = fields.Many2one(
         "product.product",
         required=True,
         tracking=True,
-        readonly=True,
     )
     state = fields.Selection(
         selection=[
