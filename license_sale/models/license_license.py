@@ -23,7 +23,7 @@ class License(models.Model):
     )
     pricelist_id = fields.Many2one("product.pricelist", related="sale_order_id.pricelist_id")
     client_order_ref = fields.Char(string="Customer Reference")
-    partner_id = fields.Many2one(compute="_compute_partner_id", store=True, copy=True)
+    partner_id = fields.Many2one(compute="_compute_partner_id", store=True, copy=True, readonly=False)
     country_id = fields.Many2one("res.country", compute="_compute_partner_id", store=True, copy=True)
     product_id = fields.Many2one(
         compute="_compute_product_id", store=True, copy=True, domain=[("license_ok", "=", True)], readonly=False
