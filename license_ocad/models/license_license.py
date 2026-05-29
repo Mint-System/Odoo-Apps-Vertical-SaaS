@@ -68,7 +68,11 @@ class License(models.Model):
     def _compute_runtime(self):
         for license in self:
             if license.product_id and license.name != _("New"):
-                license.runtime = license.product_id.get_value_by_key("Runtime") * 12
+                runtime = license.product_id.get_value_by_key("Runtime")
+                if runtime:
+                    license.runtime = runtime * 12
+                else:
+                    license.runtime = 0
 
     def _compute_license_activations(self):
         for license in self:
