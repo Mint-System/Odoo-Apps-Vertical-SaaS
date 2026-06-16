@@ -158,7 +158,7 @@ class License(models.Model):
                     )
 
                 license.key = "".join(
-                    ocad.get_ocad2018_checksum(
+                    ocad.get_ocad_checksum(
                         version,
                         int(license.name),
                         edition_long,
