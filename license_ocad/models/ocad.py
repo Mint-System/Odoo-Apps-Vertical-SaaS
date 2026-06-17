@@ -198,7 +198,7 @@ def get_ocad11_checksum(v, lnum, e, lname):
         s =  ('jedzsT89s0' + lname + 'nR7sW' + str(lnum)).upper()
         iSum = lnum + 780
         factor = 23
-    elif (e == "Orienteering Standard"):
+    elif (e == "Standard"):
         s =  ('H8D7shE' + lname + 'DmnDu7S534' + str(lnum)).upper()
         iSum = lnum - 23
         factor = 18
@@ -243,7 +243,7 @@ def get_ocad11_checksum(v, lnum, e, lname):
         slist[7] = IntToCodeOcad11Starter((iSum // 781) % 30);
         slist[8] = IntToCodeOcad11Starter((iSum // 79) % 28);
         slist[9] = IntToCodeOcad11Starter(((iLicenseShort*57) // 40) % 31);
-    elif (e == "Orienteering Standard"):
+    elif (e == "Standard"):
         slist[0] = IntToCodeOcad11OrienteeringStandard((iSum // 268) % 27);
         slist[1] = IntToCodeOcad11OrienteeringStandard(((iLicenseShort*65) // 47) % 27);
         slist[2] = IntToCodeOcad11OrienteeringStandard((iSum // 842) % 28);
