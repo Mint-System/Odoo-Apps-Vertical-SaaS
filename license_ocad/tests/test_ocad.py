@@ -300,8 +300,8 @@ def get_ocad10_checksum(v, lnum, e, lname):
         slist[1] = IntToCodeOcad10Cs(((lnum*587) // 40) % 31);
         slist[2] = IntToCodeOcad10Cs(((lnum*5) // 47) % 27);
         slist[3] = IntToCodeOcad10Cs((iSum // 6842) % 28);
-        slist[4] = IntToCodeOcad10Cs(((lnum*121) // 709) % 29);
-        slist[5] = IntToCodeOcad10Cs((iSum // 958) % 30);
+        slist[5] = IntToCodeOcad10Cs(((lnum*121) // 709) % 29);
+        slist[4] = IntToCodeOcad10Cs((iSum // 958) % 30);
         slist[6] = IntToCodeOcad10Cs(((lnum*7211) // 6) % 30);
         slist[7] = IntToCodeOcad10Cs((iSum // 779) % 28);
         slist[8] = IntToCodeOcad10Cs((iSum // 985) % 30);
