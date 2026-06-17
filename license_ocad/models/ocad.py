@@ -58,43 +58,43 @@ def pkv_get_key_byte(seed, a, b, c):
 def IntToCodeOcad11CourseSetting(i):
     i = i % 33
     charTableOcad11 = 'Q15TH9AY4C6U2WZS8MPX3FGJ7DKLBVNRE'
-    return charTableOcad11[i+1]
+    return charTableOcad11[i]
 
 
 def IntToCodeOcad11Starter(i):
     i = i % 33
     charTableOcad11 = 'D1N49A5HB7J8GMF2WXEUTK3LCZPQRSV6Y'
-    return charTableOcad11[i+1]
+    return charTableOcad11[i]
 
 
 def IntToCodeOcad11OrienteeringStandard(i):
     i = i % 33
     charTableOcad11 = 'F9WZJMCBLT4QXDRN8HAU25KSY3E6P7VG1'
-    return charTableOcad11[i+1]
+    return charTableOcad11[i]
 
 
 def IntToCodeOcad11Professional(i):
     i = i % 33
     charTableOcad11 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZ'
-    return charTableOcad11[i+1]
+    return charTableOcad11[i]
 
 
 def IntToCodeOcad10Cs(i):
     i = i % 31
     charTableOcad10 = ('2','3','4','5','6','7','8','9', 'A','B','C','D','E','F','G','H','J', 'K','L','M','N','P','R','S','T', 'U','V','W','X','Y','Z')
-    return charTableOcad10[i+1]
+    return charTableOcad10[i]
 
 
 def IntToCodeOcad10Std(i):
     i = i % 31
     charTableOcad10 = ( '2','3','4','5','6','7','8','9', 'A','B','C','D','E','F','G','H','J', 'K','L','M','N','P','R','S','T', 'U','V','W','X','Y','Z')
-    return charTableOcad10[i+1]
+    return charTableOcad10[i]
 
 
 def IntToCodeOcad10Pro(i):
     i = i % 33
     charTableOcad10 = ( '1','2','3','4','5','6','7','8','9', 'A','B','C','D','E','F','G','H','J', 'K','L','M','N','P','Q','R','S','T', 'U','V','W','X','Y','Z')
-    return charTableOcad10[i+1]
+    return charTableOcad10[i]
 
 
 ## Checksum generation
@@ -147,7 +147,7 @@ def get_ocad12_checksum(v, lnum, e, lname):
     for i in [5, 6, 7, 8, 10, 11]:
         slist = list(hash_of_string(''.join(slist).upper() + str(lnum) + lname.upper()))
         #print(''.join(slist))
-        idx = 1 + (v*i + lnum) % 40
+        idx = (v * (i + 1) + lnum) % 40
         #print(idx)
         checksum[i] = slist[idx]
         
@@ -179,6 +179,8 @@ def get_ocad12_checksum(v, lnum, e, lname):
 # Get OCAD 11 checksum
 def get_ocad11_checksum(v, lnum, e, lname):
 
+    maxUint32 = 4294967296;
+    
     if (e == 'Academic'):
         e = 'Professional'    
     
@@ -189,29 +191,29 @@ def get_ocad11_checksum(v, lnum, e, lname):
     factor = 0
 
     if (e == "Course Setting"):
-        s =  ('FkHze9dDs2' + lname + 'gd5' + lnum.string()).Upper
+        s =  ('FkHze9dDs2' + lname + 'gd5' + str(lnum)).upper()
         iSum = lnum + 891
         factor = 15
     elif (e == "Starter"):
-        s =  ('jedzsT89s0' + lname + 'nR7sW' + lnum.string()).Upper
+        s =  ('jedzsT89s0' + lname + 'nR7sW' + str(lnum)).upper()
         iSum = lnum + 780
         factor = 23
     elif (e == "Orienteering Standard"):
-        s =  ('H8D7shE' + lname + 'DmnDu7S534' + lnum.string()).Upper
+        s =  ('H8D7shE' + lname + 'DmnDu7S534' + str(lnum)).upper()
         iSum = lnum - 23
         factor = 18
     elif (e == "Professional"):
-        s =  ('ajtiEjt' + lname + 'jR5d3s' + lnum.string()).Upper
+        s =  ('ajtiEjt' + lname + 'jR5d3s' + str(lnum)).upper()
         iSum = lnum - 783
         factor = 19
 
-    #print(s)
-    #print(iSum)
-    #print(factor)
-
-    for s in slist:
-        if ((s >= 'A') and (s <= 'Z')) or ((s >= '0') and (s <= '9')):
-            iSum = (iSum + factor) * factor * (ord(s)+9);
+    # print(s)
+    # print(iSum)
+    # print(factor)
+       
+    for item in s:
+        if ((item >= 'A') and (item <= 'Z')) or ((item >= '0') and (item <= '9')):
+            iSum = ((((iSum + factor) % maxUint32 * factor) % maxUint32) * (ord(item)+9)) % maxUint32;
             factor += 3
 
     if (iSum < 200000):
@@ -265,8 +267,11 @@ def get_ocad11_checksum(v, lnum, e, lname):
         slist[9] = IntToCodeOcad11Professional((iSum // 97) % 31);
     return slist
 
+
 # Get OCAD10 checksum
 def get_ocad10_checksum(v, lnum, e, lname):     
+
+    maxUint32 = 4294967296;
 
     if (e == 'Academic'):
         e = 'Professional'    
@@ -275,17 +280,17 @@ def get_ocad10_checksum(v, lnum, e, lname):
 
     s = ""
     iSum = 0;
-    factor = 0
+    factor = 0;
 
     if (e == "Course Setting"):
         lnum = lnum % 100000;
-        s =  'ABC' + lname.upper() + 'GHUSR' + lnum.string() + 'GSR'
+        s =  'ABC' + lname.upper() + 'GHUSR' + str(lnum) + 'GSR'
         iSum = lnum - 656
         factor = 3
                   
-        for s in slist:
-            if ((s >= 'A') and (s <= 'Z')) or ((s >= '0') and (s <= '9')):
-                iSum = (iSum + factor) * factor * (ord(s)+6);
+        for item in s:
+            if ((item >= 'A') and (item <= 'Z')) or ((item >= '0') and (item <= '9')):
+                iSum = ((((iSum + factor) % maxUint32 * factor) % maxUint32) * (ord(item)+6)) % maxUint32;
                 factor += 4
 
         if (iSum < 200000):
@@ -302,13 +307,13 @@ def get_ocad10_checksum(v, lnum, e, lname):
         slist[8] = IntToCodeOcad10Cs((iSum // 985) % 30);
         slist[9] = IntToCodeOcad10Cs((iSum // 98) % 31);
     elif (e == "Orienteering Standard"):
-        s =  ('FRG' + lname + 'FGZE' + lnum.string()).upper
+        s =  'FRG' + lname.upper() + 'FGZE' + str(lnum)
         iSum = lnum - 28
         factor = 13
 
-        for s in slist:
-            if ((s >= 'A') and (s <= 'Z')) or ((s >= '0') and (s <= '9')):
-                iSum = (iSum + factor) * factor * (ord(s)+9);
+        for item in s:
+            if ((item >= 'A') and (item <= 'Z')) or ((item >= '0') and (item <= '9')):
+                iSum = ((((iSum + factor) % maxUint32 * factor) % maxUint32) * (ord(item)+9)) % maxUint32;
                 factor += 3
 
         if (iSum < 200000):
@@ -325,13 +330,13 @@ def get_ocad10_checksum(v, lnum, e, lname):
         slist[8] = IntToCodeOcad10Std((iSum // 59) % 30);
         slist[9] = IntToCodeOcad10Std((iSum // 849) % 31);
     elif (e == "Professional"):
-        s =  lnum.string() + lname.upper()
+        s =  str(lnum) + lname.upper()
         iSum = lnum + 29
         factor = 7
 
-        for s in slist:
-            if ((s >= 'A') and (s <= 'Z')) or ((s >= '0') and (s <= '9')):
-                iSum = (iSum + factor) * factor * (ord(s)+4);
+        for item in s:
+            if ((item >= 'A') and (item <= 'Z')) or ((item >= '0') and (item <= '9')):
+                iSum = ((((iSum + factor) % maxUint32 * factor) % maxUint32) * (ord(item)+4)) % maxUint32;
                 factor += 2
 
         if (iSum < 100000):
