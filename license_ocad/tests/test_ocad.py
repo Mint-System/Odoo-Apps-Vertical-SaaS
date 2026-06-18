@@ -306,7 +306,7 @@ def get_ocad10_checksum(v, lnum, e, lname):
         slist[7] = IntToCodeOcad10Cs((iSum // 779) % 28);
         slist[8] = IntToCodeOcad10Cs((iSum // 985) % 30);
         slist[9] = IntToCodeOcad10Cs((iSum // 98) % 31);
-    elif (e == "Orienteering Standard"):
+    elif (e == "Standard"):
         s =  'FRG' + lname.upper() + 'FGZE' + str(lnum)
         iSum = lnum - 28
         factor = 13
@@ -482,7 +482,7 @@ for test_input in [
     [11, 15023, 'Starter', '35 RAP', "FPWA8FA9C1"],
     [11, 2005902, 'Course Setting', 'OCAD AG', "LYLAML1SPL"],
     [10, 5002, 'Professional', 'OCAD AG', "9229AFG57L"],
-    [10, 5003, 'Orienteering Standard', 'OCAD AG', "RJARA3KZ5W"],
+    [10, 5003, 'Standard', 'OCAD AG', "RJARA3KZ5W"],
     [10, 2005902, 'Course Setting', 'OCAD AG', "VX84UPN6R9"],
     [1, 2005902, 'Course Setting', 'OCAD AG', "xxxxxxxxxx"],
 ]:

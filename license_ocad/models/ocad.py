@@ -306,7 +306,7 @@ def get_ocad10_checksum(v, lnum, e, lname):
         slist[7] = IntToCodeOcad10Cs((iSum // 779) % 28);
         slist[8] = IntToCodeOcad10Cs((iSum // 985) % 30);
         slist[9] = IntToCodeOcad10Cs((iSum // 98) % 31);
-    elif (e == "Orienteering Standard"):
+    elif (e == "Standard"):
         s =  'FRG' + lname.upper() + 'FGZE' + str(lnum)
         iSum = lnum - 28
         factor = 13
