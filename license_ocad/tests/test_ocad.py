@@ -1,4 +1,31 @@
+######################################
+##### content of models/ocad.py ######
+######################################
 import hashlib
+
+## Link Generation
+def get_download_links(v, lnum, eshort, dtoken, lkey):
+    if v in [10, 11, 12] and eshort == '_CS':
+        if int(lnum) < 2000000:
+            lnum = str(int(lnum) + 2000000)
+
+    if v == 2018:
+        download_link =  f"https://www.ocad.com/OCAD2018/OCAD_2018_Setup.php?e={eshort}&l={lnum}&v={v}&d={dtoken}"
+        update_link = f"https://www.ocad.com/OCAD2018/OCAD_2018_Update.php?e={eshort}&l={lnum}&v={v}&c={lkey}"
+    elif v == 12:
+        download_link =  f"https://www.ocad.com/dwn/o12.php?e={eshort}&l={lnum}&d={dtoken}"
+        update_link = f"https://www.ocad.com/OCAD12/OCAD12{eshort}_ServiceUpdate.php?l={lnum}&v={v}&c={lkey}"
+    elif v == 11:
+        download_link =  f"https://www.ocad.ch/dwn/o11{eshort}.php?l={lnum}&d={dtoken}"
+        update_link = f"https://www.ocad.com/dwn/o11ServiceUpdate.php?e={eshort}&l={lnum}&d={dtoken}"
+    elif v == 10:
+        download_link =  f"https://www.ocad.com/dwn/o10Setup.php?e={eshort}&l={lnum}&d={dtoken}"
+        update_link = f"https://www.ocad.com/dwn/o10ServiceUpdate.php?e={eshort}&l={lnum}&d={dtoken}"
+    else:
+        return False, False
+
+    return download_link, update_link
+
 
 ## Version detection
 def get_ocad_checksum(v, lnum, e, lname):
@@ -18,6 +45,10 @@ def get_ocad_checksum(v, lnum, e, lname):
 # Get hash string
 def hash_of_string(s):
     return hashlib.sha1(s.encode("utf-16-le")).hexdigest().upper()
+
+
+def ascii_upper(s):
+    return ''.join(chr(ord(c) - 32) if 'a' <= c <= 'z' else c for c in s)
 
 
 # Convert hex to integer
@@ -100,6 +131,10 @@ def IntToCodeOcad10Pro(i):
 ## Checksum generation
 # Get OCAD2018 checksum
 def get_ocad2018_checksum(v, lnum, e, lname):
+
+    if (e == 'Academic'):
+        e = 'Mapping Solution'
+
     slist = list(e)
     checksum = list("____-____-____")
 
@@ -141,11 +176,14 @@ def get_ocad12_checksum(v, lnum, e, lname):
         
     if (e == 'Academic'):
         e = 'Mapping Solution'    
+
+    if lnum < 2000000 and e == 'Course Setting':
+        lnum = lnum + 2000000
     
     slist = list(e)
     checksum = list('____-____-____')
     for i in [5, 6, 7, 8, 10, 11]:
-        slist = list(hash_of_string(''.join(slist).upper() + str(lnum) + lname.upper()))
+        slist = list(hash_of_string(''.join(slist).upper() + str(lnum) + uppercase(lname)))
         #print(''.join(slist))
         idx = (v * (i + 1) + lnum) % 40
         #print(idx)
@@ -167,7 +205,7 @@ def get_ocad12_checksum(v, lnum, e, lname):
     slist = list(s)
     #print(s)
 
-    slist = list(hash_of_string(e + ''.join(slist).upper() + str(lnum) + lname.upper()))
+    slist = list(hash_of_string(e + ''.join(slist).upper() + str(lnum) + uppercase(lname)))
     checksum[0] = slist[7]
     checksum[1] = slist[22]
     checksum[2] = slist[11]
@@ -182,8 +220,11 @@ def get_ocad11_checksum(v, lnum, e, lname):
     maxUint32 = 4294967296;
     
     if (e == 'Academic'):
-        e = 'Professional'    
-    
+        e = 'Professional' 
+
+    if (e == 'Orienteering Standard'):
+        e = 'Standard'
+
     slist = list('__________')
 
     s = ""
@@ -191,6 +232,8 @@ def get_ocad11_checksum(v, lnum, e, lname):
     factor = 0
 
     if (e == "Course Setting"):
+        if lnum < 2000000:
+            lnum = lnum + 2000000
         s =  ('FkHze9dDs2' + lname + 'gd5' + str(lnum)).upper()
         iSum = lnum + 891
         factor = 15
@@ -198,7 +241,7 @@ def get_ocad11_checksum(v, lnum, e, lname):
         s =  ('jedzsT89s0' + lname + 'nR7sW' + str(lnum)).upper()
         iSum = lnum + 780
         factor = 23
-    elif (e == "Orienteering Standard"):
+    elif (e == "Standard"):
         s =  ('H8D7shE' + lname + 'DmnDu7S534' + str(lnum)).upper()
         iSum = lnum - 23
         factor = 18
@@ -243,7 +286,7 @@ def get_ocad11_checksum(v, lnum, e, lname):
         slist[7] = IntToCodeOcad11Starter((iSum // 781) % 30);
         slist[8] = IntToCodeOcad11Starter((iSum // 79) % 28);
         slist[9] = IntToCodeOcad11Starter(((iLicenseShort*57) // 40) % 31);
-    elif (e == "Orienteering Standard"):
+    elif (e == "Standard"):
         slist[0] = IntToCodeOcad11OrienteeringStandard((iSum // 268) % 27);
         slist[1] = IntToCodeOcad11OrienteeringStandard(((iLicenseShort*65) // 47) % 27);
         slist[2] = IntToCodeOcad11OrienteeringStandard((iSum // 842) % 28);
@@ -275,7 +318,10 @@ def get_ocad10_checksum(v, lnum, e, lname):
 
     if (e == 'Academic'):
         e = 'Professional'    
-    
+
+    if (e == 'Orienteering Standard'):
+        e = 'Standard'
+
     slist = list('__________')
 
     s = ""
@@ -283,6 +329,9 @@ def get_ocad10_checksum(v, lnum, e, lname):
     factor = 0;
 
     if (e == "Course Setting"):
+        if lnum < 2000000:
+            lnum = lnum + 2000000
+
         lnum = lnum % 100000;
         s =  'ABC' + lname.upper() + 'GHUSR' + str(lnum) + 'GSR'
         iSum = lnum - 656
@@ -355,6 +404,12 @@ def get_ocad10_checksum(v, lnum, e, lname):
     return slist
 
 
+##################
+##### Tests ######
+##################
+
+print('Testing Checksum/Key generation')
+
 # Version = OCAD 2018 Orienteering
 # Name = OL Ishikawa
 # Number = 19277
@@ -369,8 +424,7 @@ checksum = "".join(
         "OL Ishikawa",
     )
 )
-print(checksum)
-print("BB83-215D-EE94" == checksum)
+print("BB83-215D-EE94" == checksum, '-', checksum)
 
 # Version = OCAD 2018 Orienteering
 # Name = OL Ishikawa
@@ -386,8 +440,7 @@ checksum = "".join(
         "OL Ishikawa",
     )
 )
-print(checksum)
-print("C130-69AF-D0FA" == checksum)
+print("C130-69AF-D0FA" == checksum, '-', checksum)
 
 # Version = OCAD 2018 Orienteering
 # Name = Tsukuba44comp
@@ -403,8 +456,7 @@ checksum = "".join(
         "Tsukuba44comp",
     )
 )
-print(checksum)
-print("6E9D-030B-ADA1" == checksum)
+print("6E9D-030B-ADA1" == checksum, '-', checksum)
 
 # Version = OCAD 2018 Orienteering
 # Name = Tsukuba44comp
@@ -420,8 +472,7 @@ checksum = "".join(
         "Tsukuba44comp",
     )
 )
-print(checksum)
-print("743D-1013-5624" == checksum)
+print("743D-1013-5624" == checksum, '-', checksum)
 
 # Name = Långhundra IF
 # Number = 5323
@@ -435,8 +486,7 @@ checksum = "".join(
         "Långhundra IF",
     )
 )
-print(checksum)
-print("8EF8-7CFA-3E4B" == checksum)
+print("8EF8-7CFA-3E4B" == checksum, '-', checksum)
 
 # Name = FHNW - Schulungslizenz
 # Number = 14479
@@ -451,8 +501,7 @@ checksum = "".join(
         "FHNW - Schulungslizenz",
     )
 )
-print(checksum)
-print("0E37-AAC6-3A15" == checksum)
+print("0E37-AAC6-3A15" == checksum, '-', checksum)
 
 # Name = HSOK
 # Number = 26305
@@ -467,8 +516,7 @@ checksum = "".join(
         "HSOK",
     )
 )
-print(checksum)
-print("3967-6964-E2F5" == checksum)
+print("3967-6964-E2F5" == checksum, '-', checksum)
 
 for test_input in [
     [12, 2005902, 'Course Setting', 'OCAD AG', "4C1C-EE08-9166"],
@@ -485,8 +533,68 @@ for test_input in [
     [10, 5003, 'Standard', 'OCAD AG', "RJARA3KZ5W"],
     [10, 2005902, 'Course Setting', 'OCAD AG', "VX84UPN6R9"],
     [1, 2005902, 'Course Setting', 'OCAD AG', "xxxxxxxxxx"],
+    [11, 2007294, 'Course Setting', 'ANCO', "XQGTYM8GWV"],
+    [12, 2017448, 'Course Setting', 'OK Rodhen', "36C9-A8D2-ECD7"],
+    [12, 3275, 'Academic', 'Högskolan i Gävle', "C945-D4D2-E51D"],
+    [12, 16240, 'Starter', 'OLG Pfäffikon', "8511-05D0-3E22"],
 ]:
     checksum = "".join(get_ocad_checksum(*test_input[:4]))
     expected_checksum = test_input[4]
-    print(checksum)
-    print(checksum == expected_checksum)
+    print(checksum == expected_checksum, '-', checksum)
+
+tests = [
+    [
+        [10, 11368, 'PRO', 'pHNhBqoJ', ''], 
+        ['https://www.ocad.com/dwn/o10Setup.php?e=PRO&l=11368&d=pHNhBqoJ', 'https://www.ocad.com/dwn/o10ServiceUpdate.php?e=PRO&l=11368&d=pHNhBqoJ']],
+    [
+        [10, 8563, '_CS', 'eqdMtzPQ', ''], 
+        ['https://www.ocad.com/dwn/o10Setup.php?e=_CS&l=2008563&d=eqdMtzPQ', 'https://www.ocad.com/dwn/o10ServiceUpdate.php?e=_CS&l=2008563&d=eqdMtzPQ']],
+    [
+        [10, 1480, 'PRO', 'H3EFuMJw', ''], 
+        ['https://www.ocad.com/dwn/o10Setup.php?e=PRO&l=1480&d=H3EFuMJw', 'https://www.ocad.com/dwn/o10ServiceUpdate.php?e=PRO&l=1480&d=H3EFuMJw']],
+    [
+        [10, 1745, 'STD', 'kklekLaR', ''], 
+        ['https://www.ocad.com/dwn/o10Setup.php?e=STD&l=1745&d=kklekLaR', 'https://www.ocad.com/dwn/o10ServiceUpdate.php?e=STD&l=1745&d=kklekLaR']],
+    [
+        [11, 12264, 'PRO', 'WNmXpKnn', ''], 
+        ['https://www.ocad.ch/dwn/o11PRO.php?l=12264&d=WNmXpKnn', 'https://www.ocad.com/dwn/o11ServiceUpdate.php?e=PRO&l=12264&d=WNmXpKnn']],
+    [
+        [11, 10633, '_CS', '2lAyEF79', ''], 
+        ['https://www.ocad.ch/dwn/o11_CS.php?l=2010633&d=2lAyEF79', 'https://www.ocad.com/dwn/o11ServiceUpdate.php?e=_CS&l=2010633&d=2lAyEF79']],
+    [
+        [11, 3088, 'STD', 'yaYqndAP', ''], 
+        ['https://www.ocad.ch/dwn/o11STD.php?l=3088&d=yaYqndAP', 'https://www.ocad.com/dwn/o11ServiceUpdate.php?e=STD&l=3088&d=yaYqndAP']],
+    [
+        [11, 9836, 'PRO', '34WJnU4H', ''], 
+        ['https://www.ocad.ch/dwn/o11PRO.php?l=9836&d=34WJnU4H', 'https://www.ocad.com/dwn/o11ServiceUpdate.php?e=PRO&l=9836&d=34WJnU4H']],
+    [
+        [11, 13218, 'STA', 'Sb76whua', ''], 
+        ['https://www.ocad.ch/dwn/o11STA.php?l=13218&d=Sb76whua', 'https://www.ocad.com/dwn/o11ServiceUpdate.php?e=STA&l=13218&d=Sb76whua']],
+    [
+        [12, 10250, 'MAS', 'PXZheLCp', '1CA4-D687-8178'], #client_order_ref = "Auckland University Canoe Club"
+        ['https://www.ocad.com/dwn/o12.php?e=MAS&l=10250&d=PXZheLCp', 'https://www.ocad.com/OCAD12/OCAD12MAS_ServiceUpdate.php?l=10250&v=12&c=1CA4-D687-8178']],
+    [
+        [12, 5569, '_CS', 'taGUakFy', '77F4-B2FB-4F2C'], #client_order_ref = "Thomas Hodel"
+        ['https://www.ocad.com/dwn/o12.php?e=_CS&l=2005569&d=taGUakFy', 'https://www.ocad.com/OCAD12/OCAD12_CS_ServiceUpdate.php?l=2005569&v=12&c=77F4-B2FB-4F2C']],
+    [
+        [12, 1818, 'ORI', 'znGAZaFg', 'AC5B-4035-DDB7'], #client_order_ref = "Orienteering ACT"
+        ['https://www.ocad.com/dwn/o12.php?e=ORI&l=1818&d=znGAZaFg', 'https://www.ocad.com/OCAD12/OCAD12ORI_ServiceUpdate.php?l=1818&v=12&c=AC5B-4035-DDB7']],
+    [
+        [12, 10326, 'PRO', '95Km3HTN', '001E-8097-794B'], #client_order_ref = "Leif Roger Hultgreen"
+        ['https://www.ocad.com/dwn/o12.php?e=PRO&l=10326&d=95Km3HTN', 'https://www.ocad.com/OCAD12/OCAD12PRO_ServiceUpdate.php?l=10326&v=12&c=001E-8097-794B']],
+    [
+        [12, 16401, 'STA', 'L9hsxKk4', 'EF9E-8ADA-5714'], #client_order_ref = "Andrea Gianotti"
+        ['https://www.ocad.com/dwn/o12.php?e=STA&l=16401&d=L9hsxKk4', 'https://www.ocad.com/OCAD12/OCAD12STA_ServiceUpdate.php?l=16401&v=12&c=EF9E-8ADA-5714']],
+    [
+        [2018, 6834, 'ORI', 'wKRbRxwt', '92AA-6406-F7DB'], #client_order_ref = "Deb Humiston"
+        ['https://www.ocad.com/OCAD2018/OCAD_2018_Setup.php?e=ORI&l=6834&v=2018&d=wKRbRxwt', 'https://www.ocad.com/OCAD2018/OCAD_2018_Update.php?e=ORI&l=6834&v=2018&c=92AA-6406-F7DB']    ]
+]
+
+print('Testing link generation')
+
+for test in tests:
+    a, b = get_download_links(*test[0])
+    if test[1][0] == a and test[1][1] == b:
+        print(True, '-', test[0])
+    else:
+        print(False, '-', test[0])
