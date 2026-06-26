@@ -124,25 +124,12 @@ class License(models.Model):
                 version = str(license.product_id.get_value_by_key("Version"))
 
                 if edition_short != "None" and version != "None" and license.download_token:
-                    license.download_link = (
-                        "https://www.ocad.com/OCAD2018/OCAD_2018_Setup.php?e="
-                        + edition_short
-                        + "&l="
-                        + license.name
-                        + "&v="
-                        + version
-                        + "&d="
-                        + license.download_token
-                    )
-                    license.update_link = (
-                        "https://www.ocad.com/OCAD2018/OCAD_2018_Update.php?e="
-                        + edition_short
-                        + "&l="
-                        + license.name
-                        + "&v="
-                        + version
-                        + "&c="
-                        + license.key
+                    license.download_link, license.update_link = ocad.get_download_links(
+                        int(version),
+                        int(license.name),
+                        edition_short,
+                        license.download_token,
+                        license.key,
                     )
 
     @api.depends("name", "product_id", "partner_id", "client_order_ref")

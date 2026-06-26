@@ -1,5 +1,29 @@
 import hashlib
 
+## Link Generation
+def get_download_links(v, lnum, eshort, dtoken, lkey):
+    if v in [10, 11, 12] and eshort == '_CS':
+        if int(lnum) < 2000000:
+            lnum = str(int(lnum) + 2000000)
+
+    if v == 2018:
+        download_link =  f"https://www.ocad.com/OCAD2018/OCAD_2018_Setup.php?e={eshort}&l={lnum}&v={v}&d={dtoken}"
+        update_link = f"https://www.ocad.com/OCAD2018/OCAD_2018_Update.php?e={eshort}&l={lnum}&v={v}&c={lkey}"
+    elif v == 12:
+        download_link =  f"https://www.ocad.com/dwn/o12.php?e={eshort}&l={lnum}&d={dtoken}"
+        update_link = f"https://www.ocad.com/OCAD12/OCAD12{eshort}_ServiceUpdate.php?l={lnum}&v={v}&c={lkey}"
+    elif v == 11:
+        download_link =  f"https://www.ocad.ch/dwn/o11{eshort}.php?l={lnum}&d={dtoken}"
+        update_link = f"https://www.ocad.com/dwn/o11ServiceUpdate.php?e={eshort}&l={lnum}&d={dtoken}"
+    elif v == 10:
+        download_link =  f"https://www.ocad.com/dwn/o10Setup.php?e={eshort}&l={lnum}&d={dtoken}"
+        update_link = f"https://www.ocad.com/dwn/o10ServiceUpdate.php?e={eshort}&l={lnum}&d={dtoken}"
+    else:
+        return False, False
+
+    return download_link, update_link
+
+
 ## Version detection
 def get_ocad_checksum(v, lnum, e, lname):
     if v == 2018:
@@ -18,6 +42,10 @@ def get_ocad_checksum(v, lnum, e, lname):
 # Get hash string
 def hash_of_string(s):
     return hashlib.sha1(s.encode("utf-16-le")).hexdigest().upper()
+
+
+def ascii_upper(s):
+    return ''.join(chr(ord(c) - 32) if 'a' <= c <= 'z' else c for c in s)
 
 
 # Convert hex to integer
@@ -100,6 +128,10 @@ def IntToCodeOcad10Pro(i):
 ## Checksum generation
 # Get OCAD2018 checksum
 def get_ocad2018_checksum(v, lnum, e, lname):
+
+    if (e == 'Academic'):
+        e = 'Mapping Solution'
+
     slist = list(e)
     checksum = list("____-____-____")
 
@@ -141,11 +173,14 @@ def get_ocad12_checksum(v, lnum, e, lname):
         
     if (e == 'Academic'):
         e = 'Mapping Solution'    
+
+    if lnum < 2000000 and e == 'Course Setting':
+        lnum = lnum + 2000000
     
     slist = list(e)
     checksum = list('____-____-____')
     for i in [5, 6, 7, 8, 10, 11]:
-        slist = list(hash_of_string(''.join(slist).upper() + str(lnum) + lname.upper()))
+        slist = list(hash_of_string(''.join(slist).upper() + str(lnum) + uppercase(lname)))
         #print(''.join(slist))
         idx = (v * (i + 1) + lnum) % 40
         #print(idx)
@@ -167,7 +202,7 @@ def get_ocad12_checksum(v, lnum, e, lname):
     slist = list(s)
     #print(s)
 
-    slist = list(hash_of_string(e + ''.join(slist).upper() + str(lnum) + lname.upper()))
+    slist = list(hash_of_string(e + ''.join(slist).upper() + str(lnum) + uppercase(lname)))
     checksum[0] = slist[7]
     checksum[1] = slist[22]
     checksum[2] = slist[11]
@@ -182,8 +217,11 @@ def get_ocad11_checksum(v, lnum, e, lname):
     maxUint32 = 4294967296;
     
     if (e == 'Academic'):
-        e = 'Professional'    
-    
+        e = 'Professional' 
+
+    if (e == 'Orienteering Standard'):
+        e = 'Standard'
+
     slist = list('__________')
 
     s = ""
@@ -191,6 +229,8 @@ def get_ocad11_checksum(v, lnum, e, lname):
     factor = 0
 
     if (e == "Course Setting"):
+        if lnum < 2000000:
+            lnum = lnum + 2000000
         s =  ('FkHze9dDs2' + lname + 'gd5' + str(lnum)).upper()
         iSum = lnum + 891
         factor = 15
@@ -275,7 +315,10 @@ def get_ocad10_checksum(v, lnum, e, lname):
 
     if (e == 'Academic'):
         e = 'Professional'    
-    
+
+    if (e == 'Orienteering Standard'):
+        e = 'Standard'
+
     slist = list('__________')
 
     s = ""
@@ -283,6 +326,9 @@ def get_ocad10_checksum(v, lnum, e, lname):
     factor = 0;
 
     if (e == "Course Setting"):
+        if lnum < 2000000:
+            lnum = lnum + 2000000
+
         lnum = lnum % 100000;
         s =  'ABC' + lname.upper() + 'GHUSR' + str(lnum) + 'GSR'
         iSum = lnum - 656
