@@ -174,9 +174,6 @@ def get_ocad12_checksum(v, lnum, e, lname):
     if (e == 'Academic'):
         e = 'Mapping Solution'    
 
-    if lnum < 2000000 and e == 'Course Setting':
-        lnum = lnum + 2000000
-    
     slist = list(e)
     checksum = list('____-____-____')
     for i in [5, 6, 7, 8, 10, 11]:
@@ -229,8 +226,6 @@ def get_ocad11_checksum(v, lnum, e, lname):
     factor = 0
 
     if (e == "Course Setting"):
-        if lnum < 2000000:
-            lnum = lnum + 2000000
         s =  ('FkHze9dDs2' + lname + 'gd5' + str(lnum)).upper()
         iSum = lnum + 891
         factor = 15
@@ -326,9 +321,6 @@ def get_ocad10_checksum(v, lnum, e, lname):
     factor = 0;
 
     if (e == "Course Setting"):
-        if lnum < 2000000:
-            lnum = lnum + 2000000
-
         lnum = lnum % 100000;
         s =  'ABC' + lname.upper() + 'GHUSR' + str(lnum) + 'GSR'
         iSum = lnum - 656

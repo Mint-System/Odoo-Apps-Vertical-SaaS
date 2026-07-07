@@ -177,9 +177,6 @@ def get_ocad12_checksum(v, lnum, e, lname):
     if (e == 'Academic'):
         e = 'Mapping Solution'    
 
-    if lnum < 2000000 and e == 'Course Setting':
-        lnum = lnum + 2000000
-    
     slist = list(e)
     checksum = list('____-____-____')
     for i in [5, 6, 7, 8, 10, 11]:
@@ -232,8 +229,6 @@ def get_ocad11_checksum(v, lnum, e, lname):
     factor = 0
 
     if (e == "Course Setting"):
-        if lnum < 2000000:
-            lnum = lnum + 2000000
         s =  ('FkHze9dDs2' + lname + 'gd5' + str(lnum)).upper()
         iSum = lnum + 891
         factor = 15
@@ -329,9 +324,6 @@ def get_ocad10_checksum(v, lnum, e, lname):
     factor = 0;
 
     if (e == "Course Setting"):
-        if lnum < 2000000:
-            lnum = lnum + 2000000
-
         lnum = lnum % 100000;
         s =  'ABC' + lname.upper() + 'GHUSR' + str(lnum) + 'GSR'
         iSum = lnum - 656
@@ -402,7 +394,6 @@ def get_ocad10_checksum(v, lnum, e, lname):
         slist[8] = IntToCodeOcad10Pro((iSum // 729) % 19);
         slist[9] = IntToCodeOcad10Pro((iSum // 7749) % 33);
     return slist
-
 
 ##################
 ##### Tests ######
@@ -547,7 +538,7 @@ tests = [
         [10, 11368, 'PRO', 'pHNhBqoJ', ''], 
         ['https://www.ocad.com/dwn/o10Setup.php?e=PRO&l=11368&d=pHNhBqoJ', 'https://www.ocad.com/dwn/o10ServiceUpdate.php?e=PRO&l=11368&d=pHNhBqoJ']],
     [
-        [10, 8563, '_CS', 'eqdMtzPQ', ''], 
+        [10, 2008563, '_CS', 'eqdMtzPQ', ''], 
         ['https://www.ocad.com/dwn/o10Setup.php?e=_CS&l=2008563&d=eqdMtzPQ', 'https://www.ocad.com/dwn/o10ServiceUpdate.php?e=_CS&l=2008563&d=eqdMtzPQ']],
     [
         [10, 1480, 'PRO', 'H3EFuMJw', ''], 
@@ -559,7 +550,7 @@ tests = [
         [11, 12264, 'PRO', 'WNmXpKnn', ''], 
         ['https://www.ocad.ch/dwn/o11PRO.php?l=12264&d=WNmXpKnn', 'https://www.ocad.com/dwn/o11ServiceUpdate.php?e=PRO&l=12264&d=WNmXpKnn']],
     [
-        [11, 10633, '_CS', '2lAyEF79', ''], 
+        [11, 2010633, '_CS', '2lAyEF79', ''], 
         ['https://www.ocad.ch/dwn/o11_CS.php?l=2010633&d=2lAyEF79', 'https://www.ocad.com/dwn/o11ServiceUpdate.php?e=_CS&l=2010633&d=2lAyEF79']],
     [
         [11, 3088, 'STD', 'yaYqndAP', ''], 
@@ -574,7 +565,7 @@ tests = [
         [12, 10250, 'MAS', 'PXZheLCp', '1CA4-D687-8178'], #client_order_ref = "Auckland University Canoe Club"
         ['https://www.ocad.com/dwn/o12.php?e=MAS&l=10250&d=PXZheLCp', 'https://www.ocad.com/OCAD12/OCAD12MAS_ServiceUpdate.php?l=10250&v=12&c=1CA4-D687-8178']],
     [
-        [12, 5569, '_CS', 'taGUakFy', '77F4-B2FB-4F2C'], #client_order_ref = "Thomas Hodel"
+        [12, 2005569, '_CS', 'taGUakFy', '77F4-B2FB-4F2C'], #client_order_ref = "Thomas Hodel"
         ['https://www.ocad.com/dwn/o12.php?e=_CS&l=2005569&d=taGUakFy', 'https://www.ocad.com/OCAD12/OCAD12_CS_ServiceUpdate.php?l=2005569&v=12&c=77F4-B2FB-4F2C']],
     [
         [12, 1818, 'ORI', 'znGAZaFg', 'AC5B-4035-DDB7'], #client_order_ref = "Orienteering ACT"
