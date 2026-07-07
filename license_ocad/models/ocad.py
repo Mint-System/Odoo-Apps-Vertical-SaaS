@@ -2,10 +2,6 @@ import hashlib
 
 ## Link Generation
 def get_download_links(v, lnum, eshort, dtoken, lkey):
-    if v in [10, 11, 12] and eshort == '_CS':
-        if int(lnum) < 2000000:
-            lnum = str(int(lnum) + 2000000)
-
     if v == 2018:
         download_link =  f"https://www.ocad.com/OCAD2018/OCAD_2018_Setup.php?e={eshort}&l={lnum}&v={v}&d={dtoken}"
         update_link = f"https://www.ocad.com/OCAD2018/OCAD_2018_Update.php?e={eshort}&l={lnum}&v={v}&c={lkey}"
