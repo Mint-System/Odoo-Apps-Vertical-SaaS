@@ -66,12 +66,16 @@ class LicenseActivation(models.TransientModel):
         """Retrieve activations data from license activation server."""
 
         edition_short = str(license_id.product_id.get_value_by_key("EditionShort"))
+        version = str(license_id.product_id.get_value_by_key("Version"))
 
         ocad_username = license_id.company_id.ocad_username
         ocad_password = license_id.company_id.ocad_password
 
         if ocad_username and ocad_password and edition_short and license_id.name != _("New"):
             url = "https://www.ocad.com/ocadintern/db_increaseCounter/getActivations_2018.php"
+            if version == "12":
+                url = "https://www.ocad.com/ocadintern/db_increaseCounter/getActivations_12.php"
+
             params = {
                 "edition": edition_short,
                 "licenseNumber": license_id.name,

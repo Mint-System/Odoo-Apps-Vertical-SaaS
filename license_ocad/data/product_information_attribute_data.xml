@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <!-- product information keys -->
     <record id="product_information_key_ocad0" model="product.information.key">
         <field name="name">Version</field>
     </record>
@@ -22,6 +23,7 @@
         <field name="name">Runtime</field>
     </record>
 
+    <!-- product information values -->
     <record id="product_information_value_ocad0" model="product.information.value">
         <field name="name">2018</field>
         <field name="integer_value">2018</field>
@@ -57,7 +59,13 @@
         <field name="integer_value">3</field>
         <field name="attribute_type">integer</field>
     </record>
+    <record id="product_information_value_ocad7" model="product.information.value">
+        <field name="name">12</field>
+        <field name="integer_value">12</field>
+        <field name="attribute_type">integer</field>
+    </record>
 
+    <!-- product information attributes -->
     <!-- Version 2018 -->
     <record
         id="product_information_attribute_ocad0"
