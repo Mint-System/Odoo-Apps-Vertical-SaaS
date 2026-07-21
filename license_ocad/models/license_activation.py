@@ -75,6 +75,14 @@ class LicenseActivation(models.TransientModel):
             url = "https://www.ocad.com/ocadintern/db_increaseCounter/getActivations_2018.php"
             if version == "12":
                 url = "https://www.ocad.com/ocadintern/db_increaseCounter/getActivations_12.php"
+            elif version == "11":
+                url = "https://www.ocad.com/ocadintern/db_increaseCounter/getActivations_11.php"
+            elif version == "10" and edition_short == "CS":
+                url = "https://www.ocad.com/ocadintern/db_increaseCounter/getActivations_10_CS.php"
+            elif version == "10" and edition_short == "PRO":
+                url = "https://www.ocad.com/ocadintern/db_increaseCounter/getActivations_10_PRO.php"
+            elif version == "10" and edition_short == "STD":
+                url = "https://www.ocad.com/ocadintern/db_increaseCounter/getActivations_10_STD.php"
 
             params = {
                 "edition": edition_short,

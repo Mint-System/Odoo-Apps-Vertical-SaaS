@@ -59,11 +59,6 @@
         <field name="integer_value">3</field>
         <field name="attribute_type">integer</field>
     </record>
-    <record id="product_information_value_ocad7" model="product.information.value">
-        <field name="name">12</field>
-        <field name="integer_value">12</field>
-        <field name="attribute_type">integer</field>
-    </record>
 
     <!-- product information attributes -->
     <!-- Version 2018 -->

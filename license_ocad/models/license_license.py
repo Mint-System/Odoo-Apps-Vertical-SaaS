@@ -164,33 +164,35 @@ class License(models.Model):
                 number_of_activations = license.product_id.get_value_by_key("NumberOfActivations")
                 is_team = license.product_id.get_value_by_key("IsTeam")
                 checksum = "".join(substring[0] for substring in license.key.split("-"))
-                license.product_id.get_value_by_key("Version")
+                version = license.product_id.get_value_by_key("Version")
 
-                # Create entry in license activation database
-                url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateNewLicense2018.php"
-                params = {
-                    "licenseNumber": license.name,
-                    "edition": edition_short,
-                    "checkSum": checksum,
-                    "dwnlink": license.download_token,
-                    "numberOfActivations": number_of_activations,
-                    "subBegin": license.date_start.strftime("%Y-%m-%d"),
-                    "subEnd": license.date_end.strftime("%Y-%m-%d"),
-                    "isTeam": is_team,
-                    "reseller": "",
-                    "renewal": "true" if license.parent_sale_line_id else "false",
-                }
-                auth = (ocad_username, ocad_password)
+                if version == "2018":
 
-                _logger.info("Send post request to %s", url)
-                license.message_post(body=_("Send request to %s.", url))
-                response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
-                message = response.text
+                    # Create entry in license activation database
+                    url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateNewLicense2018.php"
+                    params = {
+                        "licenseNumber": license.name,
+                        "edition": edition_short,
+                        "checkSum": checksum,
+                        "dwnlink": license.download_token,
+                        "numberOfActivations": number_of_activations,
+                        "subBegin": license.date_start.strftime("%Y-%m-%d"),
+                        "subEnd": license.date_end.strftime("%Y-%m-%d"),
+                        "isTeam": is_team,
+                        "reseller": "",
+                        "renewal": "true" if license.parent_sale_line_id else "false",
+                    }
+                    auth = (ocad_username, ocad_password)
 
-                if message != "FEHLER: Lizenznummer schon in Datenbank vorhanden!" and (
-                    "FEHLER" in message or "Unauthorized" in message
-                ):
-                    raise UserError(_("Error while creating license: %s", message))
+                    _logger.info("Send post request to %s", url)
+                    license.message_post(body=_("Send request to %s.", url))
+                    response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
+                    message = response.text
+
+                    if message != "FEHLER: Lizenznummer schon in Datenbank vorhanden!" and (
+                        "FEHLER" in message or "Unauthorized" in message
+                    ):
+                        raise UserError(_("Error while creating license: %s", message))
 
         return message
 
@@ -204,23 +206,25 @@ class License(models.Model):
                 edition_short = license.product_id.get_value_by_key("EditionShort")
                 version = license.product_id.get_value_by_key("Version")
 
-                # Create entry in license manager database
-                url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateLicense.php"
-                params = {
-                    "LicenseNumber": license.name,
-                    "EditionShort": edition_short,
-                    "Version": version,
-                    "LicenseName": urllib.parse.quote(license.client_order_ref),
-                }
-                auth = (ocad_username, ocad_password)
+                if version == "2018":
 
-                _logger.info("Send post request to %s", url)
-                license.message_post(body=_("Send request to %s.", url))
-                response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
-                message = response.text
+                    # Create entry in license manager database
+                    url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateLicense.php"
+                    params = {
+                        "LicenseNumber": license.name,
+                        "EditionShort": edition_short,
+                        "Version": version,
+                        "LicenseName": urllib.parse.quote(license.client_order_ref),
+                    }
+                    auth = (ocad_username, ocad_password)
 
-                if "FEHLER" in message or "Unauthorized" in message:
-                    raise UserError(_("Error while updating license: %s", message))
+                    _logger.info("Send post request to %s", url)
+                    license.message_post(body=_("Send request to %s.", url))
+                    response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
+                    message = response.text
+
+                    if "FEHLER" in message or "Unauthorized" in message:
+                        raise UserError(_("Error while updating license: %s", message))
 
         return message
 
@@ -232,8 +236,21 @@ class License(models.Model):
         if ocad_username and ocad_password:
             for license in self:
                 edition_short = license.product_id.get_value_by_key("EditionShort")
+                version = str(license.product_id.get_value_by_key("Version"))
 
                 url = "https://www.ocad.com/ocadintern/db_increaseCounter/increaseCounter_2018.php"
+                if version == "12":
+                    url = "https://www.ocad.com/ocadintern/db_increaseCounter/increaseCounter_12.php"
+                elif version == "11":
+                    url = "https://www.ocad.com/ocadintern/db_increaseCounter/increaseCounter_11.php"
+                elif version == "10" and edition_short == "CS":
+                    url = "https://www.ocad.com/ocadintern/db_increaseCounter/increaseCounter_10_CS.php"
+                elif version == "10" and edition_short == "PRO":
+                    url = "https://www.ocad.com/ocadintern/db_increaseCounter/increaseCounter_10_PRO.php"
+                elif version == "10" and edition_short == "STD":
+                    url = "https://www.ocad.com/ocadintern/db_increaseCounter/increaseCounter_10_STD.php"
+
+
                 params = {
                     "licenseNumber": license.name,
                     "edition": edition_short,

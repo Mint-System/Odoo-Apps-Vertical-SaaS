@@ -1,6 +1,9 @@
 <odoo>
-    <record id="license.license_product0" model="product.product">
-        <field name="name">OCAD 2018</field>
+    <!-- Value 12 -->
+    <record id="product_information_value_ocad7" model="product.information.value">
+        <field name="name">12</field>
+        <field name="integer_value">12</field>
+        <field name="attribute_type">integer</field>
     </record>
 
     <!-- Version 12 -->
@@ -13,8 +16,94 @@
         <field name="value_id" ref="product_information_value_ocad7" />
     </record>
 
-    <!-- Software License -->
+    <!-- Value 11 -->
+    <record id="product_information_value_ocad8" model="product.information.value">
+        <field name="name">11</field>
+        <field name="integer_value">11</field>
+        <field name="attribute_type">integer</field>
+    </record>
+
+    <!-- Version 11 -->
+    <record
+        id="product_information_attribute_ocad10"
+        model="product.information.attribute"
+    >
+        <field name="key_id" ref="product_information_key_ocad0" />
+        <field name="attribute_type">integer</field>
+        <field name="value_id" ref="product_information_value_ocad8" />
+    </record>
+
+    <!-- Value CS -->
+    <record id="product_information_value_ocad9" model="product.information.value">
+        <field name="name">CS</field>
+        <field name="char_value">CS</field>
+        <field name="attribute_type">char</field>
+    </record>
+
+    <!-- EditionShort CS -->
+    <record
+        id="product_information_attribute_ocad11"
+        model="product.information.attribute"
+    >
+        <field name="key_id" ref="product_information_key_ocad3" />
+        <field name="attribute_type">char</field>
+        <field name="value_id" ref="product_information_value_ocad9" />
+    </record>
+
+    <!-- Value PRO -->
+    <record id="product_information_value_ocad10" model="product.information.value">
+        <field name="name">PRO</field>
+        <field name="char_value">PRO</field>
+        <field name="attribute_type">char</field>
+    </record>
+
+    <!-- EditionShort PRO -->
+    <record
+        id="product_information_attribute_ocad12"
+        model="product.information.attribute"
+    >
+        <field name="key_id" ref="product_information_key_ocad3" />
+        <field name="attribute_type">char</field>
+        <field name="value_id" ref="product_information_value_ocad10" />
+    </record>
+
+    <!-- Value STD -->
+    <record id="product_information_value_ocad11" model="product.information.value">
+        <field name="name">STD</field>
+        <field name="char_value">STD</field>
+        <field name="attribute_type">char</field>
+    </record>
+
+    <!-- EditionShort STD -->
+    <record
+        id="product_information_attribute_ocad13"
+        model="product.information.attribute"
+    >
+        <field name="key_id" ref="product_information_key_ocad3" />
+        <field name="attribute_type">char</field>
+        <field name="value_id" ref="product_information_value_ocad11" />
+    </record>
+
+    <!-- Value 10 -->
+    <record id="product_information_value_ocad12" model="product.information.value">
+        <field name="name">10</field>
+        <field name="integer_value">10</field>
+        <field name="attribute_type">integer</field>
+    </record>
+
+    <!-- Version 10 -->
+    <record
+        id="product_information_attribute_ocad14"
+        model="product.information.attribute"
+    >
+        <field name="key_id" ref="product_information_key_ocad0" />
+        <field name="attribute_type">integer</field>
+        <field name="value_id" ref="product_information_value_ocad12" />
+    </record>
+
+    <!-- OCAD 2018 -->
     <record id="license.license_product0" model="product.product">
+        <field name="name">OCAD 2018</field>
         <field
             name="attribute_ids"
             eval="[
@@ -45,20 +134,73 @@
         />
     </record>
 
-    <!-- Software License 12 -->
+    <!-- OCAD 12 -->
     <record id="license_product2" model="product.product">
-        <field name="name">Software License 12</field>
+        <field name="name">OCAD 12</field>
         <field name="type">service</field>
         <field
             name="attribute_ids"
             eval="[
-        (4, ref('product_information_attribute_ocad9')),
         (4, ref('product_information_attribute_ocad1')),
         (4, ref('product_information_attribute_ocad2')),
         (4, ref('product_information_attribute_ocad3')),
-        (4, ref('product_information_attribute_ocad4')),
-        (4, ref('product_information_attribute_ocad5')),
-        (4, ref('product_information_attribute_ocad6')),
+        (4, ref('product_information_attribute_ocad9')),
+      ]"
+        />
+    </record>
+
+    <!-- OCAD 11 -->
+    <record id="license_product3" model="product.product">
+        <field name="name">OCAD 11</field>
+        <field name="type">service</field>
+        <field
+            name="attribute_ids"
+            eval="[
+        (4, ref('product_information_attribute_ocad1')),
+        (4, ref('product_information_attribute_ocad11')),
+        (4, ref('product_information_attribute_ocad10')),
+      ]"
+        />
+    </record>
+
+    <!-- OCAD 10 CS -->
+    <record id="license_product4" model="product.product">
+        <field name="name">OCAD 10 CS</field>
+        <field name="type">service</field>
+        <field
+            name="attribute_ids"
+            eval="[
+        (4, ref('product_information_attribute_ocad1')),
+        (4, ref('product_information_attribute_ocad11')),
+        (4, ref('product_information_attribute_ocad14')),
+      ]"
+        />
+    </record>
+
+    <!-- OCAD 10 PRO -->
+    <record id="license_product5" model="product.product">
+        <field name="name">OCAD 10 PRO</field>
+        <field name="type">service</field>
+        <field
+            name="attribute_ids"
+            eval="[
+        (4, ref('product_information_attribute_ocad1')),
+        (4, ref('product_information_attribute_ocad12')),
+        (4, ref('product_information_attribute_ocad14')),
+      ]"
+        />
+    </record>
+
+    <!-- OCAD 10 STD -->
+    <record id="license_product6" model="product.product">
+        <field name="name">OCAD 10 STD</field>
+        <field name="type">service</field>
+        <field
+            name="attribute_ids"
+            eval="[
+        (4, ref('product_information_attribute_ocad1')),
+        (4, ref('product_information_attribute_ocad13')),
+        (4, ref('product_information_attribute_ocad14')),
       ]"
         />
     </record>
@@ -91,6 +233,46 @@
     <record id="license3" model="license.license">
         <field name="name">5002</field>
         <field name="product_id" ref="license_product2" />
+        <field name="client_order_ref">OCAD AG</field>
+        <field name="type_id" ref="license.type0" />
+        <field name="partner_id" ref="base.res_partner_address_31" />
+        <field name="registered" eval="True" />
+    </record>
+
+    <!-- OCAD 11 -->
+    <record id="license4" model="license.license">
+        <field name="name">5002</field>
+        <field name="product_id" ref="license_product3" />
+        <field name="client_order_ref">OCAD AG</field>
+        <field name="type_id" ref="license.type0" />
+        <field name="partner_id" ref="base.res_partner_address_31" />
+        <field name="registered" eval="True" />
+    </record>
+
+    <!-- OCAD 10 CS -->
+    <record id="license5" model="license.license">
+        <field name="name">5002</field>
+        <field name="product_id" ref="license_product4" />
+        <field name="client_order_ref">OCAD AG</field>
+        <field name="type_id" ref="license.type0" />
+        <field name="partner_id" ref="base.res_partner_address_31" />
+        <field name="registered" eval="True" />
+    </record>
+
+    <!-- OCAD 10 PRO -->
+    <record id="license6" model="license.license">
+        <field name="name">5002</field>
+        <field name="product_id" ref="license_product5" />
+        <field name="client_order_ref">OCAD AG</field>
+        <field name="type_id" ref="license.type0" />
+        <field name="partner_id" ref="base.res_partner_address_31" />
+        <field name="registered" eval="True" />
+    </record>
+
+    <!-- OCAD 10 STD -->
+    <record id="license7" model="license.license">
+        <field name="name">5002</field>
+        <field name="product_id" ref="license_product6" />
         <field name="client_order_ref">OCAD AG</field>
         <field name="type_id" ref="license.type0" />
         <field name="partner_id" ref="base.res_partner_address_31" />
