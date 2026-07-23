@@ -164,7 +164,7 @@ class License(models.Model):
                 number_of_activations = license.product_id.get_value_by_key("NumberOfActivations")
                 is_team = license.product_id.get_value_by_key("IsTeam")
                 checksum = "".join(substring[0] for substring in license.key.split("-"))
-                version = license.product_id.get_value_by_key("Version")
+                version = str(license.product_id.get_value_by_key("Version"))
 
                 if version == "2018":
 
