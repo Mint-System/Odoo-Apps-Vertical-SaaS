@@ -134,24 +134,21 @@ class License(models.Model):
 
     @api.depends("name", "product_id", "partner_id", "client_order_ref")
     def _compute_key(self):
+        super()._compute_key()
         for license in self:
             if license.product_id and license.client_order_ref and license.name != _("New"):
                 version = license.product_id.get_value_by_key("Version")
                 edition_long = license.product_id.get_value_by_key("EditionLong")
 
-                if not version or not edition_long:
-                    raise UserError(
-                        _("Missing product information fields. Ensure 'Version' and 'EditionLong' are set.")
+                if version and edition_long:
+                    license.key = "".join(
+                        ocad.get_ocad_checksum(
+                            version,
+                            int(license.name),
+                            edition_long,
+                            license.client_order_ref,
+                        )
                     )
-
-                license.key = "".join(
-                    ocad.get_ocad_checksum(
-                        version,
-                        int(license.name),
-                        edition_long,
-                        license.client_order_ref,
-                    )
-                )
 
     def _create_license(self):
         message = ""
@@ -167,7 +164,6 @@ class License(models.Model):
                 version = str(license.product_id.get_value_by_key("Version"))
 
                 if version == "2018":
-
                     # Create entry in license activation database
                     url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateNewLicense2018.php"
                     params = {
@@ -207,7 +203,6 @@ class License(models.Model):
                 version = license.product_id.get_value_by_key("Version")
 
                 if version == "2018":
-
                     # Create entry in license manager database
                     url = "https://www.ocad.com/ocadintern/db_newlicense/UpdateLicense.php"
                     params = {
@@ -249,7 +244,6 @@ class License(models.Model):
                     url = "https://www.ocad.com/ocadintern/db_increaseCounter/increaseCounter_10_PRO.php"
                 elif version == "10" and edition_short == "STD":
                     url = "https://www.ocad.com/ocadintern/db_increaseCounter/increaseCounter_10_STD.php"
-
 
                 params = {
                     "licenseNumber": license.name,
