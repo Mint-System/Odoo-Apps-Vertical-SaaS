@@ -200,7 +200,7 @@ class License(models.Model):
         if ocad_username and ocad_password:
             for license in self:
                 edition_short = license.product_id.get_value_by_key("EditionShort")
-                version = license.product_id.get_value_by_key("Version")
+                version = str(license.product_id.get_value_by_key("Version"))
 
                 if version == "2018":
                     # Create entry in license manager database
