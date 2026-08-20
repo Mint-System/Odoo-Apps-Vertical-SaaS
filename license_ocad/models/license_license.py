@@ -253,7 +253,7 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
-                _logger.info("Send post request to %s", url)
+                _logger.info("Send post request %s to %s", params, url)
                 license.message_post(body=_("Send request to %s.", url))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
@@ -280,7 +280,7 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
-                _logger.info("Send post request to %s", url)
+                _logger.info("Send post request %s to %s", params, url)
                 license.message_post(body=_("Send request to %s.", url))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
@@ -307,7 +307,7 @@ class License(models.Model):
                 }
                 auth = (ocad_username, ocad_password)
 
-                _logger.info("Send post request to %s", url)
+                _logger.info("Send post request %s to %s", params, url)
                 license.message_post(body=_("Send request to %s.", url))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text

@@ -52,7 +52,7 @@ class LicenseActivation(models.TransientModel):
                 activation.license_id.company_id.ocad_password,
             )
 
-            _logger.info("Send post request to %s", url)
+            _logger.info("Send post request %s to %s", params, url)
             response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
             message += response.text
 
@@ -95,7 +95,7 @@ class LicenseActivation(models.TransientModel):
                 ocad_password,
             )
 
-            _logger.info("Send get request to %s", url)
+            _logger.info("Send get request %s to %s", params, url)
             response = requests.get(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
 
             # Reponse is a semicolon separated string that has to be processed
