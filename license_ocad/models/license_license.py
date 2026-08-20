@@ -238,8 +238,10 @@ class License(models.Model):
                     url = "https://www.ocad.com/ocadintern/db_increaseCounter/increaseCounter_12.php"
                 elif version == "11":
                     url = "https://www.ocad.com/ocadintern/db_increaseCounter/increaseCounter_11.php"
-                elif version == "10" and edition_short == "CS":
+                    edition_short = edition_short.lower
+                elif version == "10" and edition_short == "_CS":
                     url = "https://www.ocad.com/ocadintern/db_increaseCounter/increaseCounter_10_CS.php"
+                    edition_short = "cs"
                 elif version == "10" and edition_short == "PRO":
                     url = "https://www.ocad.com/ocadintern/db_increaseCounter/increaseCounter_10_PRO.php"
                 elif version == "10" and edition_short == "STD":
