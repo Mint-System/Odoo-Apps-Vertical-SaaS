@@ -90,7 +90,7 @@
 
                                     <!-- Delivery (required radio: exactly one option) -->
                                     <div
-                                        class="s_website_form_field col-12 py-2 mb-0 s_website_form_custom s_website_form_required"
+                                        class="s_website_form_field col-12 py-2 mb-0 s_website_form_required"
                                         data-type="selection"
                                         data-name="Delivery"
                                     >
@@ -133,7 +133,7 @@
                                                                 type="radio"
                                                                 class="s_website_form_input form-check-input"
                                                                 name="license_exists"
-                                                                value="No"
+                                                                value=""
                                                                 required="1"
                                                             />
                                                             <label class="form-check-label s_website_form_check_label" for="oxnewlic01">
