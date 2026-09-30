@@ -20,7 +20,7 @@ def _get_download_token():
     return token
 
 
-REQUESTS_HEADERS = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:134.0) Gecko/20100101 Firefox/134.0"}
+REQUESTS_HEADERS = {"User-Agent": "OCAD-Odoo/18.0 (+https://www.mint-system.ch; support@mint-system.ch)"}
 
 
 class License(models.Model):
