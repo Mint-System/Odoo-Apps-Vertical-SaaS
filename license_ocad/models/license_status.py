@@ -3,6 +3,7 @@ import logging
 import requests
 
 from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -51,10 +52,13 @@ class LicenseStatus(models.TransientModel):
 
             _logger.info("Send get request to %s", url)
             response = requests.get(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
+            body = response.text.strip()
+            if body.lower().startswith("<html"):
+                raise UserError(_("Received HTML response instead of CSV data: %s", body[:150]))
 
             # Reponse is a semicolon separated string that has to be processed
-            columns = 13
             cells = response.text.split(";")
+            columns = 13
             rows = len(cells) // columns
             activation_status = []
             for i in range(0, rows):

@@ -5,7 +5,6 @@ import urllib
 import requests
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
 
 from . import ocad
 
@@ -184,11 +183,7 @@ class License(models.Model):
                     license.message_post(body=_("Send request to %s.", url))
                     response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                     message = response.text
-
-                    if message != "FEHLER: Lizenznummer schon in Datenbank vorhanden!" and (
-                        "FEHLER" in message or "Unauthorized" in message
-                    ):
-                        raise UserError(_("Error while creating license: %s", message))
+                    license.message_post(body=_("Response of request: %s", message))
 
         return message
 
@@ -217,9 +212,7 @@ class License(models.Model):
                     license.message_post(body=_("Send request to %s.", url))
                     response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                     message = response.text
-
-                    if "FEHLER" in message or "Unauthorized" in message:
-                        raise UserError(_("Error while updating license: %s", message))
+                    license.message_post(body=_("Response of request: %s", message))
 
         return message
 
@@ -257,9 +250,7 @@ class License(models.Model):
                 license.message_post(body=_("Send request to %s.", url))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
-
-                if "FEHLER" in message or "Unauthorized" in message:
-                    raise UserError(_("Error while increasing counter: %s", message))
+                license.message_post(body=_("Response of request: %s", message))
 
         return message
 
@@ -284,9 +275,7 @@ class License(models.Model):
                 license.message_post(body=_("Send request to %s.", url))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
-
-                if "FEHLER" in message or "Unauthorized" in message:
-                    raise UserError(_("Error while updating end date: %s", message))
+                license.message_post(body=_("Response of request: %s", message))
 
         return message
 
@@ -311,9 +300,7 @@ class License(models.Model):
                 license.message_post(body=_("Send request to %s.", url))
                 response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
                 message = response.text
-
-                if "FEHLER" in message or "Unauthorized" in message:
-                    raise UserError(_("Error while updating license status: %s", message))
+                license.message_post(body=_("Response of request: %s", message))
 
         return message
 

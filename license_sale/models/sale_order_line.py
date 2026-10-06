@@ -90,7 +90,7 @@ class SaleOrderLine(models.Model):
             "sale_line_id": self.id,
             "sale_order_id": self.order_id.id,
             "state": "assigned",
-            "client_order_ref": self.order_id.client_order_ref.strip(),
+            "client_order_ref": " ".join(self.order_id.client_order_ref.split()),
         }
 
     def button_create_license(self):

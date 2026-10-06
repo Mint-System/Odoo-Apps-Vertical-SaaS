@@ -55,9 +55,7 @@ class LicenseActivation(models.TransientModel):
             _logger.info("Send post request %s to %s", params, url)
             response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
             message += response.text
-
-            if "FEHLER" in message or "Unauthorized" in message:
-                raise UserError(_("Error while disabling activation: %s", message))
+            license.message_post(body=_("Response of request: %s", message))
 
         return message
 
@@ -97,6 +95,9 @@ class LicenseActivation(models.TransientModel):
 
             _logger.info("Send get request %s to %s", params, url)
             response = requests.get(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
+            body = response.text.strip()
+            if body.lower().startswith("<html"):
+                raise UserError(_("Received HTML response instead of CSV data: %s", body[:150]))
 
             # Reponse is a semicolon separated string that has to be processed
             columns = 13

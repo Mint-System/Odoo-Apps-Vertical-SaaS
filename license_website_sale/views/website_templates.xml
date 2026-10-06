@@ -94,10 +94,19 @@
                                         data-type="selection"
                                         data-name="Delivery"
                                     >
-                                        <div class="s_col_no_resize s_col_no_bgcolor row">
-                                            <label class="s_website_form_label col-form-label col-sm-auto" style="width: 200px">
-                                                <span class="s_website_form_label_content">Delivery</span>
-                                                <span class="s_website_form_mark">*</span>
+                                        <div
+                                            class="s_col_no_resize s_col_no_bgcolor row"
+                                        >
+                                            <label
+                                                class="s_website_form_label col-form-label col-sm-auto"
+                                                style="width: 200px"
+                                            >
+                                                <span
+                                                    class="s_website_form_label_content"
+                                                >Delivery</span>
+                                                <span
+                                                    class="s_website_form_mark"
+                                                >*</span>
                                             </label>
                                             <div class="col-sm">
                                                 <div
@@ -116,10 +125,15 @@
                                                                 value="Yes"
                                                                 required="1"
                                                             />
-                                                            <label class="form-check-label s_website_form_check_label" for="oxaaqf2tcdkh">
+                                                            <label
+                                                                class="form-check-label s_website_form_check_label"
+                                                                for="oxaaqf2tcdkh"
+                                                            >
                                                                 I want to renew an existing OCAD subscription license.
                                                             </label>
-                                                            <div class="o_delivery_hint small form-text text-muted">
+                                                            <div
+                                                                class="o_delivery_hint small form-text text-muted"
+                                                            >
                                                                 We will renew your license so that you can continue to work with the same license.
                                                                 The request will be processed within two business days at the latest.
                                                             </div>
@@ -136,10 +150,15 @@
                                                                 value=""
                                                                 required="1"
                                                             />
-                                                            <label class="form-check-label s_website_form_check_label" for="oxnewlic01">
+                                                            <label
+                                                                class="form-check-label s_website_form_check_label"
+                                                                for="oxnewlic01"
+                                                            >
                                                                 I need a new license
                                                             </label>
-                                                            <div class="o_delivery_hint small form-text text-muted">
+                                                            <div
+                                                                class="o_delivery_hint small form-text text-muted"
+                                                            >
                                                                 We will create a new license that you can use right away.
                                                             </div>
                                                         </div>
@@ -158,13 +177,17 @@
                                         data-visibility-comparator="selected"
                                         data-visibility-condition="Yes"
                                     >
-                                        <div class="s_col_no_resize s_col_no_bgcolor row">
+                                        <div
+                                            class="s_col_no_resize s_col_no_bgcolor row"
+                                        >
                                             <label
                                                 class="s_website_form_label col-form-label col-sm-auto"
                                                 style="width: 200px"
                                                 for="o57stxb8wu97"
                                             >
-                                                <span class="s_website_form_label_content">Remark</span>
+                                                <span
+                                                    class="s_website_form_label_content"
+                                                >Remark</span>
                                             </label>
                                             <div class="col-sm">
                                                 <textarea
