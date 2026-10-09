@@ -42,11 +42,79 @@
                                 hide-change-model="true"
                             >
                                 <div class="s_website_form_rows s_col_no_bgcolor row">
-                                    <!-- License Name (Required) -->
+
+
+                                    <!-- Delivery (required radio: exactly one option) -->
                                     <div
                                         class="s_website_form_field col-12 py-2 mb-0 s_website_form_required"
+                                        data-type="selection"
+                                        data-name="Delivery"
+                                    >
+                                        <div class="s_col_no_resize s_col_no_bgcolor row">
+                                            <label class="s_website_form_label col-form-label col-sm-auto" style="width: 200px">
+                                                <span class="s_website_form_label_content">Delivery</span>
+                                                <span class="s_website_form_mark">*</span>
+                                            </label>
+                                            <div class="col-sm">
+                                                <div
+                                                    class="s_col_no_resize s_col_no_bgcolor row s_website_form_multiple"
+                                                    data-name="license_type"
+                                                    data-display="vertical"
+                                                >
+                                                    <!-- Renew existing -->
+                                                    <div class="radio col-12">
+                                                        <div class="form-check">
+                                                            <input
+                                                            id="oxaaqf2tcdkh"
+                                                            type="radio"
+                                                            class="s_website_form_input form-check-input"
+                                                            name="license_type"
+                                                            value="Renew existing license"
+                                                            required="1"
+                                                            />
+                                                            <label class="form-check-label s_website_form_check_label" for="oxaaqf2tcdkh">
+                                                                I want to renew an existing OCAD subscription license.
+                                                            </label>
+                                                            <div class="o_delivery_hint small form-text text-muted">
+                                                                We will renew your license so that you can continue to work with the same license.
+                                                                The request will be processed within two business days at the latest.
+                                                            </div>
+                                                       </div>
+                                                    </div>
+                                                    <!-- New license -->
+                                                    <div class="radio col-12 mt-2">
+                                                        <div class="form-check">
+                                                            <input
+                                                            id="oxnewlic01"
+                                                            type="radio"
+                                                            class="s_website_form_input form-check-input"
+                                                            name="license_type"
+                                                            value="New license"
+                                                            required="1"
+                                                        />
+                                                            <label class="form-check-label s_website_form_check_label" for="oxnewlic01">
+                                                                I need a new license
+                                                            </label>
+                                                            <div class="o_delivery_hint small form-text text-muted">
+                                                                We will create a new license that you can use right away.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- License Name (Required) -->
+                                    <div
+                                        class="s_website_form_field col-12 py-2 mb-0 s_website_form_required s_website_form_field_hidden_if d-none"
                                         data-type="char"
                                         data-name="License name"
+                                        data-visibility-dependency="license_type"
+                                        data-visibility-comparator="selected"
+                                        data-visibility-condition="Renew existing license"
                                     >
                                         <div
                                             class="s_col_no_resize s_col_no_bgcolor row"
@@ -68,7 +136,7 @@
                                                     id="oeft0m4oaq2b"
                                                     type="text"
                                                     class="s_website_form_input form-control"
-                                                    name="client_order_ref"
+                                                    name="comment"
                                                     required="1"
                                                     minlength="3"
                                                     pattern="[A-z0-9À-ž\s]+"
@@ -84,11 +152,16 @@
                                         </div>
                                     </div>
 
-                                    <!-- License/Subscription Exists (Boolean) -->
+
+
+                                    <!-- License Number (Required) -->
                                     <div
-                                        class="s_website_form_field col-12 py-2 mb-0"
-                                        data-type="boolean"
-                                        data-name="License/Subscription exists"
+                                        class="s_website_form_field col-12 py-2 mb-0 s_website_form_required  s_website_form_field_hidden_if d-none"
+                                        data-type="char"
+                                        data-name="License number"
+                                        data-visibility-dependency="license_type"
+                                        data-visibility-comparator="selected"
+                                        data-visibility-condition="New license"
                                     >
                                         <div
                                             class="s_col_no_resize s_col_no_bgcolor row"
@@ -96,35 +169,41 @@
                                             <label
                                                 class="s_website_form_label col-form-label col-sm-auto"
                                                 style="width: 200px"
-                                                for="oxaaqf2tcdkh"
+                                                for="oeft0m4oaq2"
                                             >
                                                 <span
                                                     class="s_website_form_label_content"
-                                                >License/Subscription exists</span>
+                                                >License number</span>
+                                                <span
+                                                    class="s_website_form_mark"
+                                                >*</span>
                                             </label>
                                             <div class="col-sm">
-                                                <div class="form-check">
-                                                    <input
-                                                        id="oxaaqf2tcdkh"
-                                                        type="checkbox"
-                                                        class="s_website_form_input form-check-input"
-                                                        name="license_exists"
-                                                        value="Yes"
-                                                    />
-                                                </div>
+                                                <input
+                                                    id="oeft0m4oaq2"
+                                                    type="text"
+                                                    class="s_website_form_input form-control"
+                                                    name="client_order_ref"
+                                                    required="1"
+                                                    minlength="3"
+                                                    pattern="[A-z0-9À-ž\s]+"
+                                                    placeholder="e.g. 12345"
+                                                />
                                                 <div
                                                     class="s_website_form_field_description small form-text text-muted"
                                                 >
-                                                    &#160;Mark this option if you already have an OCAD license/subscription.<br
+                                                    &#160;Please enter at least 3 digits.<br
                                                 />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- Remark (Text) -->
-                                    <div
-                                        class="s_website_form_field col-12 py-2 mb-0"
+                                    
+
+                                    <!-- Remark (only visible when "Renew" is selected) -->
+                                    <!-- <div
+                                        class="s_website_form_field col-12 py-2 mb-0 s_website_form_field_hidden_if d-none"
                                         data-type="text"
                                         data-name="Remark"
                                     >
@@ -150,7 +229,7 @@
                                                 />
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <!-- Submit Buttons -->
                                     <div
