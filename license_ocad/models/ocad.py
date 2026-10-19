@@ -10,7 +10,7 @@ def get_download_links(v, lnum, eshort, dtoken, lkey):
         download_link = f"https://www.ocad.com/dwn/o12.php?e={eshort}&l={lnum}&d={dtoken}"
         update_link = f"https://www.ocad.com/OCAD12/OCAD12{eshort}_ServiceUpdate.php?l={lnum}&v={v}&c={lkey}"
     elif v == 11:
-        download_link = f"https://www.ocad.ch/dwn/o11{eshort}.php?l={lnum}&d={dtoken}"
+        download_link = f"https://www.ocad.com/dwn/o11{eshort}.php?l={lnum}&d={dtoken}"
         update_link = f"https://www.ocad.com/dwn/o11ServiceUpdate.php?e={eshort}&l={lnum}&d={dtoken}"
     elif v == 10:
         download_link = f"https://www.ocad.com/dwn/o10Setup.php?e={eshort}&l={lnum}&d={dtoken}"
