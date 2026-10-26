@@ -54,8 +54,6 @@ class LicenseActivation(models.TransientModel):
 
             _logger.info("Send post request %s to %s", params, url)
             response = requests.post(url, params=params, auth=auth, timeout=10, headers=REQUESTS_HEADERS)
-            message += response.text
-            license.message_post(body=_("Response of request: %s", message))
 
         return message
 
