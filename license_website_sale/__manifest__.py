@@ -12,11 +12,7 @@
         "license_sale",
         "website_sale",
     ],
-    "data": [
-        "views/sale_order.xml",
-        "views/website_templates.xml",
-        "data/sale_order_fields.xml",
-    ],
+    "data": ["views/sale_order.xml", "views/website_templates.xml"],
     "installable": True,
     "application": False,
     "auto_install": False,
