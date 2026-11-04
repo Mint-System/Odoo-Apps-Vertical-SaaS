@@ -114,7 +114,7 @@
                                         data-name="License name"
                                         data-visibility-dependency="license_type"
                                         data-visibility-comparator="selected"
-                                        data-visibility-condition="Renew existing license"
+                                        data-visibility-condition="New license"
                                     >
                                         <div
                                             class="s_col_no_resize s_col_no_bgcolor row"
@@ -136,7 +136,7 @@
                                                     id="oeft0m4oaq2b"
                                                     type="text"
                                                     class="s_website_form_input form-control"
-                                                    name="comment"
+                                                    name="client_order_ref"
                                                     required="1"
                                                     minlength="3"
                                                     pattern="[A-z0-9À-ž\s]+"
@@ -161,7 +161,7 @@
                                         data-name="License number"
                                         data-visibility-dependency="license_type"
                                         data-visibility-comparator="selected"
-                                        data-visibility-condition="New license"
+                                        data-visibility-condition="Renew existing license"
                                     >
                                         <div
                                             class="s_col_no_resize s_col_no_bgcolor row"
@@ -183,7 +183,7 @@
                                                     id="oeft0m4oaq2"
                                                     type="text"
                                                     class="s_website_form_input form-control"
-                                                    name="client_order_ref"
+                                                    name="comment"
                                                     required="1"
                                                     minlength="3"
                                                     pattern="[A-z0-9À-ž\s]+"
@@ -199,37 +199,20 @@
                                         </div>
                                     </div>
 
-                                    
 
-                                    <!-- Remark (only visible when "Renew" is selected) -->
-                                    <!-- <div
-                                        class="s_website_form_field col-12 py-2 mb-0 s_website_form_field_hidden_if d-none"
-                                        data-type="text"
-                                        data-name="Remark"
+                                    <!-- License Exists (Hidden) -->
+                                    <div
+                                        class="s_website_form_field col-12 s_website_form_field_hidden_if d-none"
+                                        data-type="boolean"
+                                        data-name="License exists"
+                                        data-visibility-dependency="license_type"
+                                        data-visibility-comparator="selected"
+                                        data-visibility-condition="Renew existing license"
                                     >
-                                        <div
-                                            class="s_col_no_resize s_col_no_bgcolor row"
-                                        >
-                                            <label
-                                                class="s_website_form_label col-form-label col-sm-auto"
-                                                style="width: 200px"
-                                                for="o57stxb8wu97"
-                                            >
-                                                <span
-                                                    class="s_website_form_label_content"
-                                                >Remark</span>
-                                            </label>
-                                            <div class="col-sm">
-                                                <textarea
-                                                    id="o57stxb8wu97"
-                                                    class="s_website_form_input form-control"
-                                                    name="comment"
-                                                    rows="2"
-                                                    placeholder="e.g. old license number when updating or renew a license"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div> -->
+                                        <input type="hidden" class="s_website_form_input" name="license_exists" value="1" />
+                                    </div>
+
+                                    
 
                                     <!-- Submit Buttons -->
                                     <div
