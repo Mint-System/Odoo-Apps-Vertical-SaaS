@@ -28,6 +28,10 @@
                         data-vcss="001"
                         data-snippet="s_website_form"
                     >
+                        <style>
+                            .o_delivery_hint { display: none; }
+                            .form-check-input:checked ~ .o_delivery_hint { display: block; }
+                        </style>
                         <div class="container">
                             <form
                                 action="/website/form/"
