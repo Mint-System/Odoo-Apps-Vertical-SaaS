@@ -31,6 +31,13 @@
                         <style>
                             .o_delivery_hint { display: none; }
                             .form-check-input:checked ~ .o_delivery_hint { display: block; }
+                            /* Show the standard error message on its own line above the buttons */
+                            .s_website_form_submit { flex-wrap: wrap; }
+                            #s_website_form_result:not(:empty) { order: -1; width: 100%; margin: -0.75rem 0 0.75rem; }
+                            /* Align with the field descriptions (label column is 200px) */
+                            @media (min-width: 576px) {
+                                #s_website_form_result:not(:empty) { width: calc(100% - 200px); margin-left: 200px; }
+                            }
                         </style>
                         <div class="container">
                             <form
@@ -190,13 +197,13 @@
                                                     name="comment"
                                                     required="1"
                                                     minlength="3"
-                                                    pattern="[A-z0-9À-ž\s]+"
+                                                    pattern="[A-z0-9À-ž\s]{4,}"
                                                     placeholder="e.g. 12345"
                                                 />
                                                 <div
                                                     class="s_website_form_field_description small form-text text-muted"
                                                 >
-                                                    &#160;Please enter at least 3 digits.<br
+                                                    &#160;Please enter at least 4 digits.<br
                                                 />
                                                 </div>
                                             </div>
@@ -216,7 +223,7 @@
                                         <input type="hidden" class="s_website_form_input" name="license_exists" value="1" />
                                     </div>
 
-                                    
+
 
                                     <!-- Submit Buttons -->
                                     <div
